@@ -35,12 +35,15 @@ export default {
 				5: '5rem',
 				6: '6rem',
 				6.4: '6.4rem',
+				17.4: '17.4rem',
+				calch: 'calc(100vh - 64px)'
 			},
 			fontSize: {
 				sm: '0.8rem',
 				base: '1rem',
 				xl: '1.25rem',
 				hl: ['1.8rem', { fontWeight: 'bold' }],
+				hm: ['1.5rem', { fontWeight: 'bold' }],
 				'3xl': '1.953rem',
 				'4xl': '2.441rem',
 				'5xl': '3.052rem',
