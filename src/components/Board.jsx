@@ -1,8 +1,8 @@
 import Button from './UI/Button'
 import data from '../data.json'
+import Boards from './Boards'
 
-const Board = () => {
-	console.log(data)
+const Board = ({ showNav }) => {
 	if (data.boards.length === 0) {
 		return (
 			<main className='flex flex-col justify-center items-center gap-2.5  h-calch px-1.6 text-center'>
@@ -13,6 +13,11 @@ const Board = () => {
 			</main>
 		)
 	}
+	return <Boards boards={data.boards} showNav={showNav}></Boards>
+
+	// if(data.boards.length > 0){
+	//     return
+	// }
 }
 
 export default Board

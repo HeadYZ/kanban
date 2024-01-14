@@ -23,8 +23,11 @@ export default {
 				0.6: '0.6rem',
 				0.8: '0.8rem',
 				1: '1rem',
+				1.2: '1.2rem',
+				1.5: '1.6rem',
 				1.6: '1.6rem',
 				1.8: '1.8rem',
+				1.9: '1.9rem',
 				2: '2rem',
 				2.4: '2.4rem',
 				2.5: '2.5rem',
@@ -36,7 +39,8 @@ export default {
 				6: '6rem',
 				6.4: '6.4rem',
 				17.4: '17.4rem',
-				calch: 'calc(100vh - 64px)'
+				24: '24rem',
+				calch: 'calc(100vh - 64px)',
 			},
 			fontSize: {
 				sm: '0.8rem',
@@ -44,7 +48,7 @@ export default {
 				xl: '1.25rem',
 				hl: ['1.8rem', { fontWeight: 'bold' }],
 				hm: ['1.5rem', { fontWeight: 'bold' }],
-				'3xl': '1.953rem',
+				1.2: '1.2rem',
 				'4xl': '2.441rem',
 				'5xl': '3.052rem',
 			},
@@ -57,6 +61,19 @@ export default {
 				lg: '0.5rem',
 				full: '9999px',
 				large: '12px',
+			},
+			screens: {
+				sm: '640px',
+				// => @media (min-width: 640px) { ... }
+
+				md: '768px',
+				// => @media (min-width: 768px) { ... }
+
+				lg: '1024px',
+				// => @media (min-width: 1024px) { ... }
+			},
+			letterSpacing: {
+				tight: '0.24rem',
 			},
 		},
 	},

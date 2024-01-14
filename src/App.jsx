@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Board from './components/Board'
 import TopBar from './components/TopBar'
 
@@ -12,11 +13,19 @@ const toggleTheme = () => {
 }
 
 function App() {
+	const [showBoardsMenu, setShowBoardsMenu] = useState(false)
+	const showBoardsMenuhandler = () => {
+		setShowBoardsMenu(current => !current)
+		setTimeout(() => {
+			setShowBoardsMenu(current => !current)
+		}, 500)
+	}
+
 	return (
 		<>
-			<TopBar />
+			<TopBar showBoardsMenu={showBoardsMenuhandler} />
 			<button onClick={toggleTheme} className='bg-black w-2 h-2'></button>
-			<Board />
+			<Board showNav={showBoardsMenu} />
 		</>
 	)
 }
