@@ -3,7 +3,7 @@ import sunIcon from '../assets/icon-light-theme.svg'
 import moonIcon from '../assets/icon-dark-theme.svg'
 import IconBoard from '../assets/IconBoard.jsx'
 import Button from './UI/Button'
-import Modal from './Modal/Modal.jsx'
+import Modal from './UI/Modal.jsx'
 
 const Boards = ({ boards, showNav }) => {
 	const boardRef = useRef()
