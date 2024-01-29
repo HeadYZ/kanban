@@ -1,58 +1,34 @@
-import { useRef } from 'react'
-import sunIcon from '../assets/icon-light-theme.svg'
-import moonIcon from '../assets/icon-dark-theme.svg'
-import IconBoard from '../assets/IconBoard.jsx'
-import Button from './UI/Button'
-import Modal from './UI/Modal.jsx'
+import Button from './UI/Button.jsx'
+import useHttp from '../hooks/useHttp.jsx'
+import Spinner from './UI/Spinner.jsx'
+import { useContext, useEffect } from 'react'
+import KanbanContex from '../store/KanbanContex.jsx'
 
-const Boards = ({ boards, showNav }) => {
-	const boardRef = useRef()
+const Boards = () => {
+	const { data: boards, isLoading } = useHttp('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', [])
+	const kanbanCtx = useContext(KanbanContex)
+	useEffect(() => {
+		kanbanCtx.fetchBoards(boards)
+	}, [boards])
 
-	const hideBoardsMenuHandler = () => {
-		window.addEventListener('click', e => {
-			if (e.target === boardRef.current) {
-				boardRef.current.close()
-			}
-			console.log(e.target)
-		})
+	if (isLoading) {
+		return <Spinner />
+	}
+	if (!isLoading && boards.length === 0) {
+		return (
+			<main className='flex flex-col justify-center items-center gap-2.5  h-calch px-1.6 text-center'>
+				<p className='text-hl text-medium-grey'>This board is empty. Create a new column to get started.</p>
+				<Button className='flex items-center justify-center w-17.4 h-4.8 bg-purple rounded-2.4 text-hm text-white'>
+					+ Add New Column
+				</Button>
+			</main>
+		)
 	}
 
-	showNav && boardRef.current.showModal()
-	showNav && hideBoardsMenuHandler()
-	return (
-		<Modal ref={boardRef}>
-			<aside className='rounded-0.8'>
-				<header className='pt-1.6'>
-					<h2 className='text-1.2 pl-2.4 font-bold tracking-tight text-medium-grey uppercase'>
-						All boards ({boards.length})
-					</h2>
-				</header>
-				<main>
-					<ul className='pt-1.9'>
-						{boards.map(board => (
-							<li
-								key={board.name}
-								tabIndex={0}
-								className='flex items-center gap-x-1.2 w-24 h-4.8 pl-2.4 text-medium-grey'
-							>
-								<IconBoard></IconBoard>
-								<Button className='text-hm'>{board.name}</Button>
-							</li>
-						))}
-						<li className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple '>
-							<IconBoard fill='rgb(99,95,199)'></IconBoard>
-							<Button className='text-hm'>+ Create New Board</Button>
-						</li>
-					</ul>
-				</main>
-				<footer className='flex items-center h-4.8 my-1.6'>
-					<img src={sunIcon} alt='' />
-					<button></button>
-					<img src={moonIcon} alt='' />
-				</footer>
-			</aside>
-		</Modal>
-	)
+	return <p>cos jest</p>
 }
 
 export default Boards
+{
+	/* <Boards boards={data.boards}></Boards> */
+}
