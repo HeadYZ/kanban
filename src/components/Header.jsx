@@ -6,7 +6,7 @@ import Button from './UI/Button.jsx'
 
 const Header = ({ showMobileNavHandler }) => {
 	return (
-		<header className='flex items-center justify-between h-6.4 px-1.6 bg-white dark:bg-dark-grey'>
+		<header className='flex items-center justify-between h-6.4 px-1.6 bg-white dark:bg-dark-grey sm:col-start-2 sm:col-end-2 sm:row-start-1'>
 			<div className='flex gap-x-1.6'>
 				<img src={logo} alt='' className='w-2.4 h-2.5' tabIndex={0} />
 				<Button className='flex items-center text-hl dark:text-white' onClick={showMobileNavHandler}>

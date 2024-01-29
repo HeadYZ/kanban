@@ -4,7 +4,7 @@ import Spinner from './UI/Spinner.jsx'
 import { useContext, useEffect } from 'react'
 import KanbanContex from '../store/KanbanContex.jsx'
 
-const Boards = () => {
+const Tasks = () => {
 	const { data: boards, isLoading } = useHttp('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', [])
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
@@ -25,10 +25,7 @@ const Boards = () => {
 		)
 	}
 
-	return <p>cos jest</p>
+	return <div className='sm:col-start-2 sm:row-start-2 sm:row-end-3'>cos</div>
 }
 
-export default Boards
-{
-	/* <Boards boards={data.boards}></Boards> */
-}
+export default Tasks
