@@ -5,6 +5,7 @@ import Nav from './components/Nav.jsx'
 import { KanbanContextProvider } from './store/KanbanContex.jsx'
 
 function App() {
+	const smallScreen = window.screen.width < 600
 	const [showNav, setShowNav] = useState(false)
 
 	function handleShowMobileNav() {
@@ -18,8 +19,8 @@ function App() {
 	return (
 		<KanbanContextProvider>
 			<div className='grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2'>
-				<Header showMobileNavHandler={handleShowMobileNav} />
-				<Nav mobileNav={showNav} onClose={handleCloseMobileNav} />
+				<Header showMobileNavHandler={handleShowMobileNav} smallScreen={smallScreen} />
+				<Nav mobileNav={showNav} onClose={handleCloseMobileNav} smallScreen={smallScreen} />
 				<Tasks />
 			</div>
 		</KanbanContextProvider>

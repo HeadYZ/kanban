@@ -14,7 +14,7 @@ const Tasks = () => {
 	if (isLoading) {
 		return <Spinner />
 	}
-	if (!isLoading && boards.length === 0) {
+	if (!isLoading && boards.length > 1) {
 		return (
 			<main className='flex flex-col justify-center items-center gap-2.5  h-calch px-1.6 text-center'>
 				<p className='text-hl text-medium-grey'>This board is empty. Create a new column to get started.</p>

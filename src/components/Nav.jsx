@@ -6,13 +6,11 @@ import Button from './UI/Button.jsx'
 import Modal from './UI/Modal.jsx'
 import KanbanContex from '../store/KanbanContex.jsx'
 import logoMobile from '../assets/logo-mobile.svg'
-const smallScreen = window.screen.width < 600
 
-const Nav = ({ mobileNav, onClose }) => {
+const Nav = ({ mobileNav, onClose, smallScreen }) => {
 	const [theme, setTheme] = useState('light')
 	const kanbanCtx = useContext(KanbanContex)
 	const boardRef = useRef()
-
 	const toggleTheme = () => {
 		if (document.body.classList.contains('dark')) {
 			document.body.classList.remove('dark')
@@ -36,7 +34,7 @@ const Nav = ({ mobileNav, onClose }) => {
 	mobileNav && window.addEventListener('click', hideBoardsMenuHandler)
 
 	const body = (
-		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey sm:w-26.1 sm:row-span-full sm:h-svh sm:rounded-none'>
+		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey sm:w-26.1 sm:row-span-full sm:h-svh sm:rounded-none sm:border-r sm:border-lines-light dark:sm:border-lines-dark'>
 			<main className='pt-1.6 sm:pt-3.2'>
 				<div className='hidden sm:flex items-center ml-2.6 '>
 					<img src={logoMobile} alt='' className='h-2.5' />
