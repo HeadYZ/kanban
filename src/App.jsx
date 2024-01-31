@@ -6,6 +6,7 @@ import { KanbanContextProvider } from './store/KanbanContex.jsx'
 
 function App() {
 	const smallScreen = window.innerWidth < 660
+	const [showSidebar, setShowSidebar] = useState(false)
 	const [showNav, setShowNav] = useState(false)
 
 	function handleShowMobileNav() {
@@ -16,12 +17,21 @@ function App() {
 		setShowNav(false)
 	}
 
+	const handlerToggleSidebar = () => {
+		setShowSidebar(showSidebar => !showSidebar)
+	}
 	return (
 		<KanbanContextProvider>
-			<div className='grid grid-cols-1 tablet:grid-cols-2 tablet:grid-rows-2'>
-				<Header showMobileNavHandler={handleShowMobileNav} smallScreen={smallScreen} />
-				<Nav mobileNav={showNav} onClose={handleCloseMobileNav} smallScreen={smallScreen} />
-				<Tasks />
+			<Header showMobileNavHandler={handleShowMobileNav} smallScreen={smallScreen} />
+			<div className='flex'>
+				<Nav
+					mobileNav={showNav}
+					onClose={handleCloseMobileNav}
+					smallScreen={smallScreen}
+					handlerToggleSidebar={handlerToggleSidebar}
+					showSidebar={showSidebar}
+				/>
+				<Tasks showSidebar={showSidebar} />
 			</div>
 		</KanbanContextProvider>
 	)

@@ -7,11 +7,12 @@ import Modal from './UI/Modal.jsx'
 import KanbanContex from '../store/KanbanContex.jsx'
 import iconHideSidebar from '../assets/icon-hide-sidebar.svg'
 
-const Nav = ({ mobileNav, onClose, smallScreen }) => {
+const Nav = ({ mobileNav, onClose, smallScreen, handlerToggleSidebar, showSidebar }) => {
 	const [theme, setTheme] = useState('light')
-	const [showSidebar, setShowSidebar] = useState(true)
+
 	const kanbanCtx = useContext(KanbanContex)
 	const boardRef = useRef()
+
 	const toggleTheme = () => {
 		if (document.body.classList.contains('dark')) {
 			document.body.classList.remove('dark')
@@ -24,9 +25,6 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 		}
 	}
 
-	const handlerToggleSidebar = () => {
-		setShowSidebar(showSidebar => !showSidebar)
-	}
 	const hideBoardsMenuHandler = e => {
 		if (e.target === boardRef.current) {
 			boardRef.current.close()
@@ -38,7 +36,11 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 	mobileNav && window.addEventListener('click', hideBoardsMenuHandler)
 
 	const body = (
-		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between tablet:row-span-full tablet:row-start-2 tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl   lg:w-30'>
+		<nav
+			className={`w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 transition-all ${
+				showSidebar ? 'translate-x-30' : 'translate-x-0'
+			} `}
+		>
 			<main className='pt-1.6 tablet:pt-3.2'>
 				<h2 className='text-1.2 pl-2.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
 					All boards ({kanbanCtx.boards.length})
@@ -80,7 +82,7 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 					<img src={moonIcon} alt='' />
 				</div>
 				<Button
-					className='hidden tablet:flex justify-center items-center text-hm pl-2.4 h-4.8 mb-3.2 text-medium-grey'
+					className='hidden tablet:flex justify-center items-center text-hm pl-2.4 h-4.8 mb-3.2 text-medium-grey lg:pl-3.2'
 					onClick={handlerToggleSidebar}
 				>
 					<img src={iconHideSidebar} alt='' className='pr-1' /> Hide Sidebar

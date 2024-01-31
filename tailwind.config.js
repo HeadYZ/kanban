@@ -57,6 +57,7 @@ export default {
 				26.6: '26.6rem',
 				27.6: '27.6rem',
 				30: '30rem',
+				wcalc: '100vw',
 				calchs: 'calc(100vh - 64px)',
 				calcshm: 'calc(100svh - 80px)',
 				calcshl: 'calc(100svh - 96px)',
@@ -112,7 +113,7 @@ export default {
 			tablet: '660px',
 		},
 		translate: {
-			10: '-26rem',
+			30: '-30rem',
 		},
 	},
 	plugins: [],

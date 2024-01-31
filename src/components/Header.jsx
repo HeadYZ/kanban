@@ -7,7 +7,7 @@ import Button from './UI/Button.jsx'
 
 const Header = ({ showMobileNavHandler, smallScreen }) => {
 	return (
-		<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey col-start-1 col-end-3 row-start-1 tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4'>
+		<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4'>
 			<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark '>
 				<img src={logoMobile} alt='' className='h-2.5' />
 				<h1 className='dark:text-light-grey pl-1.6 text-3 font-extrabold'>kanban</h1>
