@@ -38,7 +38,7 @@ const Nav = ({ mobileNav, onClose, smallScreen, handlerToggleSidebar, showSideba
 	const body = (
 		<nav
 			className={`w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 transition-all ${
-				showSidebar ? 'translate-x-30' : 'translate-x-0'
+				showSidebar ? 'translate-x-30' : 'translate-x-0 delay-300'
 			} `}
 		>
 			<main className='pt-1.6 tablet:pt-3.2'>

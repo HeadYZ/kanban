@@ -31,7 +31,7 @@ function App() {
 					handlerToggleSidebar={handlerToggleSidebar}
 					showSidebar={showSidebar}
 				/>
-				<Tasks showSidebar={showSidebar} />
+				<Tasks handlerToggleSidebar={handlerToggleSidebar} showSidebar={showSidebar} />
 			</div>
 		</KanbanContextProvider>
 	)
