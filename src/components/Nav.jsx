@@ -5,10 +5,11 @@ import IconBoard from '../assets/IconBoard.jsx'
 import Button from './UI/Button.jsx'
 import Modal from './UI/Modal.jsx'
 import KanbanContex from '../store/KanbanContex.jsx'
-import logoMobile from '../assets/logo-mobile.svg'
+import iconHideSidebar from '../assets/icon-hide-sidebar.svg'
 
 const Nav = ({ mobileNav, onClose, smallScreen }) => {
 	const [theme, setTheme] = useState('light')
+	const [showSidebar, setShowSidebar] = useState(true)
 	const kanbanCtx = useContext(KanbanContex)
 	const boardRef = useRef()
 	const toggleTheme = () => {
@@ -23,6 +24,9 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 		}
 	}
 
+	const handlerToggleSidebar = () => {
+		setShowSidebar(showSidebar => !showSidebar)
+	}
 	const hideBoardsMenuHandler = e => {
 		if (e.target === boardRef.current) {
 			boardRef.current.close()
@@ -34,13 +38,9 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 	mobileNav && window.addEventListener('click', hideBoardsMenuHandler)
 
 	const body = (
-		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey sm:w-26.1 sm:row-span-full sm:h-svh sm:rounded-none sm:border-r sm:border-lines-light dark:sm:border-lines-dark'>
-			<main className='pt-1.6 sm:pt-3.2'>
-				<div className='hidden sm:flex items-center ml-2.6 '>
-					<img src={logoMobile} alt='' className='h-2.5' />
-					<h1 className='dark:text-light-grey pl-1.6 text-3 font-extrabold'>kanban</h1>
-				</div>
-				<h2 className='text-1.2 pl-2.4 pt-5.4 font-bold tracking-tight text-medium-grey uppercase'>
+		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between tablet:row-span-full tablet:row-start-2 tablet:h-svh tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30'>
+			<main className='pt-1.6 lg:pt-2.3'>
+				<h2 className='text-1.2 pl-2.4 tablet:pt-5.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
 					All boards ({kanbanCtx.boards.length})
 				</h2>
 				<ul className='pt-1.9'>
@@ -52,31 +52,39 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 							<li
 								key={board.name}
 								tabIndex={0}
-								className={`flex items-center gap-x-1.2 w-24 h-4.8 pl-2.4 text-medium-grey ${
+								className={`flex items-center gap-x-1.2 w-24 h-4.8 pl-2.4 lg:pl-3.2 lg:gap-x-1.6 text-medium-grey ${
 									activeBoard && activeBoardClass
-								}`}
+								} lg:w-27.6`}
 							>
 								<IconBoard fill={activeBoard && 'white'}></IconBoard>
-								<Button className='text-hm'>{board.name}</Button>
+								<Button className='text-hm '>{board.name}</Button>
 							</li>
 						)
 					})}
-					<li className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple '>
+					<li className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple lg:w-27.6 lg:pl-3.2 lg:gap-x-1.6'>
 						<IconBoard></IconBoard>
 						<Button className='text-hm'>+ Create New Board</Button>
 					</li>
 				</ul>
 			</main>
-			<footer className='flex items-center justify-center gap-2.4 w-23.5 h-4.8 my-1.6 mx-auto rounded-0.6 bg-light-grey dark:bg-v-dark-grey'>
-				<img src={sunIcon} alt='' />
-				<Button className='w-4 h-2 rounded-1.2 bg-purple' onClick={toggleTheme}>
-					<div
-						className={`w-1.4 h-1.4 ml-0.5 bg-white rounded-full transition-all ${
-							theme === 'light' ? 'ml-0.5' : 'ml-2.3'
-						} `}
-					></div>
+			<footer>
+				<div className='flex items-center justify-center gap-2.4 w-23.5 h-4.8 my-1.6 mx-auto rounded-0.6 bg-light-grey dark:bg-v-dark-grey lg:w-25.1'>
+					<img src={sunIcon} alt='' />
+					<Button className='w-4 h-2 rounded-1.2 bg-purple' onClick={toggleTheme}>
+						<div
+							className={`w-1.4 h-1.4 ml-0.5 bg-white rounded-full transition-all ${
+								theme === 'light' ? 'ml-0.5' : 'ml-2.3'
+							} `}
+						></div>
+					</Button>
+					<img src={moonIcon} alt='' />
+				</div>
+				<Button
+					className='hidden tablet:flex justify-center items-center text-hm pl-2.4 h-4.8 mb-3.2 text-medium-grey'
+					onClick={handlerToggleSidebar}
+				>
+					<img src={iconHideSidebar} alt='' className='pr-1' /> Hide Sidebar
 				</Button>
-				<img src={moonIcon} alt='' />
 			</footer>
 		</nav>
 	)
