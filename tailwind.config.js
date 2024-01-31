@@ -57,7 +57,9 @@ export default {
 				26.6: '26.6rem',
 				27.6: '27.6rem',
 				30: '30rem',
-				calch: 'calc(100vh - 64px)',
+				calchs: 'calc(100vh - 64px)',
+				calcshm: 'calc(100svh - 80px)',
+				calcshl: 'calc(100svh - 96px)',
 			},
 			fontSize: {
 				sm: '0.8rem',

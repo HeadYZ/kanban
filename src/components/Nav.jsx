@@ -38,9 +38,9 @@ const Nav = ({ mobileNav, onClose, smallScreen }) => {
 	mobileNav && window.addEventListener('click', hideBoardsMenuHandler)
 
 	const body = (
-		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between tablet:row-span-full tablet:row-start-2 tablet:h-svh tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30'>
-			<main className='pt-1.6 lg:pt-2.3'>
-				<h2 className='text-1.2 pl-2.4 tablet:pt-5.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
+		<nav className='w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between tablet:row-span-full tablet:row-start-2 tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl   lg:w-30'>
+			<main className='pt-1.6 tablet:pt-3.2'>
+				<h2 className='text-1.2 pl-2.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
 					All boards ({kanbanCtx.boards.length})
 				</h2>
 				<ul className='pt-1.9'>

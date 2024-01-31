@@ -16,7 +16,7 @@ const Tasks = () => {
 	}
 	if (!isLoading && boards.length > 1) {
 		return (
-			<main className='flex flex-col justify-center items-center gap-2.5  h-calch  pl-1.6 pt-2.4 text-center row-start-2 col-start-2 tablet:pl-2.4 tablet:h-full  tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark'>
+			<main className='flex flex-col justify-center items-center gap-2.5  h-calchs  pl-1.6 pt-2.4 text-center row-start-2 col-start-2 tablet:pl-2.4 tablet:h-full  tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark'>
 				<p className='text-hl text-medium-grey sm:pr-2.4'>This board is empty. Create a new column to get started.</p>
 				<Button className='flex items-center justify-center w-17.4 h-4.8 bg-purple rounded-2.4 text-hm text-white'>
 					+ Add New Column
