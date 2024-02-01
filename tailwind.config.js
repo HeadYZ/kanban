@@ -59,7 +59,7 @@ export default {
 				27.6: '27.6rem',
 				30: '30rem',
 				'minus5.6': '-5.6rem',
-				wcalc: '100vw',
+				wcalc: 'calc(100vw)',
 				calchs: 'calc(100vh - 64px)',
 				calcshm: 'calc(100svh - 80px)',
 				calcshl: 'calc(100svh - 96px)',
@@ -116,6 +116,7 @@ export default {
 		},
 		translate: {
 			30: '-30rem',
+			26.1: '-26.1rem',
 		},
 	},
 	plugins: [],
