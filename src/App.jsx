@@ -1,12 +1,11 @@
 import Header from './components/Header.jsx'
 import Tasks from './components/Tasks.jsx'
 import { useState } from 'react'
-import Nav from './components/Nav.jsx'
+import Nav from './components/Nav/Nav.jsx'
 import { KanbanContextProvider } from './store/KanbanContex.jsx'
+import { VisualContextProvider } from './store/VisualContext.jsx'
 
 function App() {
-	const smallScreen = window.innerWidth < 660
-	const [showSidebar, setShowSidebar] = useState(false)
 	const [showNav, setShowNav] = useState(false)
 
 	function handleShowMobileNav() {
@@ -17,23 +16,16 @@ function App() {
 		setShowNav(false)
 	}
 
-	const handlerToggleSidebar = () => {
-		setShowSidebar(showSidebar => !showSidebar)
-	}
 	return (
-		<KanbanContextProvider>
-			<Header showMobileNavHandler={handleShowMobileNav} smallScreen={smallScreen} />
-			<div className='flex'>
-				<Nav
-					mobileNav={showNav}
-					onClose={handleCloseMobileNav}
-					smallScreen={smallScreen}
-					handlerToggleSidebar={handlerToggleSidebar}
-					showSidebar={showSidebar}
-				/>
-				<Tasks handlerToggleSidebar={handlerToggleSidebar} showSidebar={showSidebar} />
-			</div>
-		</KanbanContextProvider>
+		<VisualContextProvider>
+			<KanbanContextProvider>
+				<Header showMobileNavHandler={handleShowMobileNav} />
+				<div className='flex'>
+					<Nav mobileNav={showNav} onClose={handleCloseMobileNav}  />
+					<Tasks />
+				</div>
+			</KanbanContextProvider>
+		</VisualContextProvider>
 	)
 }
 
