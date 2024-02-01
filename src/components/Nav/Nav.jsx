@@ -26,7 +26,7 @@ const Nav = ({ mobileNav, onClose }) => {
 
 	const body = (
 		<nav
-			className={`w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 transition-all ${
+			className={`w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 transition-transform ${
 				visualCtx.showSidebar ? 'tablet:translate-x-26.1 lg:translate-x-30 ' : 'translate-x-0 delay-300'
 			} `}
 		>
