@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react'
 
 const VisualContext = createContext({
-	theme: 'light',
+	theme: 'dark',
 	showSidebar: false,
 	smallScreen: Boolean,
 	toggleTheme: () => {},

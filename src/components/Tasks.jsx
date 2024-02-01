@@ -20,7 +20,7 @@ const Tasks = () => {
 	if (!isLoading && boards.length > 1) {
 		return (
 			<main
-				className={`flex flex-col justify-center items-center gap-2.5 relative  min-h-calchs w-full pl-1.6 pt-2.4 text-center tablet:pl-2.4 tablet:min-h-calcshm tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark ${
+				className={`flex flex-col justify-center items-center gap-2.5 relative  min-h-calchs w-full pl-1.6 pt-2.4 text-center dark:bg-v-dark-grey tablet:pl-2.4 tablet:min-h-calcshm tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark ${
 					visualCtx.showSidebar ? 'tablet:translate-x-26.1 lg:translate-x-30 ' : 'translate-x-0 delay-300  '
 				}  lg:min-h-calcshl transition-transform`}
 			>
