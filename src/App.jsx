@@ -1,5 +1,5 @@
 import Header from './components/Header.jsx'
-import Tasks from './components/Tasks.jsx'
+import Tasks from './components/Tasks/Tasks.jsx'
 import { useState } from 'react'
 import Nav from './components/Nav/Nav.jsx'
 import { KanbanContextProvider } from './store/KanbanContex.jsx'
@@ -21,7 +21,7 @@ function App() {
 			<KanbanContextProvider>
 				<Header showMobileNavHandler={handleShowMobileNav} />
 				<div className='flex'>
-					<Nav mobileNav={showNav} onClose={handleCloseMobileNav}  />
+					<Nav mobileNav={showNav} onClose={handleCloseMobileNav} />
 					<Tasks />
 				</div>
 			</KanbanContextProvider>

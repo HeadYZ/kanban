@@ -1,10 +1,11 @@
-import Button from './UI/Button.jsx'
-import useHttp from '../hooks/useHttp.jsx'
-import Spinner from './UI/Spinner.jsx'
+import Button from '../UI/Button.jsx'
+import useHttp from '../../hooks/useHttp.jsx'
+import Spinner from '../UI/Spinner.jsx'
 import { useContext, useEffect } from 'react'
-import KanbanContex from '../store/KanbanContex.jsx'
-import iconShowSidebar from '../assets/icon-show-sidebar.svg'
-import VisualContext from '../store/VisualContext.jsx'
+import KanbanContex from '../../store/KanbanContex.jsx'
+import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
+import VisualContext from '../../store/VisualContext.jsx'
+import TaskList from './TaskList.jsx'
 
 const Tasks = () => {
 	const { data: boards, isLoading } = useHttp('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', [])
@@ -17,7 +18,7 @@ const Tasks = () => {
 	if (isLoading) {
 		return <Spinner />
 	}
-	if (!isLoading && boards.length > 1) {
+	if (!isLoading && boards.length === 0) {
 		return (
 			<main
 				className={`flex flex-col justify-center items-center gap-2.5 relative  min-h-calchs w-full pl-1.6 pt-2.4 text-center dark:bg-v-dark-grey tablet:pl-2.4 tablet:min-h-calcshm tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark ${
@@ -40,7 +41,7 @@ const Tasks = () => {
 		)
 	}
 
-	return <div className='sm:col-start-2 sm:row-start-2 sm:row-end-3 '>cos</div>
+	return <TaskList  boards={boards} />
 }
 
 export default Tasks
