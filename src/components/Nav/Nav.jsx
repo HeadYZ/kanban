@@ -16,7 +16,7 @@ const Nav = ({ showNav }) => {
 		<>
 			<nav
 				className={`${
-					showNav && 'opacity-0'
+					showNav ? '' : 'opacity-0'
 				} absolute z-20 top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:relative tablet:left-0 tablet:top-0  tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 tablet:transition-transform transition-opacity ${
 					visualCtx.showSidebar ? 'tablet:translate-x-26.1 lg:translate-x-30 ' : 'tablet:translate-x-0 tablet:delay-300'
 				} tablet:opacity-100 `}
@@ -55,7 +55,7 @@ const Nav = ({ showNav }) => {
 			</nav>
 			<div
 				className={`${
-					showNav ? 'opacity-0' : 'opacity-50'
+					showNav ? 'opacity-50' : 'opacity-0'
 				} absolute z-10 top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 nav-backdrop`}
 			></div>
 		</>

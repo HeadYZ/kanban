@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 
 export default function useHttp(url, initialData) {
 	const [data, setData] = useState(initialData)
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState('')
 
 	async function getBoards() {
+		setIsLoading(true)
 		try {
 			const response = await fetch(url)
 			if (!response.ok) throw new Error('Failed fetch data...')
@@ -23,7 +25,6 @@ export default function useHttp(url, initialData) {
 
 	return {
 		data,
-
 		isLoading,
 	}
 }

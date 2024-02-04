@@ -9,9 +9,10 @@ export function KanbanContextProvider({ children }) {
 
 	function fetchBoards(data) {
 		setBoards(data)
+
 	}
 
-	const kanban = { boards: boards, fetchBoards }
+	const kanban = { boards, fetchBoards }
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>
 }

@@ -1,24 +1,15 @@
 import Button from '../UI/Button.jsx'
-import useHttp from '../../hooks/useHttp.jsx'
-import Spinner from '../UI/Spinner.jsx'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
 
 const Tasks = () => {
-	const { data: boards, isLoading } = useHttp('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', [])
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-	useEffect(() => {
-		kanbanCtx.fetchBoards(boards)
-	}, [boards])
 
-	if (isLoading) {
-		return <Spinner />
-	}
-	if (!isLoading && boards.length === 0) {
+	if (kanbanCtx.boards.length === 0) {
 		return (
 			<main
 				className={`flex flex-col justify-center items-center gap-2.5 relative  min-h-calchs w-full pl-1.6 pt-2.4 text-center dark:bg-v-dark-grey tablet:pl-2.4 tablet:min-h-calcshm tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark ${
@@ -41,7 +32,7 @@ const Tasks = () => {
 		)
 	}
 
-	return <TaskList  boards={boards} />
+	return <TaskList boards={kanbanCtx.boards} />
 }
 
 export default Tasks
