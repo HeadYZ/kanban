@@ -10,7 +10,6 @@ const VisualContext = createContext({
 
 export function VisualContextProvider({ children }) {
 	const [theme, setTheme] = useState('dark')
-	const smallScreen = window.innerWidth < 660
 	const [showSidebar, setShowSidebar] = useState(false)
 
 	const toggleTheme = () => {
@@ -33,7 +32,6 @@ export function VisualContextProvider({ children }) {
 		toggleTheme,
 		showSidebar,
 		handlerToggleSidebar,
-		smallScreen,
 	}
 
 	return <VisualContext.Provider value={visual}>{children}</VisualContext.Provider>

@@ -4,11 +4,8 @@ import plusIcon from '../assets/icon-add-task-mobile.svg'
 import iconVertical from '../assets/icon-vertical-ellipsis.svg'
 import logoMobile from '../assets/logo-mobile.svg'
 import Button from './UI/Button.jsx'
-import { useContext } from 'react'
-import VisualContext from '../store/VisualContext.jsx'
 
-const Header = ({ showMobileNavHandler }) => {
-	const visualCtx = useContext(VisualContext)
+const Header = ({ handlerToggleShowMobileNav }) => {
 	return (
 		<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4'>
 			<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark '>
@@ -20,7 +17,7 @@ const Header = ({ showMobileNavHandler }) => {
 					<img src={logo} alt='' className='w-2.4 h-2.5 tablet:hidden' tabIndex={0} />
 					<Button
 						className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl'
-						onClick={visualCtx.smallScreen ? showMobileNavHandler : null}
+						onClick={handlerToggleShowMobileNav}
 					>
 						Platform Launch
 						<span className='pl-0.6'>

@@ -8,20 +8,16 @@ import { VisualContextProvider } from './store/VisualContext.jsx'
 function App() {
 	const [showNav, setShowNav] = useState(false)
 
-	function handleShowMobileNav() {
-		setShowNav(true)
-	}
-
-	function handleCloseMobileNav() {
-		setShowNav(false)
+	function handlerToggleShowMobileNav() {
+		setShowNav(prevShowNav => !prevShowNav)
 	}
 
 	return (
 		<VisualContextProvider>
 			<KanbanContextProvider>
-				<Header showMobileNavHandler={handleShowMobileNav} />
-				<div className='flex'>
-					<Nav mobileNav={showNav} onClose={handleCloseMobileNav} />
+				<Header handlerToggleShowMobileNav={handlerToggleShowMobileNav} />
+				<div className='flex relative'>
+					<Nav showNav={showNav} onClose={handlerToggleShowMobileNav} />
 					<Tasks />
 				</div>
 			</KanbanContextProvider>

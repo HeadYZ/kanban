@@ -9,8 +9,8 @@ export default function TaskList({ boards }) {
 						</li>
 						{board.tasks.map(task => {
 							return (
-								<li key={task.title} className=' mb-2 px-1.6 py-2.3 bg-dark-grey rounded-0.8 '>
-									<p className='text-hm text-white'>{task.title}</p>
+								<li key={task.title} className=' mb-2 px-1.6 py-2.3 drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 '>
+									<p className='text-hm text-black dark:text-white'>{task.title}</p>
 									<span className='text-bodym text-medium-grey'>0 of {task.subtasks.length} subtasks</span>
 								</li>
 							)
