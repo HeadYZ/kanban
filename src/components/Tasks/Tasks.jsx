@@ -1,14 +1,17 @@
 import Button from '../UI/Button.jsx'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
 
-const Tasks = () => {
+const Tasks = ({ boards }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-
+	useEffect(() => {
+		kanbanCtx.fetchBoards(boards)
+	}, [])
+	
 	if (kanbanCtx.boards.length === 0) {
 		return (
 			<main

@@ -9,7 +9,6 @@ export function KanbanContextProvider({ children }) {
 
 	function fetchBoards(data) {
 		setBoards(data)
-
 	}
 
 	const kanban = { boards, fetchBoards }

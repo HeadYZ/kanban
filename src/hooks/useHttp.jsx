@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 export default function useHttp(url, initialData) {
 	const [data, setData] = useState(initialData)
 	const [isLoading, setIsLoading] = useState(false)
-	const [error, setError] = useState('')
+	const [error, setError] = useState()
 
 	async function getBoards() {
 		setIsLoading(true)
@@ -14,7 +14,7 @@ export default function useHttp(url, initialData) {
 			setData(data)
 		} catch (error) {
 			setIsLoading(false)
-			return error.message
+			setError(error.message || 'Something went wrong.')
 		}
 		setIsLoading(false)
 	}
@@ -26,5 +26,6 @@ export default function useHttp(url, initialData) {
 	return {
 		data,
 		isLoading,
+		error,
 	}
 }

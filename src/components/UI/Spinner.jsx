@@ -3,7 +3,7 @@ export default function Spinner() {
 		<div role='status' className='w-fit'>
 			<svg
 				aria-hidden='true'
-				className='w-5 h-5 animate-spin'
+				className='w-3 h-3 tablet:w-5 tablet:h-5 lg:w-8 lg:h-8 animate-spin'
 				viewBox='0 0 100 101'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'
