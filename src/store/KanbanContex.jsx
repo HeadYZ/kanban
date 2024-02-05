@@ -31,7 +31,6 @@ export function KanbanContextProvider({ children }) {
 		dispatchKanbanBoards({ type: 'SET_ACTIVE_BOARD', activeBoard: kanbanBoards.boards[0].name })
 	}
 	function selectBoard(boardName) {
-		console.log(boardName)
 		dispatchKanbanBoards({ type: 'SELECT_BOARD', activeBoard: boardName })
 	}
 
@@ -40,7 +39,6 @@ export function KanbanContextProvider({ children }) {
 			setActiveBoard()
 		}
 	}, [kanbanBoards.boards])
-
 	const kanban = {
 		boards: kanbanBoards.boards,
 		activeBoard: kanbanBoards.activeBoard,
