@@ -8,7 +8,7 @@ import iconHideSidebar from '../../assets/icon-hide-sidebar.svg'
 import NavItem from './NavItem.jsx'
 import VisualContext from '../../store/VisualContext.jsx'
 
-const Nav = ({ showNav }) => {
+const Nav = ({ showNav, onClose }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 
@@ -26,7 +26,7 @@ const Nav = ({ showNav }) => {
 						All boards ({kanbanCtx.boards.length})
 					</h2>
 					<ul className='pt-1.9'>
-						<NavItem boards={kanbanCtx.boards} />
+						<NavItem kanbanCtx={kanbanCtx} onClose={onClose} />
 						<li className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple lg:w-27.6 lg:pl-3.2 lg:gap-x-1.6'>
 							<IconBoard></IconBoard>
 							<Button className='text-hm'>+ Create New Board</Button>

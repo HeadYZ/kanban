@@ -4,8 +4,11 @@ import plusIcon from '../assets/icon-add-task-mobile.svg'
 import iconVertical from '../assets/icon-vertical-ellipsis.svg'
 import logoMobile from '../assets/logo-mobile.svg'
 import Button from './UI/Button.jsx'
+import { useContext } from 'react'
+import KanbanContex from '../store/KanbanContex.jsx'
 
-const Header = ({ handlerToggleShowMobileNav }) => {
+const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
+	const { activeBoard } = useContext(KanbanContex)
 	return (
 		<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4'>
 			<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark '>
@@ -19,8 +22,8 @@ const Header = ({ handlerToggleShowMobileNav }) => {
 						className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl'
 						onClick={handlerToggleShowMobileNav}
 					>
-						Platform Launch
-						<span className='pl-0.6'>
+						{activeBoard}
+						<span className={`px-0.6 ${navIsVisible && 'rotate-180'} transition-transform`}>
 							<img src={downArrow} alt='' className='w-0.8 h-0.4 tablet:hidden' />
 						</span>
 					</Button>

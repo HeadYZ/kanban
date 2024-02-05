@@ -26,7 +26,9 @@ function App() {
 					<Spinner></Spinner>
 				</div>
 			)}
-			{!isLoading && !error && <Header handlerToggleShowMobileNav={handlerToggleShowMobileNav} />}
+			{!isLoading && !error && (
+				<Header handlerToggleShowMobileNav={handlerToggleShowMobileNav} navIsVisible={showNav} />
+			)}
 			{!isLoading && !error && (
 				<div className='flex relative'>
 					<Nav showNav={showNav} onClose={handlerToggleShowMobileNav} />
