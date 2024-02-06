@@ -55,8 +55,8 @@ const Nav = ({ showNav, onClose }) => {
 			</nav>
 			<div
 				className={`${
-					showNav ? 'opacity-50' : 'opacity-0'
-				} absolute z-10 top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 nav-backdrop`}
+					showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
+				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 nav-backdrop`}
 			></div>
 		</>
 	)
