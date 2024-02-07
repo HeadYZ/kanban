@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react'
+import { useContext } from 'react'
 import sunIcon from '../../assets/icon-light-theme.svg'
 import moonIcon from '../../assets/icon-dark-theme.svg'
 import IconBoard from '../../assets/IconBoard.jsx'
@@ -16,9 +16,9 @@ const Nav = ({ showNav, onClose }) => {
 		<>
 			<nav
 				className={`${
-					showNav ? '' : 'opacity-0'
-				} absolute z-20 top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey tablet:relative tablet:left-0 tablet:top-0  tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-calcshm tablet:rounded-none tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark lg:h-calcshl lg:min-w-30 tablet:transition-transform transition-opacity ${
-					visualCtx.showSidebar ? 'tablet:translate-x-26.1 lg:translate-x-30 ' : 'tablet:translate-x-0 tablet:delay-300'
+					showNav ? 'z-20' : 'opacity-0 -z-10'
+				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0  tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 tablet:transition-transform transition-opacity ${
+					visualCtx.showSidebar ? 'tablet:translate-x-minus26.1 lg:translate-x-minus30 ' : 'tablet:translate-x-0 tablet:delay-300'
 				} tablet:opacity-100 `}
 			>
 				<main className='pt-1.6 tablet:pt-3.2'>

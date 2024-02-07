@@ -4,14 +4,24 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
+import Task from './Task.jsx'
 
 const Tasks = ({ boards }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
+	const [taskInfo, setTaskInfo] = useState({
+		showTask: false,
+		task: '',
+	})
 
 	useEffect(() => {
 		kanbanCtx.fetchBoards(boards)
 	}, [])
+
+	const getTaskInfo = task => {
+		setTaskInfo({ showTask: true, task })
+	}
+	const handlerHideTask = () => {}
 
 	if (kanbanCtx.boards.length === 0) {
 		return (
@@ -36,7 +46,17 @@ const Tasks = ({ boards }) => {
 		)
 	}
 
-	return <TaskList />
+	return (
+		<>
+			<TaskList
+				getTaskInfo={getTaskInfo}
+				className={`  ${
+					visualCtx.showSidebar ? 'tablet:translate-x-0 ' : 'tablet:translate-x-26.1 lg:translate-x-30  delay-300'
+				}  transition-transform `}
+			/>
+			{taskInfo.showTask && <Task task={taskInfo.task} />}
+		</>
+	)
 }
 
 export default Tasks
