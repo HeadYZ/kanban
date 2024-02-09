@@ -30,7 +30,7 @@ function App() {
 				<Header handlerToggleShowMobileNav={handlerToggleShowMobileNav} navIsVisible={showNav} />
 			)}
 			{!isLoading && !error && (
-				<div className='flex relative tablet:h-calcshm lg:h-calcshl overflow-auto'>
+				<div className='flex relative tablet:h-calcshm lg:h-calcshl overflow-x-auto overflow-y-hidden'>
 					<Nav showNav={showNav} onClose={handlerToggleShowMobileNav} />
 					<Tasks boards={boards} />
 				</div>

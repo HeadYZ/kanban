@@ -11,7 +11,7 @@ export default function TaskList({ getTaskInfo, className }) {
 
 	if (currentBoard) {
 		return (
-			<main className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-x-auto   ${className}`}>
+			<main className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-y-auto lg:overflow-x-hidden  ${className}`}>
 				{currentBoard.columns.map((board, id) => {
 					let color
 					if (id === 0) color = 'bg-blue'
