@@ -21,7 +21,6 @@ const Tasks = ({ boards }) => {
 	const getTaskInfo = task => {
 		setTaskInfo({ showTask: true, task })
 	}
-	const handlerHideTask = () => {}
 
 	if (kanbanCtx.boards.length === 0) {
 		return (
@@ -54,7 +53,7 @@ const Tasks = ({ boards }) => {
 					visualCtx.showSidebar ? 'tablet:translate-x-0 ' : 'tablet:translate-x-26.1 lg:translate-x-30  delay-300'
 				}  transition-transform `}
 			/>
-			{taskInfo.showTask && <Task task={taskInfo.task} />}
+			{taskInfo.showTask && <Task task={taskInfo.task} board={kanbanCtx.activeBoard} />}
 		</>
 	)
 }
