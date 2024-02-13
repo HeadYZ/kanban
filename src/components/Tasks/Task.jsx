@@ -4,17 +4,15 @@ import iconVertical from '../../assets/icon-vertical-ellipsis.svg'
 import downArrow from '../../assets/icon-chevron-down.svg'
 import KanbanContex from '../../store/KanbanContex.jsx'
 
-export default function Task({ task, board }) {
+export default function Task({ task }) {
 	const taskRef = useRef()
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
 		taskRef.current.showModal()
 	}, [task])
-
-	const handlerChekboxSelect = async e => {
-		try {
-			kanbanCtx.editSubtask({ id: e.target.id, task, board })
-		} catch (err) {}
+	 
+	const handlerChekboxSelect = e => {
+		kanbanCtx.editSubtask({ id: e.target.id, task: task.title, board: kanbanCtx.activeBoard })
 
 		// try {
 		// 	const send  = fetch('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', {
@@ -26,7 +24,7 @@ export default function Task({ task, board }) {
 		// 	})
 		// } catch (err) {}
 	}
-
+	console.log('ja sie generuje')
 	return (
 		<Modal
 			ref={taskRef}

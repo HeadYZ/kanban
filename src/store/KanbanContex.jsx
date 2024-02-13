@@ -19,26 +19,37 @@ const kanbanBoardsReducer = (state, action) => {
 		return { ...state, activeBoard: action.activeBoard }
 	}
 	if (action.type === 'EDIT_SUBTASK') {
-		const indexEditedBoard = state.boards.findIndex(editedBoard => {
-			return editedBoard.name === action.subtask.board
+		const boardClone = [...state.boards]
+		const editedBoardIndex = boardClone.findIndex(board => board.name === action.subtask.board)
+
+		const editedColumn = boardClone[editedBoardIndex].columns.find(task => {
+			return task.tasks.find(subtask => {
+				return subtask.subtasks.find(title => title.title === action.subtask.id)
+			})
 		})
-		const indexEditedStatus = state.boards[indexEditedBoard].columns.findIndex(
-			status => status.name === action.subtask.task.status
+		const editedColumnIndex = boardClone[editedBoardIndex].columns.findIndex(
+			column => column.name === editedColumn.name
 		)
-		const indexEditedTask = state.boards[indexEditedBoard].columns[indexEditedStatus].tasks.findIndex(
-			editedTask => editedTask.title === action.subtask.task.title
+		const editedTaskIndex = boardClone[editedBoardIndex].columns[editedColumnIndex].tasks.findIndex(
+			task => task.title === action.subtask.task
 		)
 
-		const indexEditetSubtask = state.boards[indexEditedBoard].columns[indexEditedStatus].tasks[
-			indexEditedTask
-		].subtasks.findIndex(subtasks => subtasks.title === action.subtask.id)
-		const subtasks = state.boards[indexEditedBoard].columns[indexEditedStatus].tasks[indexEditedTask].subtasks
+		const editedSubtasks = editedColumn.tasks.map(task => {
+			return task.subtasks.map(subtask => {
+				let changeChecked = subtask
+				if (subtask.title === action.subtask.id) {
+					let isCompleted = changeChecked.isCompleted
+					return { isCompleted: !isCompleted, title: subtask.title }
+				}
+				return subtask
+			})
+		})
+		console.log(editedSubtasks[editedTaskIndex])
 
-		if (subtasks[indexEditetSubtask].isCompleted === true) {
-			subtasks[indexEditetSubtask].isCompleted = false
-		} else {
-			subtasks[indexEditetSubtask].isCompleted = true
-		}
+		boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks =
+			editedSubtasks[editedTaskIndex]
+
+		// return { ...state, boards: boardClone }
 	}
 
 	return state
@@ -58,7 +69,6 @@ export function KanbanContextProvider({ children }) {
 	}
 
 	function editSubtask({ id, task, board }) {
-		console.log(board)
 		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { id, task, board } })
 	}
 

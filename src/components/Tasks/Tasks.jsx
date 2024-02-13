@@ -1,27 +1,20 @@
 import Button from '../UI/Button.jsx'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
-import Task from './Task.jsx'
 
 const Tasks = ({ boards }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-	const [taskInfo, setTaskInfo] = useState({
-		showTask: false,
-		task: '',
-	})
 
 	useEffect(() => {
+		console.log('dzialam')
 		kanbanCtx.fetchBoards(boards)
 	}, [])
 
-	const getTaskInfo = task => {
-		setTaskInfo({ showTask: true, task })
-	}
-
+	console.log('ja sie generuje')
 	if (kanbanCtx.boards.length === 0) {
 		return (
 			<main
@@ -46,15 +39,11 @@ const Tasks = ({ boards }) => {
 	}
 
 	return (
-		<>
-			<TaskList
-				getTaskInfo={getTaskInfo}
-				className={`  ${
-					visualCtx.showSidebar ? 'tablet:translate-x-0 ' : 'tablet:translate-x-26.1 lg:translate-x-30  delay-300'
-				}  transition-transform `}
-			/>
-			{taskInfo.showTask && <Task task={taskInfo.task} board={kanbanCtx.activeBoard} />}
-		</>
+		<TaskList
+			className={`  ${
+				visualCtx.showSidebar ? 'tablet:translate-x-0 ' : 'tablet:translate-x-26.1 lg:translate-x-30  delay-300'
+			}  transition-transform `}
+		/>
 	)
 }
 

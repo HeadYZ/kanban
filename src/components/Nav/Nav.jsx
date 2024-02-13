@@ -11,7 +11,7 @@ import VisualContext from '../../store/VisualContext.jsx'
 const Nav = ({ showNav, onClose }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-
+console.log('ja sie generuje');
 	return (
 		<>
 			<nav
@@ -56,7 +56,7 @@ const Nav = ({ showNav, onClose }) => {
 			<div
 				className={`${
 					showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
-				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 nav-backdrop`}
+				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 tablet:-z-10 nav-backdrop`}
 			></div>
 		</>
 	)

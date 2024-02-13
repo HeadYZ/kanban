@@ -14,7 +14,7 @@ function App() {
 	function handlerToggleShowMobileNav() {
 		setShowNav(prevShowNav => !prevShowNav)
 	}
-
+	console.log('ja sie generuje');
 	return (
 		<>
 			{isLoading && (
