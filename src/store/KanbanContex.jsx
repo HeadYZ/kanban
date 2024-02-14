@@ -44,12 +44,12 @@ const kanbanBoardsReducer = (state, action) => {
 				return subtask
 			})
 		})
-		console.log(editedSubtasks[editedTaskIndex])
 
-		boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks =
-			editedSubtasks[editedTaskIndex]
-
-		// return { ...state, boards: boardClone }
+		boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks = [
+			...editedSubtasks[editedTaskIndex],
+		]
+		console.log(boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks)
+		return { ...state, boards: boardClone }
 	}
 
 	return state
@@ -70,6 +70,9 @@ export function KanbanContextProvider({ children }) {
 
 	function editSubtask({ id, task, board }) {
 		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { id, task, board } })
+	}
+	function handlerAddBoard(){
+		
 	}
 
 	useEffect(() => {

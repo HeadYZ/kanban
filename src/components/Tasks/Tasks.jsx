@@ -5,6 +5,7 @@ import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
 
+
 const Tasks = ({ boards }) => {
 	const kanbanCtx = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)

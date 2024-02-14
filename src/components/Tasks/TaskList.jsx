@@ -4,9 +4,12 @@ import Button from '../UI/Button.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import Task from './Task.jsx'
+import AddNewBoard from '../Board/AddNewBoard.jsx'
+
 export default function TaskList({ className }) {
 	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
+	const [showModal, setShowModal] = useState(false)
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null })
 	const currentBoard = boards.find(board => board.name === selectedBoard)
 
@@ -15,6 +18,11 @@ export default function TaskList({ className }) {
 	const handlerShowTask = task => {
 		setTaskInfo({ showTask: true, task })
 	}
+
+	const handlerShowModal = () => {
+		setShowModal(true)
+	}
+
 	if (currentBoard) {
 		return (
 			<>
@@ -56,6 +64,7 @@ export default function TaskList({ className }) {
 					})}
 					<Button
 						className={`min-w-28  max-w-28 mt-3.94 text-hxl dark:text-medium-grey bg-medium-grey dark:bg-dark-grey-opacity hover:scale-95 transition-transform rounded-0.6 `}
+						onClick={handlerShowModal}
 					>
 						+ New Column
 					</Button>
@@ -70,6 +79,7 @@ export default function TaskList({ className }) {
 				</main>
 
 				{taskInfo.showTask && <Task task={taskInfo.task} />}
+				<AddNewBoard open={showModal}></AddNewBoard>
 			</>
 		)
 	}
