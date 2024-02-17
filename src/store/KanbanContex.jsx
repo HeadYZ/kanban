@@ -71,7 +71,8 @@ export function KanbanContextProvider({ children }) {
 	function editSubtask({ id, task, board }) {
 		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { id, task, board } })
 	}
-	function handlerAddBoard(){
+	function handlerAddBoard(board){
+
 		
 	}
 

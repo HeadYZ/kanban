@@ -22,6 +22,9 @@ export default function TaskList({ className }) {
 	const handlerShowModal = () => {
 		setShowModal(true)
 	}
+	const handlerHideModal = () => {
+		setShowModal(false)
+	}
 
 	if (currentBoard) {
 		return (
@@ -79,7 +82,7 @@ export default function TaskList({ className }) {
 				</main>
 
 				{taskInfo.showTask && <Task task={taskInfo.task} />}
-				<AddNewBoard open={showModal}></AddNewBoard>
+				<AddNewBoard open={showModal} onClose={handlerHideModal}></AddNewBoard>
 			</>
 		)
 	}
