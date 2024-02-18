@@ -18,6 +18,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 				/>
 				{cross && <img src={iconCross} onClick={onRemove} alt='' className='h-1.5' />}
 			</div>
+	
 		</div>
 	)
 }

@@ -11,7 +11,7 @@ const Tasks = ({ boards }) => {
 	const visualCtx = useContext(VisualContext)
 
 	useEffect(() => {
-		console.log('dzialam')
+		
 		kanbanCtx.fetchBoards(boards)
 	}, [])
 

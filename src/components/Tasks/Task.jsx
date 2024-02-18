@@ -10,7 +10,7 @@ export default function Task({ task }) {
 	useEffect(() => {
 		taskRef.current.showModal()
 	}, [task])
-	 
+
 	const handlerChekboxSelect = e => {
 		kanbanCtx.editSubtask({ id: e.target.id, task: task.title, board: kanbanCtx.activeBoard })
 

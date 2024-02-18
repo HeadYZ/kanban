@@ -6,6 +6,7 @@ const KanbanContex = createContext({
 	fetchBoards: () => {},
 	selectBoard: () => {},
 	editSubtask: () => {},
+	addBoard: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -48,8 +49,12 @@ const kanbanBoardsReducer = (state, action) => {
 		boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks = [
 			...editedSubtasks[editedTaskIndex],
 		]
-		console.log(boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks)
 		return { ...state, boards: boardClone }
+	}
+	if (action.type === 'ADD_BOARD') {
+		const prevBoard = [...state.boards]
+		prevBoard.push(action.board)
+		return { ...state, boards: prevBoard }
 	}
 
 	return state
@@ -71,9 +76,8 @@ export function KanbanContextProvider({ children }) {
 	function editSubtask({ id, task, board }) {
 		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { id, task, board } })
 	}
-	function handlerAddBoard(board){
-
-		
+	function addBoard(board) {
+		dispatchKanbanBoards({ type: 'ADD_BOARD', board: board })
 	}
 
 	useEffect(() => {
@@ -87,6 +91,7 @@ export function KanbanContextProvider({ children }) {
 		selectBoard,
 		fetchBoards,
 		editSubtask,
+		addBoard,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>
