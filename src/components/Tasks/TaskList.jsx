@@ -66,7 +66,7 @@ export default function TaskList({ className }) {
 						)
 					})}
 					<Button
-						className={`min-w-28  max-w-28 mt-3.94 text-hxl dark:text-medium-grey bg-medium-grey dark:bg-dark-grey-opacity hover:scale-95 transition-transform rounded-0.6 `}
+						className={`min-w-28  max-w-28 mt-3.94 text-hxl text-medium-grey bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity  hover:scale-95 transition-transform rounded-0.6 `}
 						onClick={handlerShowModal}
 					>
 						+ New Column

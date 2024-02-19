@@ -11,7 +11,7 @@ export default function AddNewBoard({ open, onClose }) {
 	const [error, setError] = useState(null)
 	const { addBoard } = useContext(KanbanContex)
 	const modalRef = useRef()
-
+	console.log(newBoard)
 	useEffect(() => {
 		open && modalRef.current.showModal()
 	}, [open])
@@ -46,16 +46,14 @@ export default function AddNewBoard({ open, onClose }) {
 		})
 	}
 
-	const handlerBlurInput = (e, id) => {
-		// newBoard.columns.some((col, index) => {
-		// 	if (id !== index) {
-		// 		if (col.name === e.target.value) setError('Nie moga sie powtarzac nazwy column')
-		// 	}
-		// })
-	}
-
 	const handlerAddBoard = e => {
 		e.preventDefault()
+
+		const emptyColumnName = newBoard.columns.some(column => column.name.trim() === '')
+		if (emptyColumnName) {
+			setError('Fill in all fields.')
+			return
+		}
 		if (newBoard.name.trim().length > 0 && newBoard.columns.length > 0) {
 			addBoard(newBoard)
 			setNewBoard(initialValue)
@@ -66,8 +64,12 @@ export default function AddNewBoard({ open, onClose }) {
 	return (
 		<Modal
 			ref={modalRef}
-			onClose={onClose}
-			className='top-2/4 -translate-y-2/4 w-11/12 p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 '
+			onClose={() => {
+				setNewBoard({ name: '', columns: [{ name: '' }] })
+				setError(null)
+				onClose()
+			}}
+			className='top-2/4 -translate-y-2/4 w-11/12 p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 tablet:w-48 tablet:p-3.2'
 		>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Add New Board</h2>
@@ -88,14 +90,12 @@ export default function AddNewBoard({ open, onClose }) {
 									key={id}
 									id={id}
 									value={column.name}
+									label={id === 0 && 'Board Columns'}
 									onChange={e => {
 										handlerEnteredNameColumn(e, id)
 									}}
 									onRemove={() => {
 										handlerRemoveColumn(id)
-									}}
-									onBlur={e => {
-										handlerBlurInput(e, id)
 									}}
 									error={error}
 									name='boardColumns'
@@ -105,7 +105,7 @@ export default function AddNewBoard({ open, onClose }) {
 								/>
 							)
 						})}
-						{error && <p>{error}</p>}
+						{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 						<Button
 							type='button'
 							className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2'
