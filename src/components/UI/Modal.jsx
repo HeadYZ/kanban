@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom'
 
 const ModalOverlay = forwardRef(({ props }, ref) => {
 	return (
-		<dialog ref={ref} className={`${props.className} backdrop:bg-black backdrop:opacity-50`} onClose={props.onClose}>
+		<dialog
+			ref={ref}
+			className='top-2/4 -translate-y-2/4 w-11/12 p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 tablet:w-48 tablet:p-3.2 backdrop:bg-black backdrop:opacity-50'
+			onClose={props.onClose}
+		>
 			{props.children}
 		</dialog>
 	)

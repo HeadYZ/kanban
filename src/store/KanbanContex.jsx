@@ -1,4 +1,5 @@
 import { createContext, useEffect, useReducer } from 'react'
+import useHttp from '../hooks/useHttp'
 
 const KanbanContex = createContext({
 	boards: [],
@@ -7,6 +8,7 @@ const KanbanContex = createContext({
 	selectBoard: () => {},
 	editSubtask: () => {},
 	addBoard: () => {},
+	editBoard: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -56,6 +58,13 @@ const kanbanBoardsReducer = (state, action) => {
 		prevBoard.push(action.board)
 		return { ...state, boards: prevBoard }
 	}
+	if (action.type === 'EDIT_BOARD') {
+		const prevBoard = [...state.boards]
+
+		const indexOfEditedBoard = prevBoard.findIndex(board => board.name === action.editedBoard)
+		prevBoard[indexOfEditedBoard] = action.board
+		return { ...state, boards: prevBoard }
+	}
 
 	return state
 }
@@ -79,12 +88,16 @@ export function KanbanContextProvider({ children }) {
 	function addBoard(board) {
 		dispatchKanbanBoards({ type: 'ADD_BOARD', board: board })
 	}
+	function editBoard(board, activeBoard) {
+		dispatchKanbanBoards({ type: 'EDIT_BOARD', board: board, editedBoard: activeBoard })
+	}
 
 	useEffect(() => {
 		if (kanbanBoards.boards.length > 0) {
 			setActiveBoard()
 		}
 	}, [kanbanBoards.boards])
+
 	const kanban = {
 		boards: kanbanBoards.boards,
 		activeBoard: kanbanBoards.activeBoard,
@@ -92,6 +105,7 @@ export function KanbanContextProvider({ children }) {
 		fetchBoards,
 		editSubtask,
 		addBoard,
+		editBoard,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>

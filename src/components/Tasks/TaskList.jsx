@@ -13,7 +13,7 @@ export default function TaskList({ className }) {
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null })
 	const currentBoard = boards.find(board => board.name === selectedBoard)
 
-	console.log('ja sie generuje')
+	console.log('task list')
 
 	const handlerShowTask = task => {
 		setTaskInfo({ showTask: true, task })

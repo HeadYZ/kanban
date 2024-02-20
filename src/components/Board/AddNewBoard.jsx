@@ -11,7 +11,6 @@ export default function AddNewBoard({ open, onClose }) {
 	const [error, setError] = useState(null)
 	const { addBoard } = useContext(KanbanContex)
 	const modalRef = useRef()
-	console.log(newBoard)
 	useEffect(() => {
 		open && modalRef.current.showModal()
 	}, [open])
@@ -69,7 +68,6 @@ export default function AddNewBoard({ open, onClose }) {
 				setError(null)
 				onClose()
 			}}
-			className='top-2/4 -translate-y-2/4 w-11/12 p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 tablet:w-48 tablet:p-3.2'
 		>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Add New Board</h2>

@@ -24,7 +24,7 @@ export default function Task({ task }) {
 		// 	})
 		// } catch (err) {}
 	}
-	console.log('ja sie generuje')
+	console.log('TASk')
 	return (
 		<Modal
 			ref={taskRef}

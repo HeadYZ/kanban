@@ -15,7 +15,7 @@ const Tasks = ({ boards }) => {
 		kanbanCtx.fetchBoards(boards)
 	}, [])
 
-	console.log('ja sie generuje')
+	console.log('tasks')
 	if (kanbanCtx.boards.length === 0) {
 		return (
 			<main
