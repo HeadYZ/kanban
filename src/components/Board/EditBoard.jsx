@@ -5,18 +5,31 @@ import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
 const initialValue = { name: '', columns: [{ name: '' }] }
 
-export default function EditBoard({ open, onClose }) {
+export default function EditBoard({ open, onClose: closeEditBoard, showWarning, deleteCol, deleteColId,clearDeleteState }) {
 	const { boards, activeBoard, editBoard } = useContext(KanbanContex)
 	const editBoardRef = useRef()
 	const [existingBoard, setExistingBoard] = useState(initialValue)
-	const [deleteColumn, setDeleteColumn] = useState({ show: false, id: '' })
+
 	useEffect(() => {
 		const currentBoard = boards.find(board => board.name === activeBoard)
 		if (currentBoard) setExistingBoard(currentBoard)
 	}, [boards, activeBoard])
+
 	useEffect(() => {
 		if (open) editBoardRef.current.showModal()
 	}, [open])
+
+	useEffect(() => {
+		if (deleteCol) {
+			setExistingBoard(prevBoard => {
+				let prevColumns = [...prevBoard.columns]
+				prevColumns.splice(deleteColId, 1)
+				return { ...prevBoard, columns: prevColumns }
+			})
+			clearDeleteState()
+		
+		}
+	}, [deleteCol])
 
 	const handlerAddNewColumn = () => {
 		setExistingBoard(prevBoard => {
@@ -39,18 +52,7 @@ export default function EditBoard({ open, onClose }) {
 			return { ...prevBoard, columns: prevColumns }
 		})
 	}
-	const handlerShowDeleteModal = id => {
-		setDeleteColumn({ show: true, id })
-	}
 
-	const handlerDeleteColumn = () => {
-		setExistingBoard(prevBoard => {
-			let prevColumns = [...prevBoard.columns]
-			prevColumns.splice(deleteColumn.id, 1)
-			return { ...prevBoard, columns: prevColumns }
-		})
-		setDeleteColumn({ show: false, id: '' })
-	}
 	const handlerUpdateBoard = e => {
 		e.preventDefault()
 
@@ -64,29 +66,9 @@ export default function EditBoard({ open, onClose }) {
 			editBoardRef.current.close()
 		}
 	}
-	if (deleteColumn.show)
-		return (
-			<Modal>
-				<div className='flex flex-col gap-2.4'>
-					<h2 className='text-hl text-red'>Delete this task?</h2>
-					<p className='text-medium-grey text-bodyl '>
-						Are you sure you want to delete the ‘Build settings UI’ task and its subtasks? This action cannot be
-						reversed.
-					</p>
-					<div className='flex flex-col w-full tablet:flex-row gap-1.6'>
-						<button
-							className='h-4 text-bodyl font-bold text-white bg-red rounded-2 tablet:w-full'
-							onClick={handlerDeleteColumn}
-						>
-							Delete
-						</button>
-						<button className='h-4 text-bodyl font-bold text-purple bg-white rounded-2 tablet:w-full'>Cancel</button>
-					</div>
-				</div>
-			</Modal>
-		)
+
 	return (
-		<Modal ref={editBoardRef} onClose={onClose}>
+		<Modal ref={editBoardRef} onClose={closeEditBoard}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Edit Board</h2>
 				<form className='flex flex-col gap-2.4' onSubmit={handlerUpdateBoard}>
@@ -113,7 +95,8 @@ export default function EditBoard({ open, onClose }) {
 										handlerChangeColumnName(e, id)
 									}}
 									onRemove={() => {
-										handlerShowDeleteModal(id)
+										editBoardRef.current.close()
+										showWarning(id)
 									}}
 									// error={error}
 									name='boardColumns'

@@ -7,16 +7,47 @@ import Button from './UI/Button.jsx'
 import { useContext, useState } from 'react'
 import KanbanContex from '../store/KanbanContex.jsx'
 import EditBoard from './Board/EditBoard.jsx'
+import DeleteColumnBoard from './Board/DeleteColumnBoard.jsx'
 
+const initialDeleteState = { showEditBoard: false, showDeleteColModal: false, deleteColId: null, deleteCol: false }
 const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const kanbanCtx = useContext(KanbanContex)
-	const [showEditBoard, setShowEditBoard] = useState(false)
-	function handlerShowEditBoard() {
-		setShowEditBoard(true)
+
+	const [editBoard, setEditBoard] = useState(initialDeleteState)
+	function handlerToggleShowEditBoard() {
+		setEditBoard(prevEditBoard => {
+			let showBoard
+			prevEditBoard.showEditBoard ? (showBoard = false) : (showBoard = true)
+			return { ...prevEditBoard, showEditBoard: showBoard }
+		})
 	}
-	function handlerHideEditBoard() {
-		setShowEditBoard(false)
+	function handlerToggleShowDeleteColModal() {
+		setEditBoard(prevEditBoard => {
+			let showDeleteWarning
+			prevEditBoard.showDeleteColModal ? (showDeleteWarning = false) : (showDeleteWarning = true)
+			return { ...prevEditBoard, showDeleteColModal: showDeleteWarning }
+		})
 	}
+	function handlerShowDeleteBoardCol(id) {
+		handlerToggleShowDeleteColModal()
+		setEditBoard(prevEditBoard => {
+			return { ...prevEditBoard, showDeleteColModal: true, deleteColId: id }
+		})
+	}
+
+	function handlerDeleteCol() {
+		setEditBoard(prevEditBoard => {
+			let showBoard
+			prevEditBoard.showEditBoard ? (showBoard = false) : (showBoard = true)
+			return { ...prevEditBoard, showEditBoard: showBoard, deleteCol: true }
+		})
+	}
+	function clearDeleteState() {
+		setEditBoard(prevEditBoard => {
+			return { ...prevEditBoard, deleteColId: null, deleteCol: false }
+		})
+	}
+
 	return (
 		<>
 			<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
@@ -49,11 +80,29 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<img src={iconVertical} onClick={handlerShowEditBoard} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
+						<img
+							src={iconVertical}
+							onClick={handlerToggleShowEditBoard}
+							alt=''
+							className='h-1.6 tablet:h-2'
+							tabIndex={0}
+						/>
 					</div>
 				</div>
 			</header>
-			<EditBoard open={showEditBoard} onClose={handlerHideEditBoard}></EditBoard>
+			<EditBoard
+				open={editBoard.showEditBoard}
+				onClose={handlerToggleShowEditBoard}
+				showWarning={handlerShowDeleteBoardCol}
+				deleteCol={editBoard.deleteCol}
+				deleteColId={editBoard.deleteColId}
+				clearDeleteState={clearDeleteState}
+			></EditBoard>
+			<DeleteColumnBoard
+				open={editBoard.showDeleteColModal}
+				onClose={handlerToggleShowDeleteColModal}
+				deleteCol={handlerDeleteCol}
+			/>
 		</>
 	)
 }
