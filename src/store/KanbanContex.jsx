@@ -9,6 +9,7 @@ const KanbanContex = createContext({
 	editSubtask: () => {},
 	addBoard: () => {},
 	editBoard: () => {},
+	deleteBoard: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -65,6 +66,12 @@ const kanbanBoardsReducer = (state, action) => {
 		prevBoard[indexOfEditedBoard] = action.board
 		return { ...state, boards: prevBoard }
 	}
+	if (action.type === 'DELETE_BOARD') {
+		const prevBoard = [...state.boards]
+		const indexOfDeletedBoard = prevBoard.findIndex(board => board.name === action.deletedBoard)
+		prevBoard.splice(indexOfDeletedBoard, 1)
+		return { ...state, boards: prevBoard }
+	}
 
 	return state
 }
@@ -91,6 +98,9 @@ export function KanbanContextProvider({ children }) {
 	function editBoard(board, activeBoard) {
 		dispatchKanbanBoards({ type: 'EDIT_BOARD', board: board, editedBoard: activeBoard })
 	}
+	function deleteBoard(activeBoard) {
+		dispatchKanbanBoards({ type: 'DELETE_BOARD', deletedBoard: activeBoard })
+	}
 
 	useEffect(() => {
 		if (kanbanBoards.boards.length > 0) {
@@ -106,6 +116,7 @@ export function KanbanContextProvider({ children }) {
 		editSubtask,
 		addBoard,
 		editBoard,
+		deleteBoard,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>

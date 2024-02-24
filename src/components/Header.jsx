@@ -8,6 +8,7 @@ import { useContext, useState } from 'react'
 import KanbanContex from '../store/KanbanContex.jsx'
 import EditBoard from './Board/EditBoard.jsx'
 import DeleteColumnBoard from './Board/DeleteColumnBoard.jsx'
+import DeleteBoard from './Board/DeleteBoard.jsx'
 
 const initialDeleteState = { showEditBoard: false, showDeleteColModal: false, deleteColId: null, deleteCol: false }
 const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
@@ -52,7 +53,10 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false }
 		})
 	}
-	console.log(editBoard)
+	function deleteBoard() {
+		const currentBoard = kanbanCtx.activeBoard
+		kanbanCtx.deleteBoard(currentBoard)
+	}
 	return (
 		<>
 			<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
@@ -109,6 +113,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				deleteCol={handlerDeleteCol}
 				onCancel={cancelDelete}
 			/>
+			<DeleteBoard  onDelete={deleteBoard} currentBoard={kanbanCtx.activeBoard}/>
 		</>
 	)
 }
