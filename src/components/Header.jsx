@@ -47,7 +47,12 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			return { ...prevEditBoard, deleteColId: null, deleteCol: false }
 		})
 	}
-
+	function cancelDelete() {
+		setEditBoard(prevEditBoard => {
+			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false }
+		})
+	}
+	console.log(editBoard)
 	return (
 		<>
 			<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
@@ -102,6 +107,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				open={editBoard.showDeleteColModal}
 				onClose={handlerToggleShowDeleteColModal}
 				deleteCol={handlerDeleteCol}
+				onCancel={cancelDelete}
 			/>
 		</>
 	)

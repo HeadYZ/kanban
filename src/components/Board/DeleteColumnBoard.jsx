@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 
-export default function DeleteColumnBoard({ open, onClose, deleteCol }) {
+export default function DeleteColumnBoard({ open, onClose, deleteCol, onCancel }) {
 	const deleteColRef = useRef()
 	useEffect(() => {
 		if (open) deleteColRef.current.showModal()
@@ -25,7 +25,15 @@ export default function DeleteColumnBoard({ open, onClose, deleteCol }) {
 					>
 						Delete
 					</Button>
-					<Button className='h-4 text-bodyl font-bold text-purple bg-white rounded-2 tablet:w-full'>Cancel</Button>
+					<Button
+						className='h-4 text-bodyl font-bold text-purple bg-white rounded-2 tablet:w-full'
+						onClick={() => {
+							deleteColRef.current.close()
+							onCancel()
+						}}
+					>
+						Cancel
+					</Button>
 				</div>
 			</div>
 		</Modal>

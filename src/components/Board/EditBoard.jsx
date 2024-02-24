@@ -5,10 +5,18 @@ import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
 const initialValue = { name: '', columns: [{ name: '' }] }
 
-export default function EditBoard({ open, onClose: closeEditBoard, showWarning, deleteCol, deleteColId,clearDeleteState }) {
+export default function EditBoard({
+	open,
+	onClose: closeEditBoard,
+	showWarning,
+	deleteCol,
+	deleteColId,
+	clearDeleteState,
+}) {
 	const { boards, activeBoard, editBoard } = useContext(KanbanContex)
 	const editBoardRef = useRef()
 	const [existingBoard, setExistingBoard] = useState(initialValue)
+	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		const currentBoard = boards.find(board => board.name === activeBoard)
@@ -27,7 +35,6 @@ export default function EditBoard({ open, onClose: closeEditBoard, showWarning, 
 				return { ...prevBoard, columns: prevColumns }
 			})
 			clearDeleteState()
-		
 		}
 	}, [deleteCol])
 
@@ -58,7 +65,7 @@ export default function EditBoard({ open, onClose: closeEditBoard, showWarning, 
 
 		const emptyColumnName = existingBoard.columns.some(column => column.name.trim() === '')
 		if (emptyColumnName) {
-			// setError('Fill in all fields.')
+			setError('Fill in all fields.')
 			return
 		}
 		if (existingBoard.name.trim().length > 0) {
@@ -106,7 +113,7 @@ export default function EditBoard({ open, onClose: closeEditBoard, showWarning, 
 								/>
 							)
 						})}
-						{/* {error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>} */}
+						{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 						<Button
 							type='button'
 							className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2'
