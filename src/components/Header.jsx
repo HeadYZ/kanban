@@ -10,6 +10,7 @@ import EditBoard from './Board/EditBoard.jsx'
 import DeleteColumnBoard from './Board/DeleteColumnBoard.jsx'
 import DeleteBoard from './Board/DeleteBoard.jsx'
 import EditPanel from './Board/EditPanel.jsx'
+import { AddNewTask } from './Board/AddNewTask.jsx'
 
 const initialDeleteState = {
 	showEditBoard: false,
@@ -142,7 +143,9 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				onDelete={deleteBoard}
 				currentBoard={kanbanCtx.activeBoard}
 			/>
+				<AddNewTask></AddNewTask>
 		</>
+	
 	)
 }
 
