@@ -9,13 +9,26 @@ import KanbanContex from '../store/KanbanContex.jsx'
 import EditBoard from './Board/EditBoard.jsx'
 import DeleteColumnBoard from './Board/DeleteColumnBoard.jsx'
 import DeleteBoard from './Board/DeleteBoard.jsx'
+import EditPanel from './Board/EditPanel.jsx'
 
-const initialDeleteState = { showEditBoard: false, showDeleteColModal: false, deleteColId: null, deleteCol: false }
+const initialDeleteState = {
+	showEditBoard: false,
+	showDeleteColModal: false,
+	showDeleteBoardModal: false,
+	deleteColId: null,
+	deleteCol: false,
+}
 const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const kanbanCtx = useContext(KanbanContex)
 
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
+	const [showPanel, setShowPanel] = useState(false)
+	function handlerShowPanel() {
+		setShowPanel(true)
+	}
+
 	function handlerToggleShowEditBoard() {
+		setShowPanel(false)
 		setEditBoard(prevEditBoard => {
 			let showBoard
 			prevEditBoard.showEditBoard ? (showBoard = false) : (showBoard = true)
@@ -27,6 +40,14 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			let showDeleteWarning
 			prevEditBoard.showDeleteColModal ? (showDeleteWarning = false) : (showDeleteWarning = true)
 			return { ...prevEditBoard, showDeleteColModal: showDeleteWarning }
+		})
+	}
+	function handlerToggleShowDeleteBoardModal() {
+		setShowPanel(false)
+		setEditBoard(prevEditBoard => {
+			let showDeleteWarning
+			prevEditBoard.showDeleteBoardModal ? (showDeleteWarning = false) : (showDeleteWarning = true)
+			return { ...prevEditBoard, showDeleteBoardModal: showDeleteWarning }
 		})
 	}
 	function handlerShowDeleteBoardCol(id) {
@@ -53,6 +74,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false }
 		})
 	}
+
 	function deleteBoard() {
 		const currentBoard = kanbanCtx.activeBoard
 		kanbanCtx.deleteBoard(currentBoard)
@@ -77,7 +99,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							</span>
 						</Button>
 					</div>
-					<div className='flex items-center gap-x-1.6'>
+					<div className='flex relative items-center gap-x-1.6'>
 						<Button
 							className={`flex items-center justify-center w-4.8 h-3.2  ${
 								kanbanCtx.boards.length > 0 ? 'opacity-1' : 'opacity-25'
@@ -89,12 +111,13 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<img
-							src={iconVertical}
-							onClick={handlerToggleShowEditBoard}
-							alt=''
-							className='h-1.6 tablet:h-2'
-							tabIndex={0}
+						<div className='cursor-pointer' onClick={handlerShowPanel}>
+							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
+						</div>
+						<EditPanel
+							open={showPanel}
+							showEditBoard={handlerToggleShowEditBoard}
+							showDeleteBoardWarning={handlerToggleShowDeleteBoardModal}
 						/>
 					</div>
 				</div>
@@ -113,7 +136,12 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				deleteCol={handlerDeleteCol}
 				onCancel={cancelDelete}
 			/>
-			<DeleteBoard  onDelete={deleteBoard} currentBoard={kanbanCtx.activeBoard}/>
+			<DeleteBoard
+				open={editBoard.showDeleteBoardModal}
+				onClose={handlerToggleShowDeleteBoardModal}
+				onDelete={deleteBoard}
+				currentBoard={kanbanCtx.activeBoard}
+			/>
 		</>
 	)
 }

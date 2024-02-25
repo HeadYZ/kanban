@@ -4,13 +4,13 @@ import Modal from '../UI/Modal.jsx'
 import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
 
-export default function DeleteBoard({ currentBoard,onDelete, onCancel }) {
+export default function DeleteBoard({ open, currentBoard, onDelete, onCancel, onClose }) {
 	const boardRef = useRef()
-    useEffect(() => {
+	useEffect(() => {
 		if (open) boardRef.current.showModal()
 	}, [open])
 	return (
-		<Modal ref={boardRef}>
+		<Modal ref={boardRef} onClose={onClose}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-red'>Delete this board?</h2>
 				<p className='text-medium-grey text-bodyl '>
