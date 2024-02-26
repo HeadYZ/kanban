@@ -8,7 +8,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 	} ${className}`
 
 	const handlerBlurInput = e => {
-		e.target.value.trim() === '' ? setError('The name cannot be empty.') : setError(null)
+		e.target.value.trim() === '' ? setError('This field cannot be empty.') : setError(null)
 	}
 	const handlerFocusInput = ()=> {
 		setError(null)
