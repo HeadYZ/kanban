@@ -33,7 +33,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 					className={classList}
 					{...props}
 				/>
-				{cross && <img src={iconCross} onClick={onRemove} alt='' className='h-1.5' />}
+				{cross && <img src={iconCross} onClick={onRemove} alt='' className='h-1.5 cursor-pointer' />}
 			</div>
 			{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 		</div>
