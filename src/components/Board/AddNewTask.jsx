@@ -3,6 +3,7 @@ import Input from '../UI/Input'
 import Modal from '../UI/Modal.jsx'
 import TextArea from '../UI/Textarea.jsx'
 import Button from '../UI/Button.jsx'
+import Select from '../UI/Select.jsx'
 
 const initialState = {
 	description: '',
@@ -60,7 +61,7 @@ export function AddNewTask() {
 						+ Add New Subtask
 					</Button>
 				</div>
-				<Input label='Status' />
+				<Select label='Status' options={['Todo','Doing','Done']}></Select>
 				<Button
 					type='submit'
 					className='h-4 w-full text-center bg-purple text-white text-bodyl font-bold border-none rounded-2'
