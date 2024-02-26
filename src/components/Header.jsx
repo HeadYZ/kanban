@@ -21,9 +21,9 @@ const initialDeleteState = {
 }
 const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const kanbanCtx = useContext(KanbanContex)
-
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
+	const [showAddTask, setShowAddTask] = useState(false)
 	function handlerShowPanel() {
 		setShowPanel(true)
 	}
@@ -80,6 +80,12 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 		const currentBoard = kanbanCtx.activeBoard
 		kanbanCtx.deleteBoard(currentBoard)
 	}
+	function handlerShowAddTask() {
+		setShowAddTask(true)
+	}
+	function handlerHideAddTask() {
+		setShowAddTask(false)
+	}
 	return (
 		<>
 			<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
@@ -105,6 +111,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							className={`flex items-center justify-center w-4.8 h-3.2  ${
 								kanbanCtx.boards.length > 0 ? 'opacity-1' : 'opacity-25'
 							} bg-purple rounded-2.4  tablet:text-hm tablet:w-16.4 tablet:h-4.8 tablet:text-white  `}
+							onClick={handlerShowAddTask}
 						>
 							<span className='tablet:hidden'>
 								<img src={plusIcon} alt='' />
@@ -143,9 +150,8 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				onDelete={deleteBoard}
 				currentBoard={kanbanCtx.activeBoard}
 			/>
-				<AddNewTask></AddNewTask>
+			<AddNewTask open={showAddTask} onClose={handlerHideAddTask}></AddNewTask>
 		</>
-	
 	)
 }
 

@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Input from '../UI/Input'
 import Modal from '../UI/Modal.jsx'
 import TextArea from '../UI/Textarea.jsx'
 import Button from '../UI/Button.jsx'
 import Select from '../UI/Select.jsx'
+import KanbanContex from '../../store/KanbanContex.jsx'
 
 const initialState = {
 	description: '',
@@ -15,14 +16,14 @@ const initialState = {
 	title: '',
 }
 
-export function AddNewTask() {
+export function AddNewTask({ open, onClose }) {
 	const [newTask, setNewTask] = useState(initialState)
 	const [error, setError] = useState(null)
+	const { addTask } = useContext(KanbanContex)
 	const addTaskRef = useRef()
 	useEffect(() => {
-		addTaskRef.current.showModal()
-	}, [])
-	console.log(newTask)
+		open && addTaskRef.current.showModal()
+	}, [open])
 	const handlerEnteredTaskTitle = e => {
 		setNewTask(prevTask => {
 			return { ...prevTask, title: e.target.value }
@@ -32,7 +33,6 @@ export function AddNewTask() {
 		setNewTask(prevTask => {
 			const prevSubtasks = [...prevTask.subtasks]
 			prevSubtasks.push({ isCompleted: false, title: '' })
-
 			return { ...prevTask, subtasks: prevSubtasks }
 		})
 	}
@@ -56,6 +56,11 @@ export function AddNewTask() {
 			return { ...prevTask, subtasks: prevSubtasks }
 		})
 	}
+	const handlerChoosedStatus = e => {
+		setNewTask(prevTask => {
+			return { ...prevTask, status: e.target.value }
+		})
+	}
 
 	const handlerAddTask = e => {
 		e.preventDefault()
@@ -74,11 +79,14 @@ export function AddNewTask() {
 			setError('Fill all subtasks title.')
 			return
 		}
+		addTask(newTask)
+		setNewTask(initialState)
 		setError(null)
+		addTaskRef.current.close()
 	}
 
 	return (
-		<Modal ref={addTaskRef}>
+		<Modal ref={addTaskRef} onClose={onClose}>
 			<form action='' className='flex flex-col gap-2.4' onSubmit={handlerAddTask}>
 				<h3 className='text-hl text-black dark:text-white'>Add New Task</h3>
 				<Input
@@ -127,7 +135,14 @@ export function AddNewTask() {
 						+ Add New Subtask
 					</Button>
 				</div>
-				<Select label='Status' options={['Todo', 'Doing', 'Done']}></Select>
+				<Select
+					label='Status'
+					key='Status'
+					options={['Todo', 'Doing', 'Done']}
+					onChange={e => {
+						handlerChoosedStatus(e)
+					}}
+				></Select>
 				{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 				<Button
 					type='submit'
