@@ -6,6 +6,7 @@ const KanbanContex = createContext({
 	fetchBoards: () => {},
 	selectBoard: () => {},
 	editSubtask: () => {},
+	changeTaskStatus: () => {},
 	addBoard: () => {},
 	editBoard: () => {},
 	deleteBoard: () => {},
@@ -23,36 +24,32 @@ const kanbanBoardsReducer = (state, action) => {
 		return { ...state, activeBoard: action.activeBoard }
 	}
 	if (action.type === 'EDIT_SUBTASK') {
-		const boardClone = [...state.boards]
-		const editedBoardIndex = boardClone.findIndex(board => board.name === action.subtask.board)
-
-		const editedColumn = boardClone[editedBoardIndex].columns.find(task => {
-			return task.tasks.find(subtask => {
-				return subtask.subtasks.find(title => title.title === action.subtask.id)
-			})
-		})
-		const editedColumnIndex = boardClone[editedBoardIndex].columns.findIndex(
-			column => column.name === editedColumn.name
+		const prevBoard = [...state.boards]
+		console.log(prevBoard)
+		const indexOfBoard = prevBoard.findIndex(board => board.name === action.subtask.board)
+		const indexOfStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.subtask.status)
+		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfStatus].tasks.findIndex(
+			task => task.title === action.subtask.taskTitle
 		)
-		const editedTaskIndex = boardClone[editedBoardIndex].columns[editedColumnIndex].tasks.findIndex(
-			task => task.title === action.subtask.task
+		prevBoard[indexOfBoard].columns[indexOfStatus].tasks[indexOfTask].subtasks = action.subtask.subtasks
+		return { ...state, boards: prevBoard }
+	}
+	if (action.type === 'CHANGE_TASK_STATUS') {
+		const prevBoard = [...state.boards]
+		const indexOfBoard = prevBoard.findIndex(board => board.name === action.task.board)
+		const indexOfOldStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.task.oldStatus)
+		const indexOfNewStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.task.newStatus)
+		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.findIndex(
+			task => task.title === action.task.taskTitle
 		)
 
-		const editedSubtasks = editedColumn.tasks.map(task => {
-			return task.subtasks.map(subtask => {
-				let changeChecked = subtask
-				if (subtask.title === action.subtask.id) {
-					let isCompleted = changeChecked.isCompleted
-					return { isCompleted: !isCompleted, title: subtask.title }
-				}
-				return subtask
-			})
-		})
+		const task = { ...prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks[indexOfTask] }
 
-		boardClone[editedBoardIndex].columns[editedColumnIndex].tasks[editedTaskIndex].subtasks = [
-			...editedSubtasks[editedTaskIndex],
-		]
-		return { ...state, boards: boardClone }
+		prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.splice(indexOfTask, 1)
+		if (task.title) {
+			prevBoard[indexOfBoard].columns[indexOfNewStatus].tasks.push(task)
+		}
+		return { ...state, board: prevBoard }
 	}
 	if (action.type === 'ADD_BOARD') {
 		const prevBoard = [...state.boards]
@@ -79,7 +76,6 @@ const kanbanBoardsReducer = (state, action) => {
 			status => status.name === action.task.status
 		)
 		prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks.push(action.task)
-		console.log(prevBoards)
 		return { ...state, boards: prevBoards }
 	}
 	return state
@@ -98,8 +94,11 @@ export function KanbanContextProvider({ children }) {
 		dispatchKanbanBoards({ type: 'SELECT_BOARD', activeBoard: boardName })
 	}
 
-	function editSubtask({ id, task, board }) {
-		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { id, task, board } })
+	function editSubtask({ subtasks, status, board, taskTitle }) {
+		dispatchKanbanBoards({ type: 'EDIT_SUBTASK', subtask: { subtasks, status, board, taskTitle } })
+	}
+	function changeTaskStatus({ oldStatus, newStatus, board, taskTitle }) {
+		dispatchKanbanBoards({ type: 'CHANGE_TASK_STATUS', task: { oldStatus, newStatus, board, taskTitle } })
 	}
 	function addBoard(board) {
 		dispatchKanbanBoards({ type: 'ADD_BOARD', board: board })
@@ -126,6 +125,7 @@ export function KanbanContextProvider({ children }) {
 		selectBoard,
 		fetchBoards,
 		editSubtask,
+		changeTaskStatus,
 		addBoard,
 		editBoard,
 		deleteBoard,

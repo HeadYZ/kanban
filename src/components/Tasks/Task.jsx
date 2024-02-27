@@ -4,15 +4,25 @@ import iconVertical from '../../assets/icon-vertical-ellipsis.svg'
 import downArrow from '../../assets/icon-chevron-down.svg'
 import KanbanContex from '../../store/KanbanContex.jsx'
 
-export default function Task({ task }) {
+export default function Task({ open, task, onClose, currentBoard }) {
 	const taskRef = useRef()
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
-		taskRef.current.showModal()
-	}, [task])
+		open && taskRef.current.showModal()
+	}, [open])
 
-	const handlerChekboxSelect = e => {
-		kanbanCtx.editSubtask({ id: e.target.id, task: task.title, board: kanbanCtx.activeBoard })
+	const handlerChekboxSelect = (e, subtask) => {
+		const prevSubtasks = [...task.subtasks]
+		const subtaskId = prevSubtasks.findIndex(prevSubtask => prevSubtask.title === subtask.title)
+		const subtaskIsCompleted = prevSubtasks[subtaskId].isCompleted
+		prevSubtasks[subtaskId].isCompleted = !subtaskIsCompleted
+
+		kanbanCtx.editSubtask({
+			subtasks: prevSubtasks,
+			status: task.status,
+			board: currentBoard.name,
+			taskTitle: task.title,
+		})
 
 		// try {
 		// 	const send  = fetch('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', {
@@ -24,14 +34,21 @@ export default function Task({ task }) {
 		// 	})
 		// } catch (err) {}
 	}
-	console.log('TASk')
+	// console.log('TASk')
+	const handlerChangeStaus = e => {
+		const newStatus = e.target.value
+		kanbanCtx.changeTaskStatus({ oldStatus: task.status, newStatus, board: currentBoard.name, taskTitle: task.title })
+	}
+	console.log(task)
+	const status = currentBoard.columns.map(status => {
+		return status.name
+	})
+
 	return (
 		<Modal
 			ref={taskRef}
 			className='p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 	top-2/4 -translate-y-2/4'
-			onClose={() => {
-				taskRef.current.close()
-			}}
+			onClose={onClose}
 		>
 			<div className='flex flex-col gap-1.6'>
 				<header className='flex items-center gap-1.6'>
@@ -51,7 +68,9 @@ export default function Task({ task }) {
 									<input
 										type='checkbox'
 										defaultChecked={subtask.isCompleted === true}
-										onChange={handlerChekboxSelect}
+										onChange={e => {
+											handlerChekboxSelect(e, subtask)
+										}}
 										id={subtask.title}
 										className='bg-purple'
 									/>
@@ -75,10 +94,13 @@ export default function Task({ task }) {
 					<select
 						id='status'
 						className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
+						onChange={handlerChangeStaus}
 					>
-						<option value=''>Doing</option>
-						<option value=''>nt</option>
-						<option value=''></option>
+						{status.map(option => (
+							<option key={option} value={option}>
+								{option}
+							</option>
+						))}
 					</select>
 					<img src={downArrow} alt='' className='absolute bottom-1.8 right-1.6 h-[0.47rem] w-[0.94rem]' />
 				</footer>

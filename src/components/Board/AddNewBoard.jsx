@@ -14,7 +14,7 @@ export default function AddNewBoard({ open, onClose }) {
 	useEffect(() => {
 		open && modalRef.current.showModal()
 	}, [open])
-
+console.log('FEFEFFE');
 	const handlerAddNewColumn = () => {
 		setNewBoard(prevColumns => {
 			const prevBoard = { ...prevColumns }

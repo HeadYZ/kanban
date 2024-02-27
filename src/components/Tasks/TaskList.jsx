@@ -18,6 +18,9 @@ export default function TaskList({ className }) {
 	const handlerShowTask = task => {
 		setTaskInfo({ showTask: true, task })
 	}
+	const handlerCloseTask = task => {
+		setTaskInfo({ showTask: false, task: null })
+	}
 
 	const handlerShowModal = () => {
 		setShowModal(true)
@@ -81,8 +84,10 @@ export default function TaskList({ className }) {
 					</Button>
 				</main>
 
-				{taskInfo.showTask && <Task task={taskInfo.task} />}
-				<AddNewBoard open={showModal} onClose={handlerHideModal}></AddNewBoard>
+				{taskInfo.showTask && (
+					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
+				)}
+				{showModal && <AddNewBoard open={showModal} onClose={handlerHideModal}></AddNewBoard>}
 			</>
 		)
 	}
