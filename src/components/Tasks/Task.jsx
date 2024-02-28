@@ -39,11 +39,10 @@ export default function Task({ open, task, onClose, currentBoard }) {
 		const newStatus = e.target.value
 		kanbanCtx.changeTaskStatus({ oldStatus: task.status, newStatus, board: currentBoard.name, taskTitle: task.title })
 	}
-	console.log(task)
 	const status = currentBoard.columns.map(status => {
 		return status.name
 	})
-
+	console.log(task)
 	return (
 		<Modal
 			ref={taskRef}
@@ -96,11 +95,18 @@ export default function Task({ open, task, onClose, currentBoard }) {
 						className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
 						onChange={handlerChangeStaus}
 					>
-						{status.map(option => (
-							<option key={option} value={option}>
-								{option}
-							</option>
-						))}
+						<option key={task.status} value={task.status}>
+							{task.status}
+						</option>
+						{status.map(option => {
+							if (option !== task.status) {
+								return (
+									<option key={option} value={option}>
+										{option}
+									</option>
+								)
+							}
+						})}
 					</select>
 					<img src={downArrow} alt='' className='absolute bottom-1.8 right-1.6 h-[0.47rem] w-[0.94rem]' />
 				</footer>

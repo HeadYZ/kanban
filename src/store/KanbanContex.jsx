@@ -25,7 +25,6 @@ const kanbanBoardsReducer = (state, action) => {
 	}
 	if (action.type === 'EDIT_SUBTASK') {
 		const prevBoard = [...state.boards]
-		console.log(prevBoard)
 		const indexOfBoard = prevBoard.findIndex(board => board.name === action.subtask.board)
 		const indexOfStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.subtask.status)
 		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfStatus].tasks.findIndex(
@@ -44,9 +43,10 @@ const kanbanBoardsReducer = (state, action) => {
 		)
 
 		const task = { ...prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks[indexOfTask] }
-
-		prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.splice(indexOfTask, 1)
+		task.status = action.task.newStatus
+		console.log(task)
 		if (task.title) {
+			prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.splice(indexOfTask, 1)
 			prevBoard[indexOfBoard].columns[indexOfNewStatus].tasks.push(task)
 		}
 		return { ...state, board: prevBoard }
@@ -75,7 +75,14 @@ const kanbanBoardsReducer = (state, action) => {
 		const indexOfEditedStatus = prevBoards[indexOfEditedBoard].columns.findIndex(
 			status => status.name === action.task.status
 		)
-		prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks.push(action.task)
+		const checkIfTaskExisted = prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks.some(
+			task => task.title === action.task.title
+		)
+
+		if (!checkIfTaskExisted) {
+			prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks.push(action.task)
+		}
+
 		return { ...state, boards: prevBoards }
 	}
 	return state

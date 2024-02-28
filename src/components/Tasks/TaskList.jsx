@@ -54,7 +54,7 @@ export default function TaskList({ className }) {
 											className=' mb-2  drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 hover:scale-95 transition-transform'
 										>
 											<Button
-												className='px-1.6 py-2.3 text-left'
+												className='px-1.6 w-full py-2.3 text-left'
 												onClick={() => {
 													handlerShowTask(task)
 												}}
