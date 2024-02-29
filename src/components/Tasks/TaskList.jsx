@@ -48,6 +48,11 @@ export default function TaskList({ className }) {
 									{board.tasks?.length ?? '0'})
 								</li>
 								{board.tasks?.map(task => {
+									let completedSubtasks = 0
+									task.subtasks.forEach(subtask => {
+										if (subtask.isCompleted === true) completedSubtasks++
+									})
+
 									return (
 										<li
 											key={task.title}
@@ -60,7 +65,9 @@ export default function TaskList({ className }) {
 												}}
 											>
 												<p className='text-hm text-black dark:text-white'>{task.title}</p>
-												<span className='text-bodym text-medium-grey'>0 of {task.subtasks.length} subtasks</span>
+												<span className='text-bodym text-medium-grey'>
+													{completedSubtasks} of {task.subtasks.length} subtasks
+												</span>
 											</Button>
 										</li>
 									)

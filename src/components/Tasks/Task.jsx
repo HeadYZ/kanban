@@ -3,6 +3,7 @@ import Modal from '../UI/Modal.jsx'
 import iconVertical from '../../assets/icon-vertical-ellipsis.svg'
 import downArrow from '../../assets/icon-chevron-down.svg'
 import KanbanContex from '../../store/KanbanContex.jsx'
+import Button from '../UI/Button.jsx'
 
 export default function Task({ open, task, onClose, currentBoard }) {
 	const taskRef = useRef()
@@ -50,9 +51,11 @@ export default function Task({ open, task, onClose, currentBoard }) {
 			onClose={onClose}
 		>
 			<div className='flex flex-col gap-1.6'>
-				<header className='flex items-center gap-1.6'>
+				<header className='flex items-center justify-between w-full gap-1.6'>
 					<h3 className='text-hl text-black dark:text-white '>{task.title}</h3>
-					<img src={iconVertical} alt='' className='h-2' />
+					<Button className='flex items-center justify-center p-1'>
+						<img src={iconVertical} alt='' className='h-2 w-0.462' />
+					</Button>
 				</header>
 				<main className='flex flex-col gap-1.6'>
 					<p className='mb-0.8 text-bodyl text-medium-grey'>{task.description}</p>

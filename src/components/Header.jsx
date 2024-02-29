@@ -24,8 +24,8 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
 	const [showAddTask, setShowAddTask] = useState(false)
-	function handlerShowPanel() {
-		setShowPanel(true)
+	function handlerToggleShowPanel() {
+		setShowPanel(prevShowPanel => !prevShowPanel)
 	}
 
 	function handlerToggleShowEditBoard() {
@@ -36,11 +36,11 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			return { ...prevEditBoard, showEditBoard: showBoard }
 		})
 	}
-	function handlerToggleShowDeleteColModal() {
+	function handlerToggleShowDeleteColModal(status) {
 		setEditBoard(prevEditBoard => {
 			let showDeleteWarning
 			prevEditBoard.showDeleteColModal ? (showDeleteWarning = false) : (showDeleteWarning = true)
-			return { ...prevEditBoard, showDeleteColModal: showDeleteWarning }
+			return { ...prevEditBoard, showDeleteColModal: showDeleteWarning, status }
 		})
 	}
 	function handlerToggleShowDeleteBoardModal() {
@@ -51,10 +51,9 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 			return { ...prevEditBoard, showDeleteBoardModal: showDeleteWarning }
 		})
 	}
-	function handlerShowDeleteBoardCol(id) {
-		handlerToggleShowDeleteColModal()
+	function handlerShowDeleteBoardCol(id, status) {
 		setEditBoard(prevEditBoard => {
-			return { ...prevEditBoard, showDeleteColModal: true, deleteColId: id }
+			return { ...prevEditBoard, showDeleteColModal: true, deleteColId: id, status }
 		})
 	}
 
@@ -67,12 +66,12 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	}
 	function clearDeleteState() {
 		setEditBoard(prevEditBoard => {
-			return { ...prevEditBoard, deleteColId: null, deleteCol: false }
+			return { ...prevEditBoard, deleteColId: null, deleteCol: false, status: null }
 		})
 	}
 	function cancelDelete() {
 		setEditBoard(prevEditBoard => {
-			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false }
+			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false, status: null }
 		})
 	}
 
@@ -119,17 +118,19 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<div className='cursor-pointer' onClick={handlerShowPanel}>
+						<div className='cursor-pointer' onClick={handlerToggleShowPanel}>
 							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
 						</div>
 						<EditPanel
 							open={showPanel}
+							onClose={handlerToggleShowPanel}
 							showEditBoard={handlerToggleShowEditBoard}
 							showDeleteBoardWarning={handlerToggleShowDeleteBoardModal}
 						/>
 					</div>
 				</div>
 			</header>
+
 			<EditBoard
 				open={editBoard.showEditBoard}
 				onClose={handlerToggleShowEditBoard}
@@ -138,12 +139,16 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				deleteColId={editBoard.deleteColId}
 				clearDeleteState={clearDeleteState}
 			></EditBoard>
-			<DeleteColumnBoard
-				open={editBoard.showDeleteColModal}
-				onClose={handlerToggleShowDeleteColModal}
-				deleteCol={handlerDeleteCol}
-				onCancel={cancelDelete}
-			/>
+			{editBoard.showDeleteColModal && (
+				<DeleteColumnBoard
+					open={editBoard.showDeleteColModal}
+					status={editBoard.status}
+					onClose={handlerToggleShowDeleteColModal}
+					deleteCol={handlerDeleteCol}
+					onCancel={cancelDelete}
+				/>
+			)}
+
 			<DeleteBoard
 				open={editBoard.showDeleteBoardModal}
 				onClose={handlerToggleShowDeleteBoardModal}

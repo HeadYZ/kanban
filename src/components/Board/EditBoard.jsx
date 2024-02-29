@@ -34,6 +34,7 @@ export default function EditBoard({
 				prevColumns.splice(deleteColId, 1)
 				return { ...prevBoard, columns: prevColumns }
 			})
+
 			clearDeleteState()
 		}
 	}, [deleteCol])
@@ -103,7 +104,7 @@ export default function EditBoard({
 									}}
 									onRemove={() => {
 										editBoardRef.current.close()
-										showWarning(id)
+										showWarning(id, column.name)
 									}}
 									// error={error}
 									name='boardColumns'

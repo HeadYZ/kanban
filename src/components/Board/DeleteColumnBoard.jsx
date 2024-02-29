@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 
-export default function DeleteColumnBoard({ open, onClose, deleteCol, onCancel }) {
+export default function DeleteColumnBoard({ open, onClose, deleteCol, onCancel, status }) {
 	const deleteColRef = useRef()
 	useEffect(() => {
 		if (open) deleteColRef.current.showModal()
@@ -11,9 +11,9 @@ export default function DeleteColumnBoard({ open, onClose, deleteCol, onCancel }
 	return (
 		<Modal ref={deleteColRef} onClose={onClose}>
 			<div className='flex flex-col gap-2.4'>
-				<h2 className='text-hl text-red'>Delete this task?</h2>
+				<h2 className='text-hl text-red'>Delete this status?</h2>
 				<p className='text-medium-grey text-bodyl '>
-					Are you sure you want to delete the ‘Build settings UI’ task and its subtasks? This action cannot be reversed.
+					Are you sure you want to delete the ‘{status}’ task and its subtasks? This action cannot be reversed.
 				</p>
 				<div className='flex flex-col w-full tablet:flex-row gap-1.6'>
 					<Button
