@@ -19,8 +19,15 @@ const initialState = {
 export function AddNewTask({ open, onClose }) {
 	const [newTask, setNewTask] = useState(initialState)
 	const [error, setError] = useState(null)
-	const { addTask } = useContext(KanbanContex)
+	const { boards, activeBoard, addTask } = useContext(KanbanContex)
 	const addTaskRef = useRef()
+
+	const currentBoard = boards.find(board => board.name === activeBoard)
+
+	const status = currentBoard?.columns.map(status => {
+		return status.name
+	})
+
 	useEffect(() => {
 		open && addTaskRef.current.showModal()
 	}, [open])
@@ -87,7 +94,7 @@ export function AddNewTask({ open, onClose }) {
 
 	return (
 		<Modal ref={addTaskRef} onClose={onClose}>
-			<form  className='flex flex-col gap-2.4' onSubmit={handlerAddTask}>
+			<form className='flex flex-col gap-2.4' onSubmit={handlerAddTask}>
 				<h3 className='text-hl text-black dark:text-white'>Add New Task</h3>
 				<Input
 					key='title'
@@ -138,7 +145,7 @@ export function AddNewTask({ open, onClose }) {
 				<Select
 					label='Status'
 					key='Status'
-					options={['Todo', 'Doing', 'Done']}
+					options={status}
 					onChange={e => {
 						handlerChoosedStatus(e)
 					}}

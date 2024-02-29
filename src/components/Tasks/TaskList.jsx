@@ -9,7 +9,7 @@ import AddNewBoard from '../Board/AddNewBoard.jsx'
 export default function TaskList({ className }) {
 	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-	const [showModal, setShowModal] = useState(false)
+
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null })
 	const currentBoard = boards.find(board => board.name === selectedBoard)
 
@@ -20,13 +20,6 @@ export default function TaskList({ className }) {
 	}
 	const handlerCloseTask = task => {
 		setTaskInfo({ showTask: false, task: null })
-	}
-
-	const handlerShowModal = () => {
-		setShowModal(true)
-	}
-	const handlerHideModal = () => {
-		setShowModal(false)
 	}
 
 	if (currentBoard) {
@@ -77,7 +70,6 @@ export default function TaskList({ className }) {
 					})}
 					<Button
 						className={`min-w-28  max-w-28 mt-3.94 text-hxl text-medium-grey bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity  hover:scale-95 transition-transform rounded-0.6 `}
-						onClick={handlerShowModal}
 					>
 						+ New Column
 					</Button>
@@ -94,7 +86,6 @@ export default function TaskList({ className }) {
 				{taskInfo.showTask && (
 					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
 				)}
-				{showModal && <AddNewBoard open={showModal} onClose={handlerHideModal}></AddNewBoard>}
 			</>
 		)
 	}

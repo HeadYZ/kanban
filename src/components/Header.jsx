@@ -155,7 +155,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				onDelete={deleteBoard}
 				currentBoard={kanbanCtx.activeBoard}
 			/>
-			<AddNewTask open={showAddTask} onClose={handlerHideAddTask}></AddNewTask>
+			{showAddTask && <AddNewTask open={showAddTask} onClose={handlerHideAddTask}></AddNewTask>}
 		</>
 	)
 }
