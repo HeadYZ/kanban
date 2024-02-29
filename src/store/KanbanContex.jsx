@@ -76,6 +76,11 @@ const kanbanBoardsReducer = (state, action) => {
 		const indexOfEditedStatus = prevBoards[indexOfEditedBoard].columns.findIndex(
 			status => status.name === action.task.status
 		)
+		const noTasksInBoard = prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks
+
+		if (!noTasksInBoard) {
+			prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks = []
+		}
 		const checkIfTaskExisted = prevBoards[indexOfEditedBoard].columns[indexOfEditedStatus].tasks.some(
 			task => task.title === action.task.title
 		)

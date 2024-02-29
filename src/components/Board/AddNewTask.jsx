@@ -8,12 +8,13 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 
 const initialState = {
 	description: '',
-	status: 'Todo',
+	status: '',
 	subtasks: [
 		{ isCompleted: false, title: '' },
 		{ isCompleted: false, title: '' },
 	],
 	title: '',
+	statusIsChange: false,
 }
 
 export function AddNewTask({ open, onClose }) {
@@ -23,13 +24,16 @@ export function AddNewTask({ open, onClose }) {
 	const addTaskRef = useRef()
 
 	const currentBoard = boards.find(board => board.name === activeBoard)
-
-	const status = currentBoard?.columns.map(status => {
+	const availableStatus = currentBoard?.columns.map(status => {
 		return status.name
 	})
 
 	useEffect(() => {
 		open && addTaskRef.current.showModal()
+		open &&
+			setNewTask(prevTask => {
+				return { ...prevTask, status: availableStatus[0] }
+			})
 	}, [open])
 	const handlerEnteredTaskTitle = e => {
 		setNewTask(prevTask => {
@@ -65,7 +69,7 @@ export function AddNewTask({ open, onClose }) {
 	}
 	const handlerChoosedStatus = e => {
 		setNewTask(prevTask => {
-			return { ...prevTask, status: e.target.value }
+			return { ...prevTask, status: e.target.value, statusIsChange: true }
 		})
 	}
 
@@ -86,6 +90,7 @@ export function AddNewTask({ open, onClose }) {
 			setError('Fill all subtasks title.')
 			return
 		}
+
 		addTask(newTask)
 		setNewTask(initialState)
 		setError(null)
@@ -145,7 +150,7 @@ export function AddNewTask({ open, onClose }) {
 				<Select
 					label='Status'
 					key='Status'
-					options={status}
+					options={availableStatus}
 					onChange={e => {
 						handlerChoosedStatus(e)
 					}}
