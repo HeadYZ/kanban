@@ -54,7 +54,8 @@ const kanbanBoardsReducer = (state, action) => {
 	if (action.type === 'ADD_BOARD') {
 		const prevBoard = [...state.boards]
 		prevBoard.push(action.board)
-		return { ...state, boards: prevBoard }
+		console.log(action.board)
+		return { ...state, boards: prevBoard, activeBoard: action.board.name }
 	}
 	if (action.type === 'EDIT_BOARD') {
 		const prevBoard = [...state.boards]
@@ -121,7 +122,7 @@ export function KanbanContextProvider({ children }) {
 	}
 
 	useEffect(() => {
-		if (kanbanBoards.boards.length > 0) {
+		if (kanbanBoards.boards.length > 0 && !kanbanBoards.activeBoard) {
 			setActiveBoard()
 		}
 	}, [kanbanBoards.boards])
