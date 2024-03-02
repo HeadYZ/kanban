@@ -1,29 +1,29 @@
 import Button from '../UI/Button.jsx'
 
-export default function EditPanel({ open, showEditBoard, showDeleteBoardWarning, onClose }) {
+export default function EditPanel({ open, showPanel, showDeleteWarning, onClose ,editInfo,deleteInfo, position}) {
 	return (
 		<div
-			className={`flex flex-col gap-1.6 ${
+			className={`flex flex-col gap-1.6 drop-shadow-md ${
 				open ? 'absolute' : 'hidden'
-			} -right-1 top-4  tablet:top-6 lg:top-6.4 w-19.2 p-1.6 z-10 bg-white dark:bg-v-dark-grey rounded-0.8`}
+			} ${position} w-19.2 p-1.6 z-10 bg-white dark:bg-v-dark-grey rounded-0.8`}
 		>
 			<Button
 				className='text-bodyl text-medium-grey text-left'
 				onClick={() => {
 					onClose()
-					showEditBoard()
+					showPanel()
 				}}
 			>
-				Edit Board
+				{editInfo}
 			</Button>
 			<Button
 				className='text-bodyl text-red text-left'
 				onClick={() => {
 					onClose()
-					showDeleteBoardWarning()
+					showDeleteWarning()
 				}}
 			>
-				Delete Board
+				{deleteInfo}
 			</Button>
 		</div>
 	)

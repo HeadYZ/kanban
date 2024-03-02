@@ -4,7 +4,7 @@ import Button from '../UI/Button.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import Task from './Task.jsx'
-import AddNewBoard from '../Board/AddNewBoard.jsx'
+
 
 export default function TaskList({ className }) {
 	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
@@ -18,7 +18,7 @@ export default function TaskList({ className }) {
 	const handlerShowTask = task => {
 		setTaskInfo({ showTask: true, task })
 	}
-	const handlerCloseTask = task => {
+	const handlerCloseTask = () => {
 		setTaskInfo({ showTask: false, task: null })
 	}
 

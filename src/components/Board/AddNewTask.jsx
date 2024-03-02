@@ -14,7 +14,6 @@ const initialState = {
 		{ isCompleted: false, title: '' },
 	],
 	title: '',
-	statusIsChange: false,
 }
 
 export function AddNewTask({ open, onClose }) {

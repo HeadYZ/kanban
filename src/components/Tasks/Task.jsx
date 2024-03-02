@@ -1,11 +1,14 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Modal from '../UI/Modal.jsx'
 import iconVertical from '../../assets/icon-vertical-ellipsis.svg'
 import downArrow from '../../assets/icon-chevron-down.svg'
 import KanbanContex from '../../store/KanbanContex.jsx'
 import Button from '../UI/Button.jsx'
+import EditPanel from '../Board/EditPanel.jsx'
+import EditTask from './EditTask.jsx'
 
 export default function Task({ open, task, onClose, currentBoard }) {
+	const [showPanel, setShowPanel] = useState({ editPanel: false, editTask: false })
 	const taskRef = useRef()
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
@@ -40,80 +43,114 @@ export default function Task({ open, task, onClose, currentBoard }) {
 		const newStatus = e.target.value
 		kanbanCtx.changeTaskStatus({ oldStatus: task.status, newStatus, board: currentBoard.name, taskTitle: task.title })
 	}
+	const handlerShowEditTask = () => {
+		setShowPanel(prevShow => {
+			return { ...prevShow, editTask: true }
+		})
+	}
+
+	const handlerHideEditTask = () => {
+		setShowPanel(prevShow => {
+			return { ...prevShow, editTask: false }
+		})
+	}
+	const handlerShowEditPanel = () => {
+		setShowPanel(prevShow => {
+			return { ...prevShow, editPanel: true }
+		})
+	}
+	const handlerCloseEditPanel = () => {
+		setShowPanel(prevShow => {
+			return { ...prevShow, editPanel: false }
+		})
+	}
+
 	const status = currentBoard.columns.map(status => {
 		return status.name
 	})
 	console.log(task)
 	return (
-		<Modal
-			ref={taskRef}
-			className='p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 	top-2/4 -translate-y-2/4'
-			onClose={onClose}
-		>
-			<div className='flex flex-col gap-1.6'>
-				<header className='flex items-center justify-between w-full gap-1.6'>
-					<h3 className='text-hl text-black dark:text-white '>{task.title}</h3>
-					<Button className='flex items-center justify-center p-1'>
-						<img src={iconVertical} alt='' className='h-2 w-0.462' />
-					</Button>
-				</header>
-				<main className='flex flex-col gap-1.6'>
-					<p className='mb-0.8 text-bodyl text-medium-grey'>{task.description}</p>
-					<span className='text-bodym text-medium-grey dark:text-white'>Subtask ( of {task.subtasks.length})</span>
-					<ul className='flex flex-col gap-0.8'>
-						{task.subtasks.map(subtask => {
-							return (
-								<li
-									key={subtask.title}
-									className='flex items-center gap-1.6 p-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4'
-								>
-									<input
-										type='checkbox'
-										defaultChecked={subtask.isCompleted === true}
-										onChange={e => {
-											handlerChekboxSelect(e, subtask)
-										}}
-										id={subtask.title}
-										className='bg-purple'
-									/>
-									<label
-										htmlFor={subtask.title}
-										className={`text-1.2 font-bold ${
-											subtask.isCompleted === true && 'opacity-50 line-through'
-										} dark:text-white`}
-									>
-										{subtask.title}
-									</label>
-								</li>
-							)
-						})}
-					</ul>
-				</main>
-				<footer className='flex flex-col relative gap-0.8 '>
-					<label htmlFor='status' className='text-1.2 font-bold text-medium-grey dark:text-white'>
-						Current Status
-					</label>
-					<select
-						id='status'
-						className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
-						onChange={handlerChangeStaus}
-					>
-						<option key={task.status} value={task.status}>
-							{task.status}
-						</option>
-						{status.map(option => {
-							if (option !== task.status) {
+		<>
+			<Modal
+				ref={taskRef}
+				className='p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 	top-2/4 -translate-y-2/4'
+				onClose={onClose}
+			>
+				<div className='flex flex-col gap-1.6'>
+					<header className='flex items-center justify-between relative w-full gap-1.6'>
+						<h3 className='text-hl text-black dark:text-white '>{task.title}</h3>
+						<Button className='flex items-center justify-center p-1' onClick={handlerShowEditPanel}>
+							<img src={iconVertical} alt='' className='h-2 w-0.462' />
+						</Button>
+						<EditPanel
+							open={showPanel.editPanel}
+							showPanel={handlerShowEditTask}
+							onClose={handlerCloseEditPanel}
+							editInfo='Edit Task'
+							deleteInfo='Delete Task'
+							position='top-4 -right-2 '
+						></EditPanel>
+					</header>
+
+					<main className='flex flex-col gap-1.6'>
+						<p className='mb-0.8 text-bodyl text-medium-grey'>{task.description}</p>
+						<span className='text-bodym text-medium-grey dark:text-white'>Subtask ( of {task.subtasks.length})</span>
+						<ul className='flex flex-col gap-0.8'>
+							{task.subtasks.map(subtask => {
 								return (
-									<option key={option} value={option}>
-										{option}
-									</option>
+									<li
+										key={subtask.title}
+										className='flex items-center gap-1.6 p-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4'
+									>
+										<input
+											type='checkbox'
+											defaultChecked={subtask.isCompleted === true}
+											onChange={e => {
+												handlerChekboxSelect(e, subtask)
+											}}
+											id={subtask.title}
+											className='bg-purple'
+										/>
+										<label
+											htmlFor={subtask.title}
+											className={`text-1.2 font-bold ${
+												subtask.isCompleted === true && 'opacity-50 line-through'
+											} dark:text-white`}
+										>
+											{subtask.title}
+										</label>
+									</li>
 								)
-							}
-						})}
-					</select>
-					<img src={downArrow} alt='' className='absolute bottom-1.8 right-1.6 h-[0.47rem] w-[0.94rem]' />
-				</footer>
-			</div>
-		</Modal>
+							})}
+						</ul>
+					</main>
+					<footer className='flex flex-col relative gap-0.8 '>
+						<label htmlFor='status' className='text-1.2 font-bold text-medium-grey dark:text-white'>
+							Current Status
+						</label>
+						<select
+							id='status'
+							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
+							onChange={handlerChangeStaus}
+						>
+							<option key={task.status} value={task.status}>
+								{task.status}
+							</option>
+							{status.map(option => {
+								if (option !== task.status) {
+									return (
+										<option key={option} value={option}>
+											{option}
+										</option>
+									)
+								}
+							})}
+						</select>
+						<img src={downArrow} alt='' className='absolute bottom-1.8 right-1.6 h-[0.47rem] w-[0.94rem]' />
+					</footer>
+				</div>
+			</Modal>
+			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} />}
+		</>
 	)
 }

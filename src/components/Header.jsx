@@ -124,8 +124,11 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 						<EditPanel
 							open={showPanel}
 							onClose={handlerToggleShowPanel}
-							showEditBoard={handlerToggleShowEditBoard}
-							showDeleteBoardWarning={handlerToggleShowDeleteBoardModal}
+							showPanel={handlerToggleShowEditBoard}
+							showDeleteWarning={handlerToggleShowDeleteBoardModal}
+							editInfo='Edit Board'
+							deleteInfo='Delete Board'
+							position='-right-1 top-4  tablet:top-6 lg:top-6.4'
 						/>
 					</div>
 				</div>
