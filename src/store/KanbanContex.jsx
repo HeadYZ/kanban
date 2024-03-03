@@ -11,6 +11,7 @@ const KanbanContex = createContext({
 	editBoard: () => {},
 	deleteBoard: () => {},
 	addTask: () => {},
+	addNewColumn: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -91,6 +92,23 @@ const kanbanBoardsReducer = (state, action) => {
 
 		return { ...state, boards: prevBoards }
 	}
+	if (action.type === 'ADD_NEW_COLUMN') {
+		const prevBoard = [...state.boards]
+		const indexOfEditedBoard = prevBoard.findIndex(board => board.name === state.activeBoard)
+		let colNameExisted = false
+
+		prevBoard[indexOfEditedBoard].columns.forEach(col => {
+			action.columns.forEach(actionCol => {
+				if (actionCol.name === col.name) colNameExisted = true
+			})
+		})
+
+		if (!colNameExisted) {
+			prevBoard[indexOfEditedBoard].columns.push(...action.columns)
+		}
+
+		return { ...state, boards: prevBoard }
+	}
 	return state
 }
 
@@ -125,6 +143,9 @@ export function KanbanContextProvider({ children }) {
 	function addTask(task) {
 		dispatchKanbanBoards({ type: 'ADD_TASK', task })
 	}
+	function addNewColumn(columns) {
+		dispatchKanbanBoards({ type: 'ADD_NEW_COLUMN', columns })
+	}
 
 	useEffect(() => {
 		if (kanbanBoards.boards.length > 0 && !kanbanBoards.activeBoard) {
@@ -143,6 +164,7 @@ export function KanbanContextProvider({ children }) {
 		editBoard,
 		deleteBoard,
 		addTask,
+		addNewColumn,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>
