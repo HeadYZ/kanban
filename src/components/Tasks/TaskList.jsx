@@ -4,16 +4,23 @@ import Button from '../UI/Button.jsx'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import Task from './Task.jsx'
-
+import AddNewColumn from './AddNewColumn.jsx'
 
 export default function TaskList({ className }) {
 	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null })
+	const [addNewColumn, setAddNewColumn] = useState(false)
 	const currentBoard = boards.find(board => board.name === selectedBoard)
 
 	console.log('task list')
+	const handlerShowAddNewColumns = () => {
+		setAddNewColumn(true)
+	}
+	const handlerHideAddNewColumns = () => {
+		setAddNewColumn(false)
+	}
 
 	const handlerShowTask = task => {
 		setTaskInfo({ showTask: true, task })
@@ -70,6 +77,7 @@ export default function TaskList({ className }) {
 					})}
 					<Button
 						className={`min-w-28  max-w-28 mt-3.94 text-hxl text-medium-grey bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity  hover:scale-95 transition-transform rounded-0.6 `}
+						onClick={handlerShowAddNewColumns}
 					>
 						+ New Column
 					</Button>
@@ -86,6 +94,7 @@ export default function TaskList({ className }) {
 				{taskInfo.showTask && (
 					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
 				)}
+				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} />}
 			</>
 		)
 	}
