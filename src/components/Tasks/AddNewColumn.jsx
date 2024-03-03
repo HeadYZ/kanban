@@ -1,28 +1,30 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
-const initialValue = { columns: [{ name: '' }] }
+import KanbanContex from '../../store/KanbanContex.jsx'
+const initialValue = [{ name: '' }]
 
-export default function ({ open, currentBoard, onClose }) {
+export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState(initialValue)
+	const { addNewColumn } = useContext(KanbanContex)
 	const addColRef = useRef()
 	useEffect(() => {
 		open && addColRef.current.showModal()
 	}, [open])
 	const handlerEnteredNameColumn = (e, id) => {
 		setBoardColumns(prevColumns => {
-			const prevBoard = [...prevColumns.columns]
+			const prevBoard = [...prevColumns]
 			prevBoard[id].name = e.target.value
-			return { ...prevColumns, columns: prevBoard }
+			return [...prevBoard]
 		})
 	}
 
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
-			const columns = [...prevColumns.columns]
+			const columns = [...prevColumns]
 			columns.push({ name: '' })
-			return { ...prevColumns, columns: columns }
+			return [...columns]
 		})
 	}
 
@@ -34,13 +36,19 @@ export default function ({ open, currentBoard, onClose }) {
 		})
 	}
 
+	const handlerOnSubmit = e => {
+		e.preventDefault()
+		console.log(boardColumns)
+		if (boardColumns && boardColumns.length > 0) addNewColumn(boardColumns)
+	}
+
 	return (
 		<Modal ref={addColRef} onClose={onClose}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Add New Column</h2>
-				<form className='flex flex-col gap-2.4'>
+				<form className='flex flex-col gap-2.4' onSubmit={handlerOnSubmit}>
 					<div className='flex flex-col gap-1.2'>
-						{boardColumns.columns.map((column, id) => {
+						{boardColumns.map((column, id) => {
 							return (
 								<Input
 									key={id}

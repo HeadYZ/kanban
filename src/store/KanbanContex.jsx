@@ -93,6 +93,7 @@ const kanbanBoardsReducer = (state, action) => {
 		return { ...state, boards: prevBoards }
 	}
 	if (action.type === 'ADD_NEW_COLUMN') {
+		console.log('dzialam');
 		const prevBoard = [...state.boards]
 		const indexOfEditedBoard = prevBoard.findIndex(board => board.name === state.activeBoard)
 		let colNameExisted = false
