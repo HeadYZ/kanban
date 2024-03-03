@@ -3,7 +3,7 @@ import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
-const initialValue = [{ name: '' }]
+const initialValue = [{ name: '', tasks: [] }]
 
 export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState(initialValue)
@@ -23,7 +23,7 @@ export default function ({ open, onClose }) {
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
 			const columns = [...prevColumns]
-			columns.push({ name: '' })
+			columns.push({ name: '',tasks: [] })
 			return [...columns]
 		})
 	}

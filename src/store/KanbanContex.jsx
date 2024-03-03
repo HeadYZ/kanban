@@ -42,10 +42,8 @@ const kanbanBoardsReducer = (state, action) => {
 		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.findIndex(
 			task => task.title === action.task.taskTitle
 		)
-
 		const task = { ...prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks[indexOfTask] }
 		task.status = action.task.newStatus
-		console.log(task)
 		if (task.title) {
 			prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.splice(indexOfTask, 1)
 			prevBoard[indexOfBoard].columns[indexOfNewStatus].tasks.push(task)
@@ -93,7 +91,6 @@ const kanbanBoardsReducer = (state, action) => {
 		return { ...state, boards: prevBoards }
 	}
 	if (action.type === 'ADD_NEW_COLUMN') {
-		console.log('dzialam');
 		const prevBoard = [...state.boards]
 		const indexOfEditedBoard = prevBoard.findIndex(board => board.name === state.activeBoard)
 		let colNameExisted = false
@@ -103,7 +100,7 @@ const kanbanBoardsReducer = (state, action) => {
 				if (actionCol.name === col.name) colNameExisted = true
 			})
 		})
-
+console.log(prevBoard[indexOfEditedBoard]);
 		if (!colNameExisted) {
 			prevBoard[indexOfEditedBoard].columns.push(...action.columns)
 		}
