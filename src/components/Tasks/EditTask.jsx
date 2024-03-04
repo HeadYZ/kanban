@@ -7,9 +7,9 @@ import TextArea from '../UI/Textarea.jsx'
 import Input from '../UI/Input.jsx'
 
 export default function EditTask({ open, task, onClose }) {
-	const [editTask, setEditTask] = useState(task)
+	const [editedTask, setEditedTask] = useState(task)
 	const [error, setError] = useState(null)
-	const { boards, activeBoard, addTask } = useContext(KanbanContex)
+	const { boards, activeBoard, editTask } = useContext(KanbanContex)
 	const editTaskRef = useRef()
 
 	const currentBoard = boards.find(board => board.name === activeBoard)
@@ -21,12 +21,12 @@ export default function EditTask({ open, task, onClose }) {
 		open && editTaskRef.current.showModal()
 	}, [open])
 	const handlerEnteredTaskTitle = e => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			return { ...prevTask, title: e.target.value }
 		})
 	}
 	const handlerAddNewSubtask = () => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			const prevSubtasks = [...prevTask.subtasks]
 			prevSubtasks.push({ isCompleted: false, title: '' })
 			return { ...prevTask, subtasks: prevSubtasks }
@@ -34,26 +34,26 @@ export default function EditTask({ open, task, onClose }) {
 	}
 
 	const handlerEnteredSubtaskTitle = (e, id) => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			const prevSubtasks = [...prevTask.subtasks]
 			prevSubtasks[id] = { isCompleted: false, title: e.target.value }
 			return { ...prevTask, subtasks: prevSubtasks }
 		})
 	}
 	const handlerEnteredTaskDescription = e => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			return { ...prevTask, description: e.target.value }
 		})
 	}
 	const handlerRemoveSubtask = id => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			const prevSubtasks = [...prevTask.subtasks]
 			prevSubtasks.splice(id, 1)
 			return { ...prevTask, subtasks: prevSubtasks }
 		})
 	}
 	const handlerChoosedStatus = e => {
-		setEditTask(prevTask => {
+		setEditedTask(prevTask => {
 			return { ...prevTask, status: e.target.value, statusIsChange: true }
 		})
 	}
@@ -61,9 +61,9 @@ export default function EditTask({ open, task, onClose }) {
 	const handlerAddTask = e => {
 		e.preventDefault()
 
-		const emptySubtask = editTask.subtasks.some(subtask => subtask.title.trim() === '')
-		const emptyDescription = editTask.description.trim() === ''
-		const emptyTitle = editTask.title.trim() === ''
+		const emptySubtask = editedTask.subtasks.some(subtask => subtask.title.trim() === '')
+		const emptyDescription = editedTask.description.trim() === ''
+		const emptyTitle = editedTask.title.trim() === ''
 
 		if (emptyTitle) {
 			setError('Fill task title.')
@@ -76,10 +76,9 @@ export default function EditTask({ open, task, onClose }) {
 			return
 		}
 
-		addTask(editTask)
-		setEditTask(initialState)
+		editTask(editedTask, task.title, task.status)
 		setError(null)
-		editTaskRef.current.close()
+		// editTaskRef.current.close()
 	}
 
 	return (
@@ -91,19 +90,19 @@ export default function EditTask({ open, task, onClose }) {
 					id={'title'}
 					label='Title'
 					placeholder='e.g. Take coffe break'
-					value={editTask.title}
+					value={editedTask.title}
 					onChange={handlerEnteredTaskTitle}
 				></Input>
 				<TextArea
 					label='Description'
 					placeholder={`e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little.`}
-					value={editTask.description}
+					value={editedTask.description}
 					onChange={e => {
 						handlerEnteredTaskDescription(e)
 					}}
 				></TextArea>
 				<div className='flex flex-col gap-1.2'>
-					{editTask.subtasks.map((subtask, id) => {
+					{editedTask.subtasks.map((subtask, id) => {
 						return (
 							<Input
 								key={id}

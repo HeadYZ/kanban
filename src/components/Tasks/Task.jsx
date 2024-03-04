@@ -14,7 +14,7 @@ export default function Task({ open, task, onClose, currentBoard }) {
 	useEffect(() => {
 		open && taskRef.current.showModal()
 	}, [open])
-
+console.log(kanbanCtx.boards);
 	const handlerChekboxSelect = (e, subtask) => {
 		const prevSubtasks = [...task.subtasks]
 		const subtaskId = prevSubtasks.findIndex(prevSubtask => prevSubtask.title === subtask.title)
