@@ -7,6 +7,7 @@ const initialValue = [{ name: '', tasks: [] }]
 
 export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState(initialValue)
+	const [error, setError] = useState(null)
 	const { addNewColumn } = useContext(KanbanContex)
 	const addColRef = useRef()
 	useEffect(() => {
@@ -23,7 +24,7 @@ export default function ({ open, onClose }) {
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
 			const columns = [...prevColumns]
-			columns.push({ name: '',tasks: [] })
+			columns.push({ name: '', tasks: [] })
 			return [...columns]
 		})
 	}
@@ -38,8 +39,20 @@ export default function ({ open, onClose }) {
 
 	const handlerOnSubmit = e => {
 		e.preventDefault()
-		console.log(boardColumns)
-		if (boardColumns && boardColumns.length > 0) addNewColumn(boardColumns)
+		let emptyColumnName = false
+		if (boardColumns && boardColumns.length > 0) {
+			emptyColumnName = boardColumns.some(column => column.name.trim() === '')
+		}
+
+		if (boardColumns && boardColumns.length > 0 && emptyColumnName) {
+			setError('Fill in all fields.')
+			return
+		}
+		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
+			addNewColumn(boardColumns)
+			setBoardColumns(initialValue)
+			addColRef.current.close()
+		}
 	}
 
 	return (
@@ -68,6 +81,7 @@ export default function ({ open, onClose }) {
 								/>
 							)
 						})}
+						{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 						<Button
 							type='button'
 							className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2'

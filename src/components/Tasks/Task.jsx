@@ -39,9 +39,10 @@ export default function Task({ open, task, onClose, currentBoard }) {
 		// } catch (err) {}
 	}
 	// console.log('TASk')
-	const handlerChangeStaus = e => {
+	const handlerChangeStatus = e => {
 		const newStatus = e.target.value
 		kanbanCtx.changeTaskStatus({ oldStatus: task.status, newStatus, board: currentBoard.name, taskTitle: task.title })
+		taskRef.current.close()
 	}
 	const handlerShowEditTask = () => {
 		setShowPanel(prevShow => {
@@ -131,7 +132,7 @@ export default function Task({ open, task, onClose, currentBoard }) {
 						<select
 							id='status'
 							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
-							onChange={handlerChangeStaus}
+							onChange={handlerChangeStatus}
 						>
 							<option key={task.status} value={task.status}>
 								{task.status}
