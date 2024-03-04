@@ -7,12 +7,11 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 export default function AddNewBoard({ open, onClose }) {
 	const [newBoard, setNewBoard] = useState({ name: '', columns: [{ name: '', tasks: [] }] })
 	const [error, setError] = useState(null)
-	const { addBoard } = useContext(KanbanContex)
+	const { boards, addBoard } = useContext(KanbanContex)
 	const modalRef = useRef()
 	useEffect(() => {
 		open && modalRef.current.showModal()
 	}, [open])
-	console.log('FEFEFFE')
 	const handlerAddNewColumn = () => {
 		setNewBoard(prevColumns => {
 			const prevBoard = { ...prevColumns }
@@ -52,7 +51,15 @@ export default function AddNewBoard({ open, onClose }) {
 			return
 		}
 		if (newBoard.name.trim().length > 0 && newBoard.columns.length > 0) {
-			addBoard(newBoard)
+			const boardNameExist = boards.some(kanbanBoard => {
+				return kanbanBoard.name.toLowerCase() === newBoard.name.toLowerCase()
+			})
+			if (boardNameExist) {
+				setError('You are trying to add an existing board name. Use a different name.')
+				return
+			}
+			if (!boardNameExist) addBoard(newBoard)
+
 			setNewBoard({ name: '', columns: [{ name: '', tasks: [] }] })
 			modalRef.current.close()
 		}
