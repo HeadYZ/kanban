@@ -36,13 +36,17 @@ export default function TaskList({ className }) {
 					className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-y-auto lg:overflow-x-hidden tablet:h-full  ${className}`}
 				>
 					{currentBoard.columns.map((board, id) => {
+						let noTasks = true
+						if (!board.tasks) noTasks = true
+						if (board.tasks?.length > 0) noTasks = false
+
 						let color
 						if (id === 0) color = 'bg-blue'
 						if (id === 1) color = 'bg-light-purple'
 						if (id === 2) color = 'bg-green'
 						if (id > 2) color = 'bg-yellow'
 						return (
-							<ul key={board.name} className='min-w-28  max-w-28'>
+							<ul key={board.name} className={`${noTasks ? 'w-13' : 'min-w-28  max-w-28'}`}>
 								<li className='flex mb-2.4 text-hs text-medium-grey uppercase '>
 									<div className={`w-1.5 h-1.5 ${color} rounded-full mr-1.2`}></div> {board.name} (
 									{board.tasks?.length ?? '0'})
@@ -94,7 +98,7 @@ export default function TaskList({ className }) {
 				{taskInfo.showTask && (
 					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
 				)}
-				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns}  />}
+				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} />}
 			</>
 		)
 	}

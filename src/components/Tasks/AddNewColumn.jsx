@@ -20,7 +20,7 @@ export default function ({ open, onClose }) {
 			return [...prevBoard]
 		})
 	}
-
+	console.log(boardColumns)
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
 			const columns = [...prevColumns]
@@ -51,8 +51,8 @@ export default function ({ open, onClose }) {
 		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
 			addNewColumn(boardColumns)
 			setBoardColumns(initialValue)
-			addColRef.current.close()
 		}
+		addColRef.current.close()
 	}
 
 	return (
