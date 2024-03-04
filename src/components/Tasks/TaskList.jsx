@@ -30,6 +30,7 @@ export default function TaskList({ className }) {
 	}
 
 	if (currentBoard) {
+	
 		return (
 			<>
 				<main
@@ -98,7 +99,7 @@ export default function TaskList({ className }) {
 				{taskInfo.showTask && (
 					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
 				)}
-				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} />}
+				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} currentBoard={currentBoard} />}
 			</>
 		)
 	}

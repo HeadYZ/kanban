@@ -3,10 +3,9 @@ import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
-const initialValue = [{ name: '', tasks: [] }]
 
-export default function ({ open, onClose }) {
-	const [boardColumns, setBoardColumns] = useState(initialValue)
+export default function ({ open, onClose, currentBoard }) {
+	const [boardColumns, setBoardColumns] = useState([{ name: '', tasks: [] }])
 	const [error, setError] = useState(null)
 	const { addNewColumn } = useContext(KanbanContex)
 	const addColRef = useRef()
@@ -20,7 +19,6 @@ export default function ({ open, onClose }) {
 			return [...prevBoard]
 		})
 	}
-	console.log(boardColumns)
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
 			const columns = [...prevColumns]
@@ -36,7 +34,7 @@ export default function ({ open, onClose }) {
 			return { ...prevColumns, columns: prevCols }
 		})
 	}
-
+	console.log(currentBoard)
 	const handlerOnSubmit = e => {
 		e.preventDefault()
 		let emptyColumnName = false
@@ -49,9 +47,10 @@ export default function ({ open, onClose }) {
 			return
 		}
 		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
+			
 			addNewColumn(boardColumns)
-			setBoardColumns(initialValue)
 		}
+		setBoardColumns([{ name: '', tasks: [] }])
 		addColRef.current.close()
 	}
 
