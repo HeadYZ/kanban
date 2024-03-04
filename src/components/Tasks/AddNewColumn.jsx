@@ -34,7 +34,7 @@ export default function ({ open, onClose, currentBoard }) {
 			return { ...prevColumns, columns: prevCols }
 		})
 	}
-	console.log(currentBoard)
+
 	const handlerOnSubmit = e => {
 		e.preventDefault()
 		let emptyColumnName = false
@@ -47,8 +47,18 @@ export default function ({ open, onClose, currentBoard }) {
 			return
 		}
 		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
-			
-			addNewColumn(boardColumns)
+			const boardNameExist = boardColumns.some(board => {
+				let nameExist = false
+				currentBoard.columns.forEach(kanbanBoard => {
+					if (board.name.toLowerCase() === kanbanBoard.name.toLowerCase()) nameExist = true
+				})
+				return nameExist
+			})
+			if (boardNameExist) {
+				setError('You are trying to add an existing column name. Use a different name.')
+				return
+			}
+			if (!boardNameExist) addNewColumn(boardColumns)
 		}
 		setBoardColumns([{ name: '', tasks: [] }])
 		addColRef.current.close()
