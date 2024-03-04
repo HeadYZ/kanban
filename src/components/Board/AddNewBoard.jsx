@@ -4,17 +4,15 @@ import Button from '../UI/Button.jsx'
 import { useContext, useEffect, useRef, useState } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 
-const initialValue = { name: '', columns: [{ name: '' }] }
-
 export default function AddNewBoard({ open, onClose }) {
-	const [newBoard, setNewBoard] = useState(initialValue)
+	const [newBoard, setNewBoard] = useState({ name: '', columns: [{ name: '', tasks: [] }] })
 	const [error, setError] = useState(null)
 	const { addBoard } = useContext(KanbanContex)
 	const modalRef = useRef()
 	useEffect(() => {
 		open && modalRef.current.showModal()
 	}, [open])
-console.log('FEFEFFE');
+	console.log('FEFEFFE')
 	const handlerAddNewColumn = () => {
 		setNewBoard(prevColumns => {
 			const prevBoard = { ...prevColumns }
@@ -55,7 +53,7 @@ console.log('FEFEFFE');
 		}
 		if (newBoard.name.trim().length > 0 && newBoard.columns.length > 0) {
 			addBoard(newBoard)
-			setNewBoard(initialValue)
+			setNewBoard({ name: '', columns: [{ name: '', tasks: [] }] })
 			modalRef.current.close()
 		}
 	}
