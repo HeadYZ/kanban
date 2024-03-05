@@ -10,7 +10,7 @@ export default function TaskList({ className }) {
 	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 
-	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null })
+	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null, status: null })
 	const [addNewColumn, setAddNewColumn] = useState(false)
 	const currentBoard = boards.find(board => board.name === selectedBoard)
 
@@ -22,15 +22,14 @@ export default function TaskList({ className }) {
 		setAddNewColumn(false)
 	}
 
-	const handlerShowTask = task => {
-		setTaskInfo({ showTask: true, task })
+	const handlerShowTask = (task, status) => {
+		setTaskInfo({ showTask: true, task, status })
 	}
 	const handlerCloseTask = () => {
-		setTaskInfo({ showTask: false, task: null })
+		setTaskInfo({ showTask: false, task: null, status: null })
 	}
 
 	if (currentBoard) {
-	
 		return (
 			<>
 				<main
@@ -66,7 +65,7 @@ export default function TaskList({ className }) {
 											<Button
 												className='px-1.6 w-full py-2.3 text-left'
 												onClick={() => {
-													handlerShowTask(task)
+													handlerShowTask(task, board.name)
 												}}
 											>
 												<p className='text-hm text-black dark:text-white'>{task.title}</p>
@@ -97,9 +96,17 @@ export default function TaskList({ className }) {
 				</main>
 
 				{taskInfo.showTask && (
-					<Task open={taskInfo.showTask} task={taskInfo.task} onClose={handlerCloseTask} currentBoard={currentBoard} />
+					<Task
+						open={taskInfo.showTask}
+						task={taskInfo.task}
+						status={taskInfo.status}
+						onClose={handlerCloseTask}
+						currentBoard={currentBoard}
+					/>
 				)}
-				{addNewColumn && <AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} currentBoard={currentBoard} />}
+				{addNewColumn && (
+					<AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} currentBoard={currentBoard} />
+				)}
 			</>
 		)
 	}

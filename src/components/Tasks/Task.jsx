@@ -7,14 +7,14 @@ import Button from '../UI/Button.jsx'
 import EditPanel from '../Board/EditPanel.jsx'
 import EditTask from './EditTask.jsx'
 
-export default function Task({ open, task, onClose, currentBoard }) {
+export default function Task({ open, task, onClose, currentBoard, status: taskStatus }) {
 	const [showPanel, setShowPanel] = useState({ editPanel: false, editTask: false })
 	const taskRef = useRef()
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
 		open && taskRef.current.showModal()
 	}, [open])
-console.log(kanbanCtx.boards);
+	console.log(taskStatus)
 	const handlerChekboxSelect = (e, subtask) => {
 		const prevSubtasks = [...task.subtasks]
 		const subtaskId = prevSubtasks.findIndex(prevSubtask => prevSubtask.title === subtask.title)
@@ -69,7 +69,7 @@ console.log(kanbanCtx.boards);
 	const status = currentBoard.columns.map(status => {
 		return status.name
 	})
-	console.log(task)
+
 	return (
 		<>
 			<Modal
@@ -134,11 +134,11 @@ console.log(kanbanCtx.boards);
 							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
 							onChange={handlerChangeStatus}
 						>
-							<option key={task.status} value={task.status}>
-								{task.status}
+							<option key={taskStatus} value={taskStatus}>
+								{taskStatus}
 							</option>
 							{status.map(option => {
-								if (option !== task.status) {
+								if (option !== taskStatus) {
 									return (
 										<option key={option} value={option}>
 											{option}
