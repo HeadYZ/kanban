@@ -96,7 +96,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 					<div className='flex gap-x-1.6'>
 						<img src={logo} alt='' className='w-2.4 h-2.5 tablet:hidden' tabIndex={0} />
 						<Button
-							className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl'
+							className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl tablet:hidden'
 							onClick={handlerToggleShowMobileNav}
 						>
 							{kanbanCtx.activeBoard}
@@ -104,6 +104,9 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 								<img src={downArrow} alt='' className='w-0.8 h-0.4 tablet:hidden' />
 							</span>
 						</Button>
+						<h2 className='hidden items-center text-hl dark:text-white tablet:text-2 lg:text-hxl  tablet:flex'>
+							{kanbanCtx.activeBoard}
+						</h2>
 					</div>
 					<div className='flex relative items-center gap-x-1.6'>
 						<Button
