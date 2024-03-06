@@ -3,7 +3,6 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 import Modal from '../UI/Modal.jsx'
 import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
-const initialValue = { name: '', columns: [{ name: '' }] }
 
 export default function EditBoard({
 	open,
@@ -15,7 +14,7 @@ export default function EditBoard({
 }) {
 	const { boards, activeBoard, editBoard } = useContext(KanbanContex)
 	const editBoardRef = useRef()
-	const [existingBoard, setExistingBoard] = useState(initialValue)
+	const [existingBoard, setExistingBoard] = useState({ name: '', columns: [{ name: '' }] })
 	const [error, setError] = useState(null)
 
 	useEffect(() => {

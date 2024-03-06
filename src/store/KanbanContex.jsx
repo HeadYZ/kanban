@@ -70,7 +70,7 @@ const kanbanBoardsReducer = (state, action) => {
 
 		const indexOfEditedBoard = prevBoard.findIndex(board => board.name === action.editedBoard)
 		prevBoard[indexOfEditedBoard] = action.board
-		return { ...state, boards: prevBoard }
+		return { ...state, boards: prevBoard, activeBoard: action.board.name }
 	}
 	if (action.type === 'DELETE_BOARD') {
 		const prevBoard = [...state.boards]
