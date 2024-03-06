@@ -70,6 +70,11 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 		return status.name
 	})
 
+	let completedSubtasks = 0
+	task.subtasks.forEach(subtask => {
+		if (subtask.isCompleted === true) completedSubtasks++
+	})
+
 	return (
 		<>
 			<Modal
@@ -95,7 +100,9 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 
 					<main className='flex flex-col gap-1.6'>
 						<p className='mb-0.8 text-bodyl text-medium-grey'>{task.description}</p>
-						<span className='text-bodym text-medium-grey dark:text-white'>Subtask ( of {task.subtasks.length})</span>
+						<span className='text-bodym text-medium-grey dark:text-white'>
+							Subtask ( {completedSubtasks} of {task.subtasks.length})
+						</span>
 						<ul className='flex flex-col gap-0.8'>
 							{task.subtasks.map(subtask => {
 								return (
