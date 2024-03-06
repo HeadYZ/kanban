@@ -41,9 +41,10 @@ const kanbanBoardsReducer = (state, action) => {
 		const indexOfOldStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.task.oldStatus)
 		const indexOfNewStatus = prevBoard[indexOfBoard].columns.findIndex(col => col.name === action.task.newStatus)
 
-		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks?.findIndex(
+		const indexOfTask = prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks.findIndex(
 			task => task.title === action.task.taskTitle
 		)
+
 		const task = { ...prevBoard[indexOfBoard].columns[indexOfOldStatus].tasks[indexOfTask] }
 		task.status = action.task.newStatus
 		if (task.title) {
@@ -55,6 +56,7 @@ const kanbanBoardsReducer = (state, action) => {
 				prevBoard[indexOfBoard].columns[indexOfNewStatus].tasks.push(task)
 			}
 		}
+
 		return { ...state, board: prevBoard }
 	}
 	if (action.type === 'ADD_BOARD') {

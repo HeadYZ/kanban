@@ -41,7 +41,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 	// console.log('TASk')
 	const handlerChangeStatus = e => {
 		const newStatus = e.target.value
-		kanbanCtx.changeTaskStatus({ oldStatus: task.status, newStatus, board: currentBoard.name, taskTitle: task.title })
+		kanbanCtx.changeTaskStatus({ oldStatus: taskStatus, newStatus, board: currentBoard.name, taskTitle: task.title })
 		taskRef.current.close()
 	}
 	const handlerShowEditTask = () => {
