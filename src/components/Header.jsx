@@ -24,8 +24,11 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
 	const [showAddTask, setShowAddTask] = useState(false)
-	function handlerToggleShowPanel() {
-		setShowPanel(prevShowPanel => !prevShowPanel)
+	function handlerShowEditPanel() {
+		setShowPanel(true)
+	}
+	function handlerHideEditPanel() {
+		setShowPanel(false)
 	}
 
 	function handlerToggleShowEditBoard() {
@@ -87,7 +90,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	}
 	return (
 		<>
-			<header className='flex h-6.4 px-1.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:px-2.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
+			<header className='flex h-6.4 pl-1.6 pr-0.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:pl-2.4  tablet:pr-1.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
 				<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark '>
 					<img src={logoMobile} alt='' className='h-2.5' />
 					<h1 className='dark:text-light-grey pl-1.6 text-3 font-extrabold'>kanban</h1>
@@ -121,12 +124,12 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<div className='cursor-pointer' onClick={handlerToggleShowPanel}>
+						<div className='cursor-pointer p-1' onClick={handlerShowEditPanel} id='edit-panel-icon'>
 							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
 						</div>
 						<EditPanel
 							open={showPanel}
-							onClose={handlerToggleShowPanel}
+							onClose={handlerHideEditPanel}
 							showPanel={handlerToggleShowEditBoard}
 							showDeleteWarning={handlerToggleShowDeleteBoardModal}
 							editInfo='Edit Board'
