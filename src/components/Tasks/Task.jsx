@@ -14,7 +14,8 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 	useEffect(() => {
 		open && taskRef.current.showModal()
 	}, [open])
-	console.log(taskStatus)
+
+
 	const handlerChekboxSelect = (e, subtask) => {
 		const prevSubtasks = [...task.subtasks]
 		const subtaskId = prevSubtasks.findIndex(prevSubtask => prevSubtask.title === subtask.title)
@@ -38,7 +39,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 		// 	})
 		// } catch (err) {}
 	}
-	// console.log('TASk')
+
 	const handlerChangeStatus = e => {
 		const newStatus = e.target.value
 		kanbanCtx.changeTaskStatus({ oldStatus: taskStatus, newStatus, board: currentBoard.name, taskTitle: task.title })
@@ -158,7 +159,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 					</footer>
 				</div>
 			</Modal>
-			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} />}
+			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} status={taskStatus}  />}
 		</>
 	)
 }

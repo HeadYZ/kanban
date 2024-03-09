@@ -122,12 +122,30 @@ const kanbanBoardsReducer = (state, action) => {
 			board => board.name.toLowerCase() === state.activeBoard.toLowerCase()
 		)
 		const indexOfEditedColumn = prevBoard[indexOfEditedBoard].columns.findIndex(
-			column => column.name.toLowerCase() === action.statusEditTask.toLowerCase()
+			column => column.name.toLowerCase() === action.oldStatus.toLowerCase()
 		)
 		const indexOfEditedTask = prevBoard[indexOfEditedBoard].columns[indexOfEditedColumn].tasks.findIndex(
 			task => task.title.toLowerCase() === action.titleEditTask.toLowerCase()
 		)
-		prevBoard[indexOfEditedBoard].columns[indexOfEditedColumn].tasks[indexOfEditedTask] = action.task
+
+		const editedTask = action.task
+		prevBoard[indexOfEditedBoard].columns[indexOfEditedColumn].tasks[indexOfEditedTask] = editedTask
+
+		if (action.task.statusIsChange) {
+			const indexOfNewStatus = prevBoard[indexOfEditedBoard].columns.findIndex(col => col.name === action.task.status)
+			editedTask.status = action.task.status
+
+			if (indexOfEditedTask >= 0) {
+				prevBoard[indexOfEditedBoard].columns[indexOfEditedColumn].tasks.splice(indexOfEditedTask, 1)
+
+				let prevTask
+				prevBoard[indexOfEditedBoard].columns[indexOfNewStatus].tasks
+					? (prevTask = [...prevBoard[indexOfEditedBoard].columns[indexOfNewStatus].tasks])
+					: (prevTask = [])
+
+				prevBoard[indexOfEditedBoard].columns[indexOfNewStatus].tasks = [...prevTask, editedTask]
+			}
+		}
 
 		return { ...state, boards: prevBoard }
 	}
@@ -168,8 +186,8 @@ export function KanbanContextProvider({ children }) {
 	function addNewColumn(columns) {
 		dispatchKanbanBoards({ type: 'ADD_NEW_COLUMN', columns })
 	}
-	function editTask(task, titleEditTask, statusEditTask) {
-		dispatchKanbanBoards({ type: 'EDIT_TASK', task, titleEditTask, statusEditTask })
+	function editTask(task, titleEditTask, oldStatus) {
+		dispatchKanbanBoards({ type: 'EDIT_TASK', task, titleEditTask, oldStatus })
 	}
 
 	useEffect(() => {

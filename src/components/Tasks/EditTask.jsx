@@ -6,7 +6,7 @@ import Select from '../UI/Select.jsx'
 import TextArea from '../UI/Textarea.jsx'
 import Input from '../UI/Input.jsx'
 
-export default function EditTask({ open, task, onClose }) {
+export default function EditTask({ open, task, onClose, status: oldStatus }) {
 	const [editedTask, setEditedTask] = useState(task)
 	const [error, setError] = useState(null)
 	const { boards, activeBoard, editTask } = useContext(KanbanContex)
@@ -14,8 +14,12 @@ export default function EditTask({ open, task, onClose }) {
 
 	const currentBoard = boards.find(board => board.name === activeBoard)
 	const availableStatus = currentBoard?.columns.map(status => {
-		return status.name
+		if (status.name !== oldStatus) {
+			return status.name
+		}
+		return
 	})
+	console.log(availableStatus)
 
 	useEffect(() => {
 		open && editTaskRef.current.showModal()
@@ -76,7 +80,7 @@ export default function EditTask({ open, task, onClose }) {
 			return
 		}
 
-		editTask(editedTask, task.title, task.status)
+		editTask(editedTask, task.title, oldStatus)
 		setError(null)
 		// editTaskRef.current.close()
 	}
