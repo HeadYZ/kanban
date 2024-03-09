@@ -85,7 +85,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 				<div className='flex flex-col gap-1.6'>
 					<header className='flex items-center justify-between relative w-full gap-1.6'>
 						<h3 className='text-hl text-black dark:text-white '>{task.title}</h3>
-						<Button className='flex items-center justify-center p-1' onClick={handlerShowEditPanel}>
+						<Button className='flex items-center justify-center p-1 edit-panel-icon' onClick={handlerShowEditPanel}>
 							<img src={iconVertical} alt='' className='h-2 w-0.462' />
 						</Button>
 						<EditPanel

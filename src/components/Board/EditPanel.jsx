@@ -4,14 +4,18 @@ import Button from '../UI/Button.jsx'
 export default function EditPanel({ open, showPanel, showDeleteWarning, onClose, editInfo, deleteInfo, position }) {
 	const handlerClosePanel = e => {
 		const clickedEditPanel = e.target.closest('#editPanel')
-		const clickedEditIconPanel = e.target.closest('#edit-panel-icon')
-		if (clickedEditIconPanel === null && clickedEditPanel === null) onClose()
+		const clickedEditIconPanel = e.target.closest('.edit-panel-icon')
+		if (clickedEditIconPanel === null && clickedEditPanel === null) {
+			onClose()
+		} else {
+			return
+		}
 	}
 
 	useEffect(() => {
-		window.addEventListener('click', handlerClosePanel)
-	}, [])
-	console.log(open)
+		open === true && window.addEventListener('click', handlerClosePanel)
+	}, [open])
+
 	return (
 		<div
 			id='editPanel'

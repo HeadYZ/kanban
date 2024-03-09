@@ -124,7 +124,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<div className='cursor-pointer p-1' onClick={handlerShowEditPanel} id='edit-panel-icon'>
+						<div className='cursor-pointer p-1 edit-panel-icon' onClick={handlerShowEditPanel}>
 							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
 						</div>
 						<EditPanel
