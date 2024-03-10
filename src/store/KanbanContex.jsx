@@ -76,7 +76,11 @@ const kanbanBoardsReducer = (state, action) => {
 		const prevBoard = [...state.boards]
 		const indexOfDeletedBoard = prevBoard.findIndex(board => board.name === action.deletedBoard)
 		prevBoard.splice(indexOfDeletedBoard, 1)
-		return { ...state, boards: prevBoard }
+
+		let activeBoard
+		if (state.boards[1]?.name) activeBoard = state.boards[1].name
+		if (!state.boards[1]?.name) activeBoard = ''
+		return { ...state, boards: prevBoard, activeBoard: activeBoard }
 	}
 	if (action.type === 'ADD_TASK') {
 		const prevBoards = [...state.boards]

@@ -24,7 +24,7 @@ const Nav = ({ showNav, onClose }) => {
 			<nav
 				className={`${
 					showNav ? 'z-20' : 'opacity-0 -z-10'
-				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0  tablet:w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 tablet:transition-transform transition-opacity ${
+				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0 tablet:relative  tablet:w-26.1 tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 lg:min-w-30 tablet:transition-transform transition-opacity ${
 					visualCtx.showSidebar
 						? 'tablet:translate-x-minus26.1 lg:translate-x-minus30 '
 						: 'tablet:translate-x-0 tablet:delay-300'

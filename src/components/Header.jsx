@@ -90,8 +90,8 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	}
 	return (
 		<>
-			<header className='flex h-6.4 pl-1.6 pr-0.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:pl-2.4  tablet:pr-1.4  lg:h-9.6 lg:px-3.4 tablet:border-b tablet:border-lines-light dark:tablet:border-lines-dark'>
-				<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark '>
+			<header className='flex h-6.4 pl-1.6 pr-0.6 bg-white dark:bg-dark-grey  tablet:h-8 tablet:pl-2.4  tablet:pr-1.4  lg:h-9.6 lg:px-3.4 '>
+				<div className='hidden tablet:flex items-center h-full min-w-23.7  lg:min-w-26.6  border-r border-lines-light dark:border-lines-dark  '>
 					<img src={logoMobile} alt='' className='h-2.5' />
 					<h1 className='dark:text-light-grey pl-1.6 text-3 font-extrabold'>kanban</h1>
 				</div>

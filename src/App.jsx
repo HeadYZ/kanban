@@ -14,7 +14,7 @@ function App() {
 	function handlerToggleShowMobileNav() {
 		setShowNav(prevShowNav => !prevShowNav)
 	}
-	console.log('app');
+	console.log('app')
 	return (
 		<>
 			{isLoading && (
@@ -30,7 +30,7 @@ function App() {
 				<Header handlerToggleShowMobileNav={handlerToggleShowMobileNav} navIsVisible={showNav} />
 			)}
 			{!isLoading && !error && (
-				<div className='flex relative tablet:h-calcshm lg:h-calcshl overflow-x-auto overflow-y-hidden'>
+				<div className=' flex relative tablet:h-calcshm lg:h-calcshl overflow-hidden'>
 					<Nav showNav={showNav} onClose={handlerToggleShowMobileNav} />
 					<Tasks boards={boards} />
 				</div>
@@ -40,3 +40,6 @@ function App() {
 }
 
 export default App
+{
+	/* <div className='flex relative tablet:h-calcshm lg:h-calcshl overflow-x-auto overflow-y-hidden'> */
+}

@@ -32,9 +32,7 @@ export default function TaskList({ className }) {
 	if (currentBoard) {
 		return (
 			<>
-				<main
-					className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-y-auto lg:overflow-x-hidden tablet:h-full  ${className}`}
-				>
+				<main className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto tablet:h-full ${className} `}>
 					{currentBoard.columns.map((board, id) => {
 						let noTasks = true
 						if (!board.tasks) noTasks = true
