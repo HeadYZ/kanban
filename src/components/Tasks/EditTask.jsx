@@ -13,14 +13,15 @@ export default function EditTask({ open, task, onClose, status: oldStatus }) {
 	const editTaskRef = useRef()
 
 	const currentBoard = boards.find(board => board.name === activeBoard)
-	const availableStatus = currentBoard?.columns.map(status => {
-		if (status.name !== oldStatus) {
-			return status.name
-		}
-		return
-	})
-	console.log(availableStatus)
-
+	const filtredStatus = currentBoard?.columns
+		.map(status => {
+			if (status.name !== oldStatus) {
+				return status.name
+			}
+			return
+		})
+		.filter(status => status !== undefined)
+	const availableStatus = [oldStatus, ...filtredStatus]
 	useEffect(() => {
 		open && editTaskRef.current.showModal()
 	}, [open])
