@@ -7,14 +7,13 @@ import Task from './Task.jsx'
 import AddNewColumn from './AddNewColumn.jsx'
 
 export default function TaskList({ className }) {
-	const { boards, activeBoard: selectedBoard } = useContext(KanbanContex)
+	const { findCurrentBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null, status: null })
 	const [addNewColumn, setAddNewColumn] = useState(false)
-	const currentBoard = boards.find(board => board.name === selectedBoard)
+	const currentBoard = findCurrentBoard()
 
-	console.log('task list')
 	const handlerShowAddNewColumns = () => {
 		setAddNewColumn(true)
 	}

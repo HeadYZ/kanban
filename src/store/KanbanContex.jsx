@@ -13,6 +13,7 @@ const KanbanContex = createContext({
 	addTask: () => {},
 	addNewColumn: () => {},
 	editTask: () => {},
+	findCurrentBoard: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -193,6 +194,9 @@ export function KanbanContextProvider({ children }) {
 	function editTask(task, titleEditTask, oldStatus) {
 		dispatchKanbanBoards({ type: 'EDIT_TASK', task, titleEditTask, oldStatus })
 	}
+	function findCurrentBoard() {
+		return kanbanBoards?.boards.find(board => board.name === kanbanBoards.activeBoard)
+	}
 
 	useEffect(() => {
 		if (kanbanBoards.boards.length > 0 && !kanbanBoards.activeBoard) {
@@ -213,6 +217,7 @@ export function KanbanContextProvider({ children }) {
 		addTask,
 		addNewColumn,
 		editTask,
+		findCurrentBoard,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>
