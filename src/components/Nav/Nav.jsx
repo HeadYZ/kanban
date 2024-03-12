@@ -10,13 +10,18 @@ import VisualContext from '../../store/VisualContext.jsx'
 import AddNewBoard from '../Board/AddNewBoard.jsx'
 
 const Nav = ({ showNav, onClose }) => {
-	const kanbanCtx = useContext(KanbanContex)
+	const { boards, addBoard, selectBoard, activeBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 	const [showModal, setShowModal] = useState(false)
-	console.log('ja sie generuje')
 
 	const handlerShowModal = () => {
 		setShowModal(prevShow => !prevShow)
+	}
+	const handlerCreateNewBoard = newBoard => {
+		addBoard(newBoard)
+	}
+	const handlerSelectBoard = selectedBoard => {
+		selectBoard(selectedBoard)
 	}
 
 	return (
@@ -32,10 +37,10 @@ const Nav = ({ showNav, onClose }) => {
 			>
 				<main className='pt-1.6 tablet:pt-3.2'>
 					<h2 className='text-1.2 pl-2.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
-						All boards ({kanbanCtx.boards.length})
+						All boards ({boards.length})
 					</h2>
 					<ul className='pt-1.9'>
-						<NavItem kanbanCtx={kanbanCtx} onClose={onClose} />
+						<NavItem boards={boards} onClose={onClose} onSelectBoard={handlerSelectBoard} activeBoard={activeBoard} />
 						<li
 							className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple lg:w-27.6 lg:pl-3.2 lg:gap-x-1.6'
 							onClick={handlerShowModal}
@@ -70,7 +75,14 @@ const Nav = ({ showNav, onClose }) => {
 					showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
 				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:opacity-0 tablet:-z-10 nav-backdrop`}
 			></div>
-			{showModal && <AddNewBoard open={showModal} onClose={handlerShowModal}></AddNewBoard>}
+			{showModal && (
+				<AddNewBoard
+					open={showModal}
+					onClose={handlerShowModal}
+					boards={boards}
+					onAddBoard={handlerCreateNewBoard}
+				></AddNewBoard>
+			)}
 		</>
 	)
 }

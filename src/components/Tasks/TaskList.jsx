@@ -5,6 +5,7 @@ import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import VisualContext from '../../store/VisualContext.jsx'
 import Task from './Task.jsx'
 import AddNewColumn from './AddNewColumn.jsx'
+import NewColumn from './NewColumn.jsx'
 
 export default function TaskList({ className }) {
 	const { findCurrentBoard } = useContext(KanbanContex)
@@ -13,7 +14,6 @@ export default function TaskList({ className }) {
 	const [taskInfo, setTaskInfo] = useState({ showTask: false, task: null, status: null })
 	const [addNewColumn, setAddNewColumn] = useState(false)
 	const currentBoard = findCurrentBoard()
-
 	const handlerShowAddNewColumns = () => {
 		setAddNewColumn(true)
 	}
@@ -28,7 +28,17 @@ export default function TaskList({ className }) {
 		setTaskInfo({ showTask: false, task: null, status: null })
 	}
 
-	if (currentBoard) {
+	if (currentBoard?.columns.length === 0) {
+		return (
+			<NewColumn
+				showSidebar={visualCtx.showSidebar}
+				toggleSidebar={visualCtx.handlerToggleSidebar}
+				currentBoard={currentBoard}
+			/>
+		)
+	}
+
+	if (currentBoard?.columns.length > 0) {
 		return (
 			<>
 				<main className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto tablet:h-full ${className} `}>

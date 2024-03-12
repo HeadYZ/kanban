@@ -1,13 +1,12 @@
 import Input from '../UI/Input.jsx'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
-import { useContext, useEffect, useRef, useState } from 'react'
-import KanbanContex from '../../store/KanbanContex.jsx'
+import { useEffect, useRef, useState } from 'react'
 
-export default function AddNewBoard({ open, onClose }) {
+export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoard }) {
 	const [newBoard, setNewBoard] = useState({ name: '', columns: [{ name: '', tasks: [] }] })
 	const [error, setError] = useState(null)
-	const { boards, addBoard } = useContext(KanbanContex)
+
 	const modalRef = useRef()
 	useEffect(() => {
 		open && modalRef.current.showModal()

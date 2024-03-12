@@ -1,9 +1,9 @@
 import IconBoard from '../../assets/IconBoard.jsx'
 import Button from '../UI/Button.jsx'
-export default function NavItem({ kanbanCtx, onClose }) {
-	return kanbanCtx.boards.map(board => {
+export default function NavItem({ boards, onClose, onSelectBoard, activeBoard: currentBoard }) {
+	return boards.map(board => {
 		const activeBoardClass = 'bg-purple rounded-r-full text-white'
-		const activeBoard = board.name === kanbanCtx.activeBoard
+		const activeBoard = board.name === currentBoard
 		return (
 			<li
 				key={board.name}
@@ -12,7 +12,7 @@ export default function NavItem({ kanbanCtx, onClose }) {
 					activeBoard && activeBoardClass
 				} lg:w-27.6 `}
 				onClick={() => {
-					kanbanCtx.selectBoard(board.name)
+					onSelectBoard(board.name)
 					onClose()
 				}}
 			>
