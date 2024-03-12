@@ -24,6 +24,7 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
 	const [showAddTask, setShowAddTask] = useState(false)
+
 	function handlerShowEditPanel() {
 		setShowPanel(true)
 	}
@@ -102,13 +103,13 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl tablet:hidden'
 							onClick={handlerToggleShowMobileNav}
 						>
-							{kanbanCtx.activeBoard}
+							{kanbanCtx.activeBoard ? kanbanCtx.activeBoard : 'There is no board'}
 							<span className={`px-0.6 ${navIsVisible && 'rotate-180'} transition-transform`}>
 								<img src={downArrow} alt='' className='w-0.8 h-0.4 tablet:hidden' />
 							</span>
 						</Button>
 						<h2 className='hidden items-center text-hl dark:text-white tablet:text-2 lg:text-hxl  tablet:flex'>
-							{kanbanCtx.activeBoard}
+							{kanbanCtx.activeBoard ? kanbanCtx.activeBoard : 'There is no board'}
 						</h2>
 					</div>
 					<div className='flex relative items-center gap-x-1.6'>

@@ -50,7 +50,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 			return
 		}
 		if (newBoard.name.trim().length > 0 && newBoard.columns.length > 0) {
-			const boardNameExist = boards.some(kanbanBoard => {
+			const boardNameExist = boards?.some(kanbanBoard => {
 				return kanbanBoard.name.toLowerCase() === newBoard.name.toLowerCase()
 			})
 			if (boardNameExist) {

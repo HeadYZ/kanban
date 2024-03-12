@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import Button from '../UI/Button.jsx'
-import AddNewColumn from './AddNewColumn.jsx'
 import AddNewBoard from '../Board/AddNewBoard.jsx'
-export default function NewBoard({ showSidebar, toggleSidebar, currentBoard }) {
-	const [addNewColumn, setAddNewColumn] = useState(false)
-	const handlerShowAddNewColumns = () => {
-		setAddNewColumn(true)
+export default function NewBoard({ showSidebar, toggleSidebar, currentBoard, onAddBoard }) {
+	const [addNewBoard, setAddNewBoard] = useState(false)
+	const handlerShowAddNewBoard = () => {
+		setAddNewBoard(true)
 	}
-	const handlerHideAddNewColumns = () => {
-		setAddNewColumn(false)
+	const handlerHideAddNewBoard = () => {
+		setAddNewBoard(false)
 	}
 
 	return (
@@ -19,12 +18,12 @@ export default function NewBoard({ showSidebar, toggleSidebar, currentBoard }) {
 					showSidebar ? 'tablet:translate-x-minus30 min-w-wcalc ' : 'tablet:translate-x-0 min-w-minw delay-300 '
 				}  transition-all`}
 			>
-				<p className='text-hl text-medium-grey sm:pr-2.4 '>This board is empty. Create a new column to get started.</p>
+				<p className='text-hl text-medium-grey sm:pr-2.4 '>No Boards. Create a new board to get started.</p>
 				<Button
 					className='flex items-center justify-center w-17.4 h-4.8 bg-purple rounded-2.4 text-hm text-white'
-					onClick={handlerShowAddNewColumns}
+					onClick={handlerShowAddNewBoard}
 				>
-					+ Add New Column
+					+ Add New Board
 				</Button>
 				<Button
 					className={`flex ${
@@ -35,8 +34,13 @@ export default function NewBoard({ showSidebar, toggleSidebar, currentBoard }) {
 					<img src={iconShowSidebar} alt='' />
 				</Button>
 			</main>
-			{addNewColumn && (
-				<AddNewColumn open={addNewColumn} onClose={handlerHideAddNewColumns} currentBoard={currentBoard} />
+			{addNewBoard && (
+				<AddNewBoard
+					open={addNewBoard}
+					onClose={handlerHideAddNewBoard}
+					currentBoard={currentBoard}
+					onAddBoard={onAddBoard}
+				/>
 			)}
 		</>
 	)

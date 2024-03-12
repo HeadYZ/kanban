@@ -1,25 +1,27 @@
-import Button from '../UI/Button.jsx'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 
 import VisualContext from '../../store/VisualContext.jsx'
 import TaskList from './TaskList.jsx'
-import NewColumn from './NewColumn.jsx'
+import NewBoard from './NewBoard.jsx'
 
 const Tasks = ({ boards }) => {
-	const { boards: kanbanBoards, findCurrentBoard, fetchBoards } = useContext(KanbanContex)
+	const { boards: kanbanBoards, findCurrentBoard, fetchBoards, addBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-	let currentBoard
-	useEffect(() => {
-		fetchBoards(boards)
-	}, [])
-	if (kanbanBoards.length > 0) currentBoard = findCurrentBoard()
+	const currentBoard = findCurrentBoard()
+	// useEffect(() => {
+	// 	fetchBoards(boards)
+	// }, [])
+	const handlerCreateNewBoard = newBoard => {
+		addBoard(newBoard)
+	}
 
-	if (kanbanBoards.length === 0) {
+	if (kanbanBoards?.length === 0) {
 		return (
-			<NewColumn
+			<NewBoard
 				showSidebar={visualCtx.showSidebar}
 				toggleSidebar={visualCtx.handlerToggleSidebar}
+				onAddBoard={handlerCreateNewBoard}
 				currentBoard={currentBoard}
 			/>
 		)
