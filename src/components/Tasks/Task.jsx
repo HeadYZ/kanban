@@ -6,15 +6,23 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 import Button from '../UI/Button.jsx'
 import EditPanel from '../Board/EditPanel.jsx'
 import EditTask from './EditTask.jsx'
+import DeleteInformation from '../DeleteInformation.jsx'
 
 export default function Task({ open, task, onClose, currentBoard, status: taskStatus }) {
 	const [showPanel, setShowPanel] = useState({ editPanel: false, editTask: false })
+	const [showDeleteInfo, setShowDeleteInfo] = useState(false)
 	const taskRef = useRef()
 	const kanbanCtx = useContext(KanbanContex)
 	useEffect(() => {
 		open && taskRef.current.showModal()
 	}, [open])
 
+	const handlerShowDeleteInformation = () => {
+		setShowDeleteInfo(true)
+	}
+	const handlerHideDeleteInformation = () => {
+		setShowDeleteInfo(false)
+	}
 
 	const handlerChekboxSelect = (e, subtask) => {
 		const prevSubtasks = [...task.subtasks]
@@ -95,6 +103,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 							onClose={handlerCloseEditPanel}
 							editInfo='Edit Task'
 							deleteInfo='Delete Task'
+							showDeleteWarning={handlerShowDeleteInformation}
 							position='top-4 -right-2 '
 						></EditPanel>
 					</header>
@@ -159,7 +168,21 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 					</footer>
 				</div>
 			</Modal>
-			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} closeTask={onClose} status={taskStatus}  />}
+			{showPanel.editTask && (
+				<EditTask
+					open={showPanel.editTask}
+					task={task}
+					onClose={handlerHideEditTask}
+					closeTask={onClose}
+					status={taskStatus}
+				/>
+			)}
+			<DeleteInformation
+				open={showDeleteInfo}
+				onClose={handlerHideDeleteInformation}
+				deletedElement={`${task.title} task`}
+				deletedInformation={`Are you sure you want to delete the ‘${task.title}’ task and its subtasks? This action cannot be reversed.`}
+			/>
 		</>
 	)
 }
