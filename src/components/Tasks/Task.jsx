@@ -12,7 +12,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 	const [showPanel, setShowPanel] = useState({ editPanel: false, editTask: false })
 	const [showDeleteInfo, setShowDeleteInfo] = useState(false)
 	const taskRef = useRef()
-	const kanbanCtx = useContext(KanbanContex)
+	const { editSubtask, changeTaskStatus, deleteTask } = useContext(KanbanContex)
 	useEffect(() => {
 		open && taskRef.current.showModal()
 	}, [open])
@@ -30,7 +30,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 		const subtaskIsCompleted = prevSubtasks[subtaskId].isCompleted
 		prevSubtasks[subtaskId].isCompleted = !subtaskIsCompleted
 
-		kanbanCtx.editSubtask({
+		editSubtask({
 			subtasks: prevSubtasks,
 			status: task.status,
 			board: currentBoard.name,
@@ -50,7 +50,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 
 	const handlerChangeStatus = e => {
 		const newStatus = e.target.value
-		kanbanCtx.changeTaskStatus({ oldStatus: taskStatus, newStatus, board: currentBoard.name, taskTitle: task.title })
+		changeTaskStatus({ oldStatus: taskStatus, newStatus, board: currentBoard.name, taskTitle: task.title })
 		taskRef.current.close()
 	}
 	const handlerShowEditTask = () => {
@@ -83,6 +83,11 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 	task.subtasks.forEach(subtask => {
 		if (subtask.isCompleted === true) completedSubtasks++
 	})
+
+	const handlerDeleteTask = () => {
+		deleteTask(task.title, taskStatus)
+		taskRef.current.close()
+	}
 
 	return (
 		<>
@@ -182,6 +187,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 				onClose={handlerHideDeleteInformation}
 				deletedElement={`${task.title} task`}
 				deletedInformation={`Are you sure you want to delete the ‘${task.title}’ task and its subtasks? This action cannot be reversed.`}
+				onDelete={handlerDeleteTask}
 			/>
 		</>
 	)

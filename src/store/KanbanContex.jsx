@@ -14,6 +14,7 @@ const KanbanContex = createContext({
 	addNewColumn: () => {},
 	editTask: () => {},
 	findCurrentBoard: () => {},
+	deleteTask: () => {},
 })
 
 const kanbanBoardsReducer = (state, action) => {
@@ -154,6 +155,22 @@ const kanbanBoardsReducer = (state, action) => {
 
 		return { ...state, boards: prevBoard }
 	}
+	if (action.type === 'DELETE_TASK') {
+		const prevBoard = [...state.boards]
+		const indexOfDeletedBoard = prevBoard.findIndex(board => board.name === state.activeBoard)
+		const indexOfDeletedStatus = prevBoard[indexOfDeletedBoard].columns.findIndex(
+			status => status.name.toLowerCase() === action.taskStatus.toLowerCase()
+		)
+		const indexOfDeletedTask = prevBoard[indexOfDeletedBoard].columns[indexOfDeletedStatus].tasks.findIndex(
+			task => task.title.toLowerCase() === action.taskTitle.toLowerCase()
+		)
+
+		if (indexOfDeletedTask >= 0) {
+			prevBoard[indexOfDeletedBoard].columns[indexOfDeletedStatus].tasks.splice(indexOfDeletedTask, 1)
+		}
+
+		return { ...state, boards: prevBoard }
+	}
 	return state
 }
 
@@ -197,6 +214,9 @@ export function KanbanContextProvider({ children }) {
 	function findCurrentBoard() {
 		return kanbanBoards?.boards.find(board => board.name === kanbanBoards.activeBoard)
 	}
+	function deleteTask(taskTitle, taskStatus) {
+		dispatchKanbanBoards({ type: 'DELETE_TASK', taskTitle, taskStatus })
+	}
 
 	useEffect(() => {
 		if (kanbanBoards.boards.length > 0 && !kanbanBoards.activeBoard) {
@@ -218,6 +238,7 @@ export function KanbanContextProvider({ children }) {
 		addNewColumn,
 		editTask,
 		findCurrentBoard,
+		deleteTask,
 	}
 
 	return <KanbanContex.Provider value={kanban}>{children}</KanbanContex.Provider>
