@@ -6,7 +6,7 @@ import Select from '../UI/Select.jsx'
 import TextArea from '../UI/Textarea.jsx'
 import Input from '../UI/Input.jsx'
 
-export default function EditTask({ open, task, onClose, status: oldStatus }) {
+export default function EditTask({ open, task, onClose, status: oldStatus, closeTask }) {
 	const [editedTask, setEditedTask] = useState(task)
 	const [error, setError] = useState(null)
 	const { boards, activeBoard, editTask } = useContext(KanbanContex)
@@ -83,7 +83,8 @@ export default function EditTask({ open, task, onClose, status: oldStatus }) {
 
 		editTask(editedTask, task.title, oldStatus)
 		setError(null)
-		// editTaskRef.current.close()
+		editTaskRef.current.close()
+		closeTask()
 	}
 
 	return (

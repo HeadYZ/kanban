@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import KanbanContex from '../../store/KanbanContex.jsx'
 
 import VisualContext from '../../store/VisualContext.jsx'
@@ -9,9 +9,9 @@ const Tasks = ({ boards }) => {
 	const { boards: kanbanBoards, findCurrentBoard, fetchBoards, addBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 	const currentBoard = findCurrentBoard()
-	// useEffect(() => {
-	// 	fetchBoards(boards)
-	// }, [])
+	useEffect(() => {
+		fetchBoards(boards)
+	}, [])
 	const handlerCreateNewBoard = newBoard => {
 		addBoard(newBoard)
 	}

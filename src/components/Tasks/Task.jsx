@@ -159,7 +159,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 					</footer>
 				</div>
 			</Modal>
-			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} status={taskStatus}  />}
+			{showPanel.editTask && <EditTask open={showPanel.editTask} task={task} onClose={handlerHideEditTask} closeTask={onClose} status={taskStatus}  />}
 		</>
 	)
 }
