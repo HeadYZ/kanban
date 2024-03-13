@@ -7,10 +7,9 @@ import Button from './UI/Button.jsx'
 import { useContext, useState } from 'react'
 import KanbanContex from '../store/KanbanContex.jsx'
 import EditBoard from './Board/EditBoard.jsx'
-import DeleteColumnBoard from './Board/DeleteColumnBoard.jsx'
-import DeleteBoard from './Board/DeleteBoard.jsx'
 import EditPanel from './Board/EditPanel.jsx'
 import { AddNewTask } from './Board/AddNewTask.jsx'
+import DeleteInformation from './DeleteInformation.jsx'
 
 const initialDeleteState = {
 	showEditBoard: false,
@@ -20,7 +19,7 @@ const initialDeleteState = {
 	deleteCol: false,
 }
 const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
-	const kanbanCtx = useContext(KanbanContex)
+	const { boards, activeBoard, deleteBoard } = useContext(KanbanContex)
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
 	const [showAddTask, setShowAddTask] = useState(false)
@@ -79,9 +78,9 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 		})
 	}
 
-	function deleteBoard() {
-		const currentBoard = kanbanCtx.activeBoard
-		kanbanCtx.deleteBoard(currentBoard)
+	function handlerDeleteBoard() {
+		const currentBoard = activeBoard
+		deleteBoard(currentBoard)
 	}
 	function handlerShowAddTask() {
 		setShowAddTask(true)
@@ -103,19 +102,19 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							className='flex items-center text-hl dark:text-white tablet:text-2 lg:text-hxl tablet:hidden'
 							onClick={handlerToggleShowMobileNav}
 						>
-							{kanbanCtx.activeBoard ? kanbanCtx.activeBoard : 'There is no board'}
+							{activeBoard ? activeBoard : 'There is no board'}
 							<span className={`px-0.6 ${navIsVisible && 'rotate-180'} transition-transform`}>
 								<img src={downArrow} alt='' className='w-0.8 h-0.4 tablet:hidden' />
 							</span>
 						</Button>
 						<h2 className='hidden items-center text-hl dark:text-white tablet:text-2 lg:text-hxl  tablet:flex'>
-							{kanbanCtx.activeBoard ? kanbanCtx.activeBoard : 'There is no board'}
+							{activeBoard ? activeBoard : 'There is no board'}
 						</h2>
 					</div>
 					<div className='flex relative items-center gap-x-1.6'>
 						<Button
 							className={`flex items-center justify-center w-4.8 h-3.2  ${
-								kanbanCtx.boards.length > 0 ? 'opacity-1' : 'opacity-25'
+								boards.length > 0 ? 'opacity-1' : 'opacity-25'
 							} bg-purple rounded-2.4  tablet:text-hm tablet:w-16.4 tablet:h-4.8 tablet:text-white  `}
 							onClick={handlerShowAddTask}
 						>
@@ -149,21 +148,25 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 				deleteColId={editBoard.deleteColId}
 				clearDeleteState={clearDeleteState}
 			></EditBoard>
+
 			{editBoard.showDeleteColModal && (
-				<DeleteColumnBoard
+				<DeleteInformation
 					open={editBoard.showDeleteColModal}
-					status={editBoard.status}
+					deletedElement={editBoard.status}
 					onClose={handlerToggleShowDeleteColModal}
-					deleteCol={handlerDeleteCol}
+					onDelete={handlerDeleteCol}
+					deletedInformation={`Are you sure you want to delete the ‘${editBoard.status}’ tasks and its subtasks? This action cannot be reversed.`}
 					onCancel={cancelDelete}
 				/>
 			)}
 
-			<DeleteBoard
+			<DeleteInformation
 				open={editBoard.showDeleteBoardModal}
 				onClose={handlerToggleShowDeleteBoardModal}
-				onDelete={deleteBoard}
-				currentBoard={kanbanCtx.activeBoard}
+				onDelete={handlerDeleteBoard}
+				deletedInformation={`Are you sure you want to delete the ‘${activeBoard}’ board? This action will remove all columns and tasks and
+				cannot be reversed.`}
+				deletedElement={activeBoard}
 			/>
 			{showAddTask && <AddNewTask open={showAddTask} onClose={handlerHideAddTask}></AddNewTask>}
 		</>
