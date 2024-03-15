@@ -95,7 +95,7 @@ export default function TaskList({ className }) {
 					<Button
 						className={`flex ${
 							visualCtx.showSidebar ? 'left-0 opacity-100 delay-300' : 'left-minus5.6 opacity-0 '
-						} items-center justify-center fixed bottom-3.2   w-5.6 h-4.8 bg-purple rounded-r-full opacity-0  transition-all `}
+						} items-center justify-center fixed bottom-3.2   w-5.6 h-4.8 bg-purple rounded-r-full  transition-all `}
 						onClick={visualCtx.handlerToggleSidebar}
 					>
 						<img src={iconShowSidebar} alt='' />

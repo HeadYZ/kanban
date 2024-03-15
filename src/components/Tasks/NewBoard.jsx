@@ -20,7 +20,7 @@ export default function NewBoard({ showSidebar, toggleSidebar, currentBoard, onA
 			>
 				<p className='text-hl text-medium-grey sm:pr-2.4 '>No Boards. Create a new board to get started.</p>
 				<Button
-					className='flex items-center justify-center w-17.4 h-4.8 bg-purple rounded-2.4 text-hm text-white'
+					className='flex items-center justify-center w-17.4 h-4.8 bg-purple rounded-2.4 text-hm text-white hover:bg-purple-hover transition ease-out duration-300'
 					onClick={handlerShowAddNewBoard}
 				>
 					+ Add New Board
@@ -28,7 +28,7 @@ export default function NewBoard({ showSidebar, toggleSidebar, currentBoard, onA
 				<Button
 					className={`flex ${
 						showSidebar ? 'left-0 opacity-100 delay-300' : 'left-minus5.6 opacity-0 '
-					} items-center justify-center absolute bottom-3.2   w-5.6 h-4.8 bg-purple rounded-r-full opacity-0  transition-all `}
+					} items-center justify-center absolute bottom-3.2   w-5.6 h-4.8 bg-purple rounded-r-full  transition-all hover:bg-purple-hover hover:transition hover:ease-out hover:duration-300 `}
 					onClick={toggleSidebar}
 				>
 					<img src={iconShowSidebar} alt='' />

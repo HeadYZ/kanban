@@ -115,7 +115,10 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 						<Button
 							className={`flex items-center justify-center w-4.8 h-3.2  ${
 								boards.length > 0 ? 'opacity-1' : 'opacity-25'
-							} bg-purple rounded-2.4  tablet:text-hm tablet:w-16.4 tablet:h-4.8 tablet:text-white  `}
+							} bg-purple rounded-2.4  tablet:text-hm tablet:w-16.4 tablet:h-4.8 tablet:text-white ${
+								activeBoard ? '' : 'cursor-not-allowed'
+							}`}
+							disabled={activeBoard ? false : true}
 							onClick={handlerShowAddTask}
 						>
 							<span className='tablet:hidden'>
