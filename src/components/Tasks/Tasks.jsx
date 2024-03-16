@@ -9,9 +9,9 @@ const Tasks = ({ boards }) => {
 	const { boards: kanbanBoards, findCurrentBoard, fetchBoards, addBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 	const currentBoard = findCurrentBoard()
-	// useEffect(() => {
-	// 	fetchBoards(boards)
-	// }, [])
+	useEffect(() => {
+		fetchBoards(boards)
+	}, [])
 	const handlerCreateNewBoard = newBoard => {
 		addBoard(newBoard)
 	}
@@ -31,7 +31,7 @@ const Tasks = ({ boards }) => {
 		<TaskList
 			className={` ${
 				visualCtx.showSidebar ? 'tablet:translate-x-minus30 min-w-wcalc ' : 'tablet:translate-x-0 min-w-minw delay-300 '
-			}  transition-all	tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark `}
+			}  transition-all`}
 		/>
 	)
 }

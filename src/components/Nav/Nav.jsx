@@ -4,10 +4,10 @@ import moonIcon from '../../assets/icon-dark-theme.svg'
 import IconBoard from '../../assets/IconBoard.jsx'
 import Button from '../UI/Button.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
-import iconHideSidebar from '../../assets/icon-hide-sidebar.svg'
 import NavItem from './NavItem.jsx'
 import VisualContext from '../../store/VisualContext.jsx'
 import AddNewBoard from '../Board/AddNewBoard.jsx'
+import IconHideSidebar from '../../assets/IconHideSidebar.jsx'
 
 const Nav = ({ showNav, onClose }) => {
 	const { boards, addBoard, selectBoard, activeBoard } = useContext(KanbanContex)
@@ -66,10 +66,11 @@ const Nav = ({ showNav, onClose }) => {
 						<img src={moonIcon} alt='' />
 					</div>
 					<Button
-						className='hidden tablet:flex justify-center items-center text-hm pl-2.4 h-4.8 mb-3.2 text-medium-grey lg:pl-3.2'
+						className='hidden group tablet:flex tablet:gap-1 justify-center items-center text-hm pl-2.4 h-4.8 mb-3.2 text-medium-grey lg:pl-3.2 lg:w-27.6 lg:justify-start lg:rounded-r-right-corners hover:text-purple hover:bg-purple-btn dark:hover:bg-white transition-color duration-300'
 						onClick={visualCtx.handlerToggleSidebar}
 					>
-						<img src={iconHideSidebar} alt='' className='pr-1' /> Hide Sidebar
+						<IconHideSidebar />
+						Hide Sidebar
 					</Button>
 				</footer>
 			</nav>

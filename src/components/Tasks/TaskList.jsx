@@ -41,65 +41,73 @@ export default function TaskList({ className }) {
 	if (currentBoard?.columns.length > 0) {
 		return (
 			<>
-				<main className={`flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto tablet:h-full ${className} `}>
-					{currentBoard.columns.map((board, id) => {
-						let noTasks = true
-						if (!board.tasks) noTasks = true
-						if (board.tasks?.length > 0) noTasks = false
+				<main className={className}>
+					<div className='flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto tablet:h-full  tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark'>
+						{currentBoard.columns.map((board, id) => {
+							let noTasks = true
+							if (!board.tasks) noTasks = true
+							if (board.tasks?.length > 0) noTasks = false
 
-						let color
-						if (id === 0) color = 'bg-blue'
-						if (id === 1) color = 'bg-light-purple'
-						if (id === 2) color = 'bg-green'
-						if (id > 2) color = 'bg-yellow'
-						return (
-							<ul key={board.name} className={`${noTasks ? 'w-13' : 'min-w-28  max-w-28'}`}>
-								<li className='flex mb-2.4 text-hs text-medium-grey uppercase '>
-									<div className={`w-1.5 h-1.5 ${color} rounded-full mr-1.2`}></div> {board.name} (
-									{board.tasks?.length ?? '0'})
-								</li>
-								{board.tasks?.map(task => {
-									let completedSubtasks = 0
-									task.subtasks.forEach(subtask => {
-										if (subtask.isCompleted === true) completedSubtasks++
-									})
+							let color
+							if (id === 0) color = 'bg-blue'
+							if (id === 1) color = 'bg-light-purple'
+							if (id === 2) color = 'bg-green'
+							if (id > 2) color = 'bg-yellow'
+							return (
+								<ul key={board.name} className={`${noTasks ? 'w-13' : 'min-w-28  max-w-28'}`}>
+									<li className='flex mb-2.4 text-hs text-medium-grey uppercase '>
+										<div className={`w-1.5 h-1.5 ${color} rounded-full mr-1.2`}></div> {board.name} (
+										{board.tasks?.length ?? '0'})
+									</li>
+									{board.tasks?.map(task => {
+										let completedSubtasks = 0
+										task.subtasks.forEach(subtask => {
+											if (subtask.isCompleted === true) completedSubtasks++
+										})
 
-									return (
-										<li
-											key={task.title}
-											className=' mb-2  drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 hover:scale-95 transition-transform'
-										>
-											<Button
-												className='px-1.6 w-full py-2.3 text-left'
-												onClick={() => {
-													handlerShowTask(task, board.name)
-												}}
+										return (
+											<li
+												key={task.title}
+												className=' mb-2  drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 hover:scale-95 transition-transform duration-300'
 											>
-												<p className='text-hm text-black dark:text-white'>{task.title}</p>
-												<span className='text-bodym text-medium-grey'>
-													{completedSubtasks} of {task.subtasks.length} subtasks
-												</span>
-											</Button>
-										</li>
-									)
-								})}
-							</ul>
-						)
-					})}
-					<Button
-						className={`min-w-28  max-w-28 mt-3.94 text-hxl text-medium-grey bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity  hover:scale-95 transition-transform rounded-0.6 `}
-						onClick={handlerShowAddNewColumns}
-					>
-						+ New Column
-					</Button>
-					<Button
-						className={`flex ${
-							visualCtx.showSidebar ? 'left-0 opacity-100 delay-300' : 'left-minus5.6 opacity-0 '
-						} items-center justify-center fixed bottom-3.2   w-5.6 h-4.8 bg-purple rounded-r-full  transition-all `}
-						onClick={visualCtx.handlerToggleSidebar}
-					>
-						<img src={iconShowSidebar} alt='' />
-					</Button>
+												<Button
+													className='px-1.6 w-full py-2.3 text-left text-black hover:text-purple dark:text-white  dark:hover:text-purple'
+													onClick={() => {
+														handlerShowTask(task, board.name)
+													}}
+												>
+													<p className='text-hm transition-color duration-300'>{task.title}</p>
+													<span className='text-bodym text-medium-grey'>
+														{completedSubtasks} of {task.subtasks.length} subtasks
+													</span>
+												</Button>
+											</li>
+										)
+									})}
+								</ul>
+							)
+						})}
+						<div className='min-w-28  max-w-28 mt-3.94  bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity'>
+							<Button
+								className={`w-full h-full text-hxl text-medium-grey  hover:text-purple  hover:scale-95 transition duration-300 rounded-0.6 `}
+								onClick={handlerShowAddNewColumns}
+							>
+								+ New Column
+							</Button>
+						</div>
+						<div
+							className={`fixed bottom-3.2  ${
+								visualCtx.showSidebar ? 'left-0 opacity-100 delay-300' : 'left-minus5.6 opacity-0 '
+							} transition-all`}
+						>
+							<Button
+								className={`flex  items-center justify-center   w-5.6 h-4.8 bg-purple rounded-r-full hover:bg-purple-hover duration-300   `}
+								onClick={visualCtx.handlerToggleSidebar}
+							>
+								<img src={iconShowSidebar} alt='' />
+							</Button>
+						</div>
+					</div>
 				</main>
 
 				{taskInfo.showTask && (
