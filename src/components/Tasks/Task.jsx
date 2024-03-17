@@ -7,7 +7,7 @@ import Button from '../UI/Button.jsx'
 import EditPanel from '../Board/EditPanel.jsx'
 import EditTask from './EditTask.jsx'
 import DeleteInformation from '../DeleteInformation.jsx'
-
+import IconCheck from '../../assets/icon-check.svg'
 export default function Task({ open, task, onClose, currentBoard, status: taskStatus }) {
 	const [showPanel, setShowPanel] = useState({ editPanel: false, editTask: false })
 	const [showDeleteInfo, setShowDeleteInfo] = useState(false)
@@ -123,22 +123,36 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 								return (
 									<li
 										key={subtask.title}
-										className='flex items-center gap-1.6 p-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4'
+										className='flex items-center gap-1.6 p-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4 hover:bg-purple-25 dark:hover:bg-purple-25 duration-300 transition-color'
 									>
-										<input
-											type='checkbox'
-											defaultChecked={subtask.isCompleted === true}
-											onChange={e => {
-												handlerChekboxSelect(e, subtask)
-											}}
-											id={subtask.title}
-											className='bg-purple'
-										/>
+										<div className='relative flex items-center w-1.6 h-1.6 '>
+											<input
+												type='checkbox'
+												defaultChecked={subtask.isCompleted === true}
+												onChange={e => {
+													handlerChekboxSelect(e, subtask)
+												}}
+												id={subtask.title}
+												className={`appearance-none w-1.6 h-1.6  ${
+													subtask.isCompleted === true ? 'bg-purple dark:bg-purple' : 'bg-white dark:bg-dark-grey'
+												} border border-[rgba(130,143,163,0.25)] rounded cursor-pointer  `}
+											/>
+											<img
+												src={IconCheck}
+												alt=''
+												onClick={e => {
+													handlerChekboxSelect(e, subtask)
+												}}
+												className={`${
+													subtask.isCompleted === true ? 'absolute' : 'hidden'
+												}   top-2/4 left-2/4 -translate-x-2/4  -translate-y-2/4 cursor-pointer `}
+											/>
+										</div>
 										<label
 											htmlFor={subtask.title}
-											className={`text-1.2 font-bold ${
+											className={`w-full h-full text-1.2 font-bold ${
 												subtask.isCompleted === true && 'opacity-50 line-through'
-											} dark:text-white`}
+											} dark:text-white cursor-pointer`}
 										>
 											{subtask.title}
 										</label>
@@ -153,16 +167,16 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 						</label>
 						<select
 							id='status'
-							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey `}
+							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey cursor-pointer `}
 							onChange={handlerChangeStatus}
 						>
-							<option key={taskStatus} value={taskStatus}>
+							<option key={taskStatus} value={taskStatus} className=' bg-white  dark:bg-v-dark-grey text-medium-grey '>
 								{taskStatus}
 							</option>
 							{status.map(option => {
 								if (option !== taskStatus) {
 									return (
-										<option key={option} value={option}>
+										<option key={option} value={option} className='bg-white  dark:bg-v-dark-grey text-medium-grey'>
 											{option}
 										</option>
 									)

@@ -10,6 +10,7 @@ import EditBoard from './Board/EditBoard.jsx'
 import EditPanel from './Board/EditPanel.jsx'
 import { AddNewTask } from './Board/AddNewTask.jsx'
 import DeleteInformation from './DeleteInformation.jsx'
+import VisualContext from '../store/VisualContext.jsx'
 
 const initialDeleteState = {
 	showEditBoard: false,
@@ -18,8 +19,9 @@ const initialDeleteState = {
 	deleteColId: null,
 	deleteCol: false,
 }
-const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
+const Header = () => {
 	const { boards, activeBoard, deleteBoard } = useContext(KanbanContex)
+	const { showMav: navIsVisible, handlerToggleShowMobileNav } = useContext(VisualContext)
 	const [editBoard, setEditBoard] = useState(initialDeleteState)
 	const [showPanel, setShowPanel] = useState(false)
 	const [showAddTask, setShowAddTask] = useState(false)
@@ -116,7 +118,9 @@ const Header = ({ handlerToggleShowMobileNav, navIsVisible }) => {
 							className={`flex items-center justify-center w-4.8 h-3.2  ${
 								boards.length > 0 ? 'opacity-1' : 'opacity-25'
 							} bg-purple rounded-2.4  tablet:text-hm tablet:w-16.4 tablet:h-4.8 tablet:text-white ${
-								activeBoard ? 'tablet:hover:bg-purple-hover tablet:duration-300 tablet:transition-color' : 'cursor-not-allowed'
+								activeBoard
+									? 'tablet:hover:bg-purple-hover tablet:duration-300 tablet:transition-color'
+									: 'cursor-not-allowed'
 							}`}
 							disabled={activeBoard ? false : true}
 							onClick={handlerShowAddTask}

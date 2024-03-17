@@ -8,16 +8,17 @@ export default function NavItem({ boards, onClose, onSelectBoard, activeBoard: c
 			<li
 				key={board.name}
 				tabIndex={0}
-				className={`flex items-center gap-x-1.2 w-24 h-4.8 pl-2.4 lg:pl-3.2 lg:gap-x-1.6 text-medium-grey ${
+				className={`flex group items-center gap-x-1.2 w-24 h-4.8 pl-2.4 lg:pl-3.2 lg:gap-x-1.6 text-medium-grey ${
 					activeBoard && activeBoardClass
-				} lg:w-27.6 `}
+				} lg:w-27.6  lg:rounded-r-right-corners hover:text-purple hover:bg-purple-btn dark:hover:bg-white transition-color duration-300`}
 				onClick={() => {
 					onSelectBoard(board.name)
 					onClose()
 				}}
 			>
-				<IconBoard fill={activeBoard && 'white'}></IconBoard>
-				<Button className='text-hm '>{board.name}</Button>
+				<Button className='flex items-center gap-x-1.2 text-hm w-full h-full'>
+					<IconBoard fill={activeBoard && 'white'}></IconBoard> {board.name}
+				</Button>
 			</li>
 		)
 	})

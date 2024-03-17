@@ -9,7 +9,7 @@ import VisualContext from '../../store/VisualContext.jsx'
 import AddNewBoard from '../Board/AddNewBoard.jsx'
 import IconHideSidebar from '../../assets/IconHideSidebar.jsx'
 
-const Nav = ({ showNav, onClose }) => {
+const Nav = () => {
 	const { boards, addBoard, selectBoard, activeBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 	const [showModal, setShowModal] = useState(false)
@@ -28,7 +28,7 @@ const Nav = ({ showNav, onClose }) => {
 		<>
 			<nav
 				className={`${
-					showNav ? 'z-20 ' : 'opacity-0 -z-10'
+					visualCtx.showNav ? 'z-20 ' : 'opacity-0 -z-10'
 				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0 tablet:relative  tablet:w-26.1 tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 lg:min-w-30 tablet:transition-transform transition-opacity  ${
 					visualCtx.showSidebar
 						? 'tablet:translate-x-minus26.1 lg:translate-x-minus30 '
@@ -40,13 +40,19 @@ const Nav = ({ showNav, onClose }) => {
 						All boards ({boards.length})
 					</h2>
 					<ul className='pt-1.9'>
-						<NavItem boards={boards} onClose={onClose} onSelectBoard={handlerSelectBoard} activeBoard={activeBoard} />
+						<NavItem
+							boards={boards}
+							onClose={visualCtx.handlerToggleShowMobileNav}
+							onSelectBoard={handlerSelectBoard}
+							activeBoard={activeBoard}
+						/>
 						<li
-							className='flex items-center gap-x-1.2  w-24 h-4.8 pl-2.4 text-purple lg:w-27.6 lg:pl-3.2 lg:gap-x-1.6'
+							className='  w-24 h-4.8 group pl-2.4 text-purple lg:w-27.6 lg:pl-3.2 lg:gap-x-1.6 lg:rounded-r-right-corners hover:text-purple hover:bg-purple-btn dark:hover:bg-white transition-color duration-300'
 							onClick={handlerShowModal}
 						>
-							<IconBoard></IconBoard>
-							<Button className='text-hm'>+ Create New Board</Button>
+							<Button className='flex items-center gap-x-1.2 text-hm w-full h-full'>
+								<IconBoard fill='rgb(99,95,199)' /> + Create New Board
+							</Button>
 						</li>
 					</ul>
 				</main>
@@ -76,7 +82,7 @@ const Nav = ({ showNav, onClose }) => {
 			</nav>
 			<div
 				className={`${
-					showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
+					visualCtx.showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
 				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity tablet:hidden tablet:-z-10 nav-backdrop`}
 			></div>
 			{showModal && (

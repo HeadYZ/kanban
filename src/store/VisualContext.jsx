@@ -6,11 +6,13 @@ const VisualContext = createContext({
 	smallScreen: Boolean,
 	toggleTheme: () => {},
 	handlerToggleSidebar: () => {},
+	handlerToggleShowMobileNav: () => {},
 })
 
 export function VisualContextProvider({ children }) {
 	const [theme, setTheme] = useState('dark')
 	const [showSidebar, setShowSidebar] = useState(false)
+	const [showNav, setShowNav] = useState(false)
 
 	const toggleTheme = () => {
 		if (document.body.classList.contains('dark')) {
@@ -26,12 +28,17 @@ export function VisualContextProvider({ children }) {
 	const handlerToggleSidebar = () => {
 		setShowSidebar(showSidebar => !showSidebar)
 	}
+	const handlerToggleShowMobileNav = () => {
+		setShowNav(prevShowNav => !prevShowNav)
+	}
 
 	const visual = {
 		theme,
 		toggleTheme,
 		showSidebar,
 		handlerToggleSidebar,
+		showNav,
+		handlerToggleShowMobileNav,
 	}
 
 	return <VisualContext.Provider value={visual}>{children}</VisualContext.Provider>
