@@ -19,10 +19,10 @@ const initialState = {
 export function AddNewTask({ open, onClose }) {
 	const [newTask, setNewTask] = useState(initialState)
 	const [error, setError] = useState(null)
-	const { boards, activeBoard, addTask } = useContext(KanbanContex)
+	const { addTask, findCurrentBoard } = useContext(KanbanContex)
 	const addTaskRef = useRef()
 
-	const currentBoard = boards.find(board => board.name === activeBoard)
+	const currentBoard = findCurrentBoard()
 	const availableStatus = currentBoard?.columns.map(status => {
 		return status.name
 	})
@@ -102,7 +102,7 @@ export function AddNewTask({ open, onClose }) {
 				<h3 className='text-hl text-black dark:text-white'>Add New Task</h3>
 				<Input
 					key='title'
-					id={'title'}
+					id='title'
 					label='Title'
 					placeholder='e.g. Take coffe break'
 					value={newTask.title}
@@ -140,7 +140,7 @@ export function AddNewTask({ open, onClose }) {
 
 					<Button
 						type='button'
-						className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2'
+						className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2 hover:text-white hover:bg-purple-hover dark:hover:bg-purple-hover  focus:text-white focus:bg-purple-hover dark:focus:bg-purple-hover focus:outline focus:outline-0 transition-color duration-300'
 						onClick={handlerAddNewSubtask}
 					>
 						+ Add New Subtask
@@ -157,7 +157,7 @@ export function AddNewTask({ open, onClose }) {
 				{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 				<Button
 					type='submit'
-					className='h-4 w-full text-center bg-purple text-white text-bodyl font-bold border-none rounded-2'
+					className='h-4 w-full text-center bg-purple text-white text-bodyl font-bold border-none rounded-2 hover:bg-purple-hover focus:bg-purple focus:outline focus:outline-0 transition-color duration-300'
 				>
 					Create Task
 				</Button>

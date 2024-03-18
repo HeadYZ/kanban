@@ -123,9 +123,9 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 								return (
 									<li
 										key={subtask.title}
-										className='flex items-center gap-1.6 p-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4 hover:bg-purple-25 dark:hover:bg-purple-25 duration-300 transition-color'
+										className='flex items-center gap-1.6 px-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4 hover:bg-purple-25 dark:hover:bg-purple-25 duration-300 transition-color'
 									>
-										<div className='relative flex items-center w-1.6 h-1.6 '>
+										<div className='relative flex items-center'>
 											<input
 												type='checkbox'
 												defaultChecked={subtask.isCompleted === true}
@@ -145,12 +145,12 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 												}}
 												className={`${
 													subtask.isCompleted === true ? 'absolute' : 'hidden'
-												}   top-2/4 left-2/4 -translate-x-2/4  -translate-y-2/4 cursor-pointer `}
+												}    top-2/4 left-2/4 -translate-x-2/4  -translate-y-2/4 cursor-pointer `}
 											/>
 										</div>
 										<label
 											htmlFor={subtask.title}
-											className={`w-full h-full text-1.2 font-bold ${
+											className={`w-full h-full text-1.2 py-1.2  font-bold ${
 												subtask.isCompleted === true && 'opacity-50 line-through'
 											} dark:text-white cursor-pointer`}
 										>
@@ -161,13 +161,13 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 							})}
 						</ul>
 					</main>
-					<footer className='flex flex-col relative gap-0.8 '>
-						<label htmlFor='status' className='text-1.2 font-bold text-medium-grey dark:text-white'>
+					<footer className='flex flex-col relative gap-0.8'>
+						<label htmlFor='status' className='text-1.2 font-bold text-medium-grey dark:text-white pointer-events-none'>
 							Current Status
 						</label>
 						<select
 							id='status'
-							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey cursor-pointer `}
+							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey cursor-pointer hover:border-purple focus:border-purple focus:outline focus:outline-0  transition-color duration-300`}
 							onChange={handlerChangeStatus}
 						>
 							<option key={taskStatus} value={taskStatus} className=' bg-white  dark:bg-v-dark-grey text-medium-grey '>
