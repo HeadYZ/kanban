@@ -18,6 +18,7 @@ const initialDeleteState = {
 	showDeleteBoardModal: false,
 	deleteColId: null,
 	deleteCol: false,
+	status: null,
 }
 const Header = () => {
 	const { boards, activeBoard, deleteBoard } = useContext(KanbanContex)
@@ -79,6 +80,11 @@ const Header = () => {
 			return { ...prevEditBoard, showEditBoard: true, deleteColId: null, deleteCol: false, status: null }
 		})
 	}
+	function cancelDeleteBoard() {
+		setEditBoard(prevEditBoard => {
+			return { ...prevEditBoard, showEditBoard: false, deleteColId: null, deleteCol: false, status: null }
+		})
+	}
 
 	function handlerDeleteBoard() {
 		const currentBoard = activeBoard
@@ -131,9 +137,9 @@ const Header = () => {
 							<span className='hidden tablet:block'>+ Add New Task</span>
 						</Button>
 
-						<div className='cursor-pointer p-1 edit-panel-icon' onClick={handlerShowEditPanel}>
-							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' tabIndex={0} />
-						</div>
+						<Button className='cursor-pointer p-1 edit-panel-icon' onClick={handlerShowEditPanel}>
+							<img src={iconVertical} alt='' className='h-1.6 tablet:h-2' />
+						</Button>
 						<EditPanel
 							open={showPanel}
 							onClose={handlerHideEditPanel}
@@ -174,6 +180,7 @@ const Header = () => {
 				deletedInformation={`Are you sure you want to delete the ‘${activeBoard}’ board? This action will remove all columns and tasks and
 				cannot be reversed.`}
 				deletedElement={activeBoard}
+				onCancel={cancelDeleteBoard}
 			/>
 			{showAddTask && <AddNewTask open={showAddTask} onClose={handlerHideAddTask}></AddNewTask>}
 		</>

@@ -24,7 +24,7 @@ export default function EditPanel({ open, showPanel, showDeleteWarning, onClose,
 			} ${position} w-19.2 p-1.6 z-10 bg-white dark:bg-v-dark-grey rounded-0.8`}
 		>
 			<Button
-				className='text-bodyl text-medium-grey text-left'
+				className='text-bodyl text-medium-grey text-left hover:scale-95 transition-transform duration-300'
 				onClick={() => {
 					onClose()
 					showPanel()
@@ -33,7 +33,7 @@ export default function EditPanel({ open, showPanel, showDeleteWarning, onClose,
 				{editInfo}
 			</Button>
 			<Button
-				className='text-bodyl text-red text-left'
+				className='text-bodyl text-red text-left hover:scale-95 transition-transform duration-300'
 				onClick={() => {
 					onClose()
 					showDeleteWarning()
