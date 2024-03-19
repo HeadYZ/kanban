@@ -42,7 +42,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 					</span>
 				)}
 				{cross && (
-					<button onClick={onRemove} className='group'>
+					<button type='button' onClick={onRemove} className='group'>
 						<IconCross error={error} />
 					</button>
 				)}

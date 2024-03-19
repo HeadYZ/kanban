@@ -18,6 +18,7 @@ export default function ({ open, onClose, currentBoard }) {
 			prevBoard[id].name = e.target.value
 			return [...prevBoard]
 		})
+		error && setError(null)
 	}
 	const handlerAddNewColumn = () => {
 		setBoardColumns(prevColumns => {
@@ -29,21 +30,36 @@ export default function ({ open, onClose, currentBoard }) {
 
 	const handlerRemoveColumn = id => {
 		setBoardColumns(prevColumns => {
-			const prevCols = [...prevColumns.columns]
+			const prevCols = [...prevColumns]
 			prevCols.splice(id, 1)
-			return { ...prevColumns, columns: prevCols }
+			return [...prevCols]
 		})
+		error && setError(null)
 	}
 
 	const handlerOnSubmit = e => {
 		e.preventDefault()
 		let emptyColumnName = false
+		const checkIdenticalColNames = boardColumns.reduce((acc, col) => {
+			acc[col.name] ? (acc[col.name] = 2) : (acc[col.name] = 1)
+			return { ...acc }
+		}, {})
+		const isIdencticalColNames = Object.values(checkIdenticalColNames).some(name => name > 1)
+
 		if (boardColumns && boardColumns.length > 0) {
 			emptyColumnName = boardColumns.some(column => column.name.trim() === '')
 		}
 
 		if (boardColumns && boardColumns.length > 0 && emptyColumnName) {
 			setError('Fill in all fields.')
+			return
+		}
+		if (boardColumns && boardColumns.length <= 0 && !emptyColumnName) {
+			setError('Before saving, add the column name.')
+			return
+		}
+		if (boardColumns && boardColumns.length > 0 && !emptyColumnName && isIdencticalColNames) {
+			setError('Please enter different column names.')
 			return
 		}
 		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
