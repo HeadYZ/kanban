@@ -4,7 +4,7 @@ export default function TextArea({ label, name, placeholder = '', id, className 
 	const [error, setError] = useState(null)
 	const classList = `h-11.2 px-1.4 py-1 text-bodyl text-black dark:text-white border rounded-0.4  bg-transparent placeholder:opacity-25 ${
 		error ? 'border-red' : 'border-medium-grey-input'
-	} ${className} hover:border-purple focus:border-purple focus:outline focus:outline-0 cursor-pointer transition-color duration-300`
+	} ${className} lg:hover:border-purple lg:focus:border-purple lg:focus:outline lg:focus:outline-0 lg:cursor-pointer lg:transition-color lg:duration-300`
 
 	const handlerBlurInput = e => {
 		e.target.value.trim() === '' ? setError('This field cannot be empty.') : setError(null)

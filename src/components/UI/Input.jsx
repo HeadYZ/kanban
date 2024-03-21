@@ -5,7 +5,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 	const [error, setError] = useState(null)
 	const classList = `h-4 w-full px-1.6 text-bodyl text-black dark:text-white border rounded-0.4  bg-transparent placeholder:opacity-25 ${
 		error ? 'border-red' : 'border-medium-grey-input'
-	} ${className} hover:border-purple focus:border-purple focus:outline focus:outline-0 cursor-pointer transition-color duration-300 `
+	} ${className} lg:hover:border-purple lg:focus:border-purple lg:focus:outline lg:focus:outline-0 cursor-pointer lg:transition-color lg:duration-300 `
 
 	const handlerBlurInput = e => {
 		e.target.value.trim() === '' ? setError('This field cannot be empty.') : setError(null)
@@ -34,6 +34,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 					}}
 					onFocus={handlerFocusInput}
 					className={classList}
+					autoFocus={false}
 					{...props}
 				/>
 				{error && (
@@ -42,7 +43,7 @@ export default function Input({ label, name, placeholder = '', cross, onRemove, 
 					</span>
 				)}
 				{cross && (
-					<button type='button' onClick={onRemove} className='group'>
+					<button type='button' onClick={onRemove} className='group' autoFocus={false}>
 						<IconCross error={error} />
 					</button>
 				)}

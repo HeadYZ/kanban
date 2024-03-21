@@ -19,12 +19,12 @@ export default function EditPanel({ open, showPanel, showDeleteWarning, onClose,
 	return (
 		<div
 			id='editPanel'
-			className={`flex flex-col gap-1.6 drop-shadow-md ${
-				open ? 'absolute' : 'hidden'
-			} ${position} w-19.2 p-1.6 z-10 bg-white dark:bg-v-dark-grey rounded-0.8`}
+			className={`flex flex-col gap-1.6 drop-shadow-md absolute ${
+				open ? 'opacity-100 z-10' : 'opacity-0 -z-40'
+			} ${position} w-19.2 p-1.6  bg-white dark:bg-v-dark-grey rounded-0.8 transition-opacity duration-300`}
 		>
 			<Button
-				className='text-bodyl text-medium-grey text-left hover:scale-95 transition-transform duration-300'
+				className='text-bodyl text-medium-grey text-left lg:hover:scale-95 lg:transition-transform lg:duration-300'
 				onClick={() => {
 					onClose()
 					showPanel()
@@ -33,7 +33,7 @@ export default function EditPanel({ open, showPanel, showDeleteWarning, onClose,
 				{editInfo}
 			</Button>
 			<Button
-				className='text-bodyl text-red text-left hover:scale-95 transition-transform duration-300'
+				className='text-bodyl text-red text-left lg:hover:scale-95 lg:transition-transform lg:duration-300'
 				onClick={() => {
 					onClose()
 					showDeleteWarning()

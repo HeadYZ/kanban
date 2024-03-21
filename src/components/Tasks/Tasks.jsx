@@ -30,7 +30,9 @@ const Tasks = ({ boards }) => {
 	return (
 		<TaskList
 			className={` ${
-				visualCtx.showSidebar ? 'tablet:translate-x-minus30 min-w-wcalc ' : 'tablet:translate-x-0 min-w-minw delay-300 '
+				visualCtx.showSidebar
+					? 'tablet:-translate-x-26.1 lg:-translate-x-30 min-w-wcalc '
+					: 'tablet:translate-x-0 min-w-wcalc tablet:min-w-minwtablet lg:min-w-minwdesktop  delay-300 '
 			}  transition-all`}
 		/>
 	)

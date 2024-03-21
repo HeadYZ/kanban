@@ -42,7 +42,7 @@ export default function TaskList({ className }) {
 		return (
 			<>
 				<main className={className}>
-					<div className='flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto tablet:h-full  tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark'>
+					<div className='flex px-1.6 gap-x-2.4 py-2.4 snap-x overflow-auto min-h-calchs tablet:min-h-calcshm lg:min-h-calcshl  tablet:border-t tablet:border-lines-light dark:tablet:border-lines-dark'>
 						{currentBoard.columns.map((board, id) => {
 							let noTasks = true
 							if (!board.tasks) noTasks = true
@@ -68,10 +68,10 @@ export default function TaskList({ className }) {
 										return (
 											<li
 												key={task.title}
-												className=' mb-2  drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 hover:scale-95 transition-transform duration-300'
+												className=' mb-2  drop-shadow-md  bg-white dark:bg-dark-grey rounded-0.8 lg:hover:scale-95 lg:transition-transform lg:duration-300'
 											>
 												<Button
-													className='px-1.6 w-full py-2.3 text-left text-black hover:text-purple dark:text-white  dark:hover:text-purple'
+													className='px-1.6 w-full py-2.3 text-left text-black lg:hover:text-purple dark:text-white  lg:dark:hover:text-purple'
 													onClick={() => {
 														handlerShowTask(task, board.name)
 													}}
@@ -89,7 +89,7 @@ export default function TaskList({ className }) {
 						})}
 						<div className='min-w-28  max-w-28 mt-3.94  bg-[rgb(233,239,250)] dark:bg-dark-grey-opacity'>
 							<Button
-								className={`w-full h-full text-hxl text-medium-grey  hover:text-purple  hover:scale-95 transition duration-300 rounded-0.6 `}
+								className={`w-full h-full text-hxl text-medium-grey  lg:hover:text-purple  lg:hover:scale-95 lg:transition lg:duration-300 rounded-0.6 `}
 								onClick={handlerShowAddNewColumns}
 							>
 								+ New Column
@@ -101,7 +101,7 @@ export default function TaskList({ className }) {
 							} transition-all`}
 						>
 							<Button
-								className={`flex  items-center justify-center   w-5.6 h-4.8 bg-purple rounded-r-full hover:bg-purple-hover duration-300   `}
+								className={`flex  items-center justify-center   w-5.6 h-4.8 bg-purple rounded-r-full lg:hover:bg-purple-hover lg:duration-300   `}
 								onClick={visualCtx.handlerToggleSidebar}
 							>
 								<img src={iconShowSidebar} alt='' />

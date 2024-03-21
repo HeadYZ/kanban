@@ -99,7 +99,11 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 				<div className='flex flex-col gap-1.6'>
 					<header className='flex items-center justify-between relative w-full gap-1.6'>
 						<h3 className='text-hl text-black dark:text-white '>{task.title}</h3>
-						<Button className='flex items-center justify-center p-1 edit-panel-icon' onClick={handlerShowEditPanel}>
+						<Button
+							className='flex items-center justify-center p-1 edit-panel-icon'
+							onClick={handlerShowEditPanel}
+							autoFocus={false}
+						>
 							<img src={iconVertical} alt='' className='h-2 w-0.462' />
 						</Button>
 						<EditPanel
@@ -123,7 +127,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 								return (
 									<li
 										key={subtask.title}
-										className='flex items-center gap-1.6 px-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4 hover:bg-purple-25 dark:hover:bg-purple-25 duration-300 transition-color'
+										className='flex items-center gap-1.6 px-1.2 bg-light-grey dark:bg-v-dark-grey rounded-0.4 lg:hover:bg-purple-25 lg:dark:hover:bg-purple-25 lg:duration-300 lg:transition-color'
 									>
 										<div className='relative flex items-center'>
 											<input
@@ -167,7 +171,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 						</label>
 						<select
 							id='status'
-							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey cursor-pointer hover:border-purple focus:border-purple focus:outline focus:outline-0  transition-color duration-300`}
+							className={`appearance-none text-bodyl px-1.6 py-0.8 rounded-0.4 border border-solid border-white-border bg-white text-black dark:text-white  dark:bg-dark-grey cursor-pointer lg:hover:border-purple lg:focus:border-purple lg:focus:outline lg:focus:outline-0  lg:transition-color lg:duration-300`}
 							onChange={handlerChangeStatus}
 						>
 							<option key={taskStatus} value={taskStatus} className=' bg-white  dark:bg-v-dark-grey text-medium-grey '>

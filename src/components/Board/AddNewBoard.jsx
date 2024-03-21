@@ -110,7 +110,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 						{error && <p className='text-1.2 font-bold text-medium-grey dark:text-white'>{error}</p>}
 						<Button
 							type='button'
-							className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2 hover:text-white hover:bg-purple-hover dark:hover:bg-purple-hover  focus:text-white focus:bg-purple-hover dark:focus:bg-purple-hover focus:outline focus:outline-0 transition-color duration-300'
+							className='h-4 w-full text-center bg-purple-btn dark:bg-white text-bodyl font-bold  text-purple border-none rounded-2 lg:hover:text-white lg:hover:bg-purple-hover lg:dark:hover:bg-purple-hover  lg:focus:text-white lg:focus:bg-purple-hover lg:dark:focus:bg-purple-hover lg:focus:outline lg:focus:outline-0 lg:transition-color lg:duration-300'
 							onClick={handlerAddNewColumn}
 						>
 							+ Add New Column
@@ -118,7 +118,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 					</div>
 					<Button
 						type='submit'
-						className='w-full h-4 text-white bg-purple text-bodyl font-bold  rounded-2 hover:bg-purple-hover focus:bg-purple focus:outline focus:outline-0 transition-color duration-300'
+						className='w-full h-4 text-white bg-purple text-bodyl font-bold  rounded-2 lg:hover:bg-purple-hover lg:focus:bg-purple lg:focus:outline lg:focus:outline-0 lg:transition-color lg:duration-300'
 					>
 						Save Changes
 					</Button>
