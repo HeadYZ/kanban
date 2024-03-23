@@ -3,6 +3,8 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 import Modal from '../UI/Modal.jsx'
 import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
+import checkColsName from '../../helpers/checkColsName.js'
+import checkBoardName from '../../helpers/checkBoardName.js'
 
 export default function EditBoard({
 	open,
@@ -68,6 +70,17 @@ export default function EditBoard({
 			setError('Fill in all fields.')
 			return
 		}
+
+		const duplicateColName = checkColsName(existingBoard.columns)
+		if (duplicateColName) {
+			setError('You are trying to add the same column names. Use different names.')
+			return
+		}
+		const duplicateBoardName = checkBoardName(existingBoard.name, boards, activeBoard)
+		if (duplicateBoardName) {
+			setError('You already have a board with this name. Use a different name.')
+			return
+		}
 		if (existingBoard.name.trim().length > 0) {
 			editBoard(existingBoard, activeBoard)
 			editBoardRef.current.close()
@@ -106,11 +119,10 @@ export default function EditBoard({
 										editBoardRef.current.close()
 										showWarning(id, column.name)
 									}}
-									// error={error}
 									name='boardColumns'
 									type='text'
 									placeholder='Todo'
-									cross
+									cross={existingBoard.columns.length > 1 ? true : false}
 								/>
 							)
 						})}

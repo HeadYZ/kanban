@@ -2,6 +2,8 @@ import Input from '../UI/Input.jsx'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import { useEffect, useRef, useState } from 'react'
+import checkColsName from '../../helpers/checkColsName.js'
+import checkBoardName from '../../helpers/checkBoardName.js'
 
 export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoard }) {
 	const [newBoard, setNewBoard] = useState({ name: '', columns: [{ name: '', tasks: [] }] })
@@ -49,16 +51,20 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 			setError('Fill in all fields.')
 			return
 		}
-		if (newBoard.name.trim().length > 0 && newBoard.columns.length > 0) {
-			const boardNameExist = boards?.some(kanbanBoard => {
-				return kanbanBoard.name.toLowerCase() === newBoard.name.toLowerCase()
-			})
-			if (boardNameExist) {
-				setError('You are trying to add an existing board name. Use a different name.')
-				return
-			}
-			if (!boardNameExist) addBoard(newBoard)
 
+		const duplicateBoardName = checkBoardName(newBoard.name, boards)
+		if (duplicateBoardName) {
+			setError('You are trying to add an existing board name. Use a different name.')
+			return
+		}
+
+		const duplicateColName = checkColsName(newBoard.columns)
+		if (duplicateColName) {
+			setError('You are trying to add the same column names. Use different names.')
+			return
+		}
+		if (!duplicateBoardName && !duplicateColName) {
+			addBoard(newBoard)
 			setNewBoard({ name: '', columns: [{ name: '', tasks: [] }] })
 			modalRef.current.close()
 		}
@@ -103,7 +109,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 									name='boardColumns'
 									type='text'
 									placeholder='Todo'
-									cross
+									cross={newBoard.columns.length > 1 ? true : false}
 								/>
 							)
 						})}
