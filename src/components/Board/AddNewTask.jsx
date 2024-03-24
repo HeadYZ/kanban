@@ -97,7 +97,7 @@ export function AddNewTask({ open, onClose }) {
 	}
 
 	return (
-		<Modal ref={addTaskRef} onClose={onClose}>
+		<Modal ref={addTaskRef} onClose={onClose} open={open}>
 			<form className='flex flex-col gap-2.4' onSubmit={handlerAddTask}>
 				<h3 className='text-hl text-black dark:text-white'>Add New Task</h3>
 				<Input

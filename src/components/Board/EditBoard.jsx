@@ -88,7 +88,7 @@ export default function EditBoard({
 	}
 
 	return (
-		<Modal ref={editBoardRef} onClose={closeEditBoard}>
+		<Modal ref={editBoardRef} onClose={closeEditBoard} open={open}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Edit Board</h2>
 				<form className='flex flex-col gap-2.4' onSubmit={handlerUpdateBoard}>

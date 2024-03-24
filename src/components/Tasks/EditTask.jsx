@@ -88,7 +88,7 @@ export default function EditTask({ open, task, onClose, status: oldStatus, close
 	}
 
 	return (
-		<Modal ref={editTaskRef} onClose={onClose}>
+		<Modal ref={editTaskRef} onClose={onClose} open={open}>
 			<form className='flex flex-col gap-2.4' onSubmit={handlerAddTask}>
 				<h3 className='text-hl text-black dark:text-white'>Edit Task</h3>
 				<Input

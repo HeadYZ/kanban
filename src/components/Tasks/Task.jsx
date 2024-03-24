@@ -95,6 +95,7 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 				ref={taskRef}
 				className='p-2.4 mx-auto bg-white dark:bg-dark-grey rounded-0.6 	top-2/4 -translate-y-2/4'
 				onClose={onClose}
+				open={open}
 			>
 				<div className='flex flex-col gap-1.6'>
 					<header className='flex items-center justify-between relative w-full gap-1.6'>

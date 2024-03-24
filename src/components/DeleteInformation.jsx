@@ -9,7 +9,7 @@ export default function DeleteInformation({ open, deletedElement, deletedInforma
 	}, [open])
 
 	return (
-		<Modal ref={deleteRef} onClose={onClose}>
+		<Modal ref={deleteRef} onClose={onClose} open={open}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-red'>Delete this {deletedElement}?</h2>
 				<p className='text-medium-grey text-bodyl '>{deletedInformation}</p>

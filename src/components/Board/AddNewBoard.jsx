@@ -78,6 +78,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 				setError(null)
 				onClose()
 			}}
+			open={open}
 		>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Add New Board</h2>

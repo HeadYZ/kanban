@@ -81,7 +81,7 @@ export default function ({ open, onClose, currentBoard }) {
 	}
 
 	return (
-		<Modal ref={addColRef} onClose={onClose}>
+		<Modal ref={addColRef} onClose={onClose} open={open}>
 			<div className='flex flex-col gap-2.4'>
 				<h2 className='text-hl text-black dark:text-white'>Add New Column</h2>
 				<form className='flex flex-col gap-2.4' onSubmit={handlerOnSubmit}>
