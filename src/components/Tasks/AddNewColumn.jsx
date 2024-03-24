@@ -3,8 +3,9 @@ import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
+import checkColsName from '../../helpers/checkColsName.js'
 
-export default function ({ open, onClose, currentBoard }) {
+export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState([{ name: '', tasks: [] }])
 	const [error, setError] = useState(null)
 	const { addNewColumn } = useContext(KanbanContex)
@@ -39,43 +40,21 @@ export default function ({ open, onClose, currentBoard }) {
 
 	const handlerOnSubmit = e => {
 		e.preventDefault()
-		let emptyColumnName = false
-		const checkIdenticalColNames = boardColumns.reduce((acc, col) => {
-			acc[col.name] ? (acc[col.name] = 2) : (acc[col.name] = 1)
-			return { ...acc }
-		}, {})
-		const isIdencticalColNames = Object.values(checkIdenticalColNames).some(name => name > 1)
 
-		if (boardColumns && boardColumns.length > 0) {
-			emptyColumnName = boardColumns.some(column => column.name.trim() === '')
-		}
+		let isSomeColEmpty = boardColumns.some(column => column.name.trim() === '')
 
-		if (boardColumns && boardColumns.length > 0 && emptyColumnName) {
+		if (isSomeColEmpty) {
 			setError('Fill in all fields.')
 			return
 		}
-		if (boardColumns && boardColumns.length <= 0 && !emptyColumnName) {
-			setError('Before saving, add the column name.')
-			return
-		}
-		if (boardColumns && boardColumns.length > 0 && !emptyColumnName && isIdencticalColNames) {
+		const isIdencticalColNames = checkColsName(boardColumns)
+		if (!isSomeColEmpty && isIdencticalColNames) {
 			setError('Please enter different column names.')
 			return
 		}
-		if (boardColumns && boardColumns.length > 0 && !emptyColumnName) {
-			const boardNameExist = boardColumns.some(board => {
-				let nameExist = false
-				currentBoard.columns.forEach(kanbanBoard => {
-					if (board.name.toLowerCase() === kanbanBoard.name.toLowerCase()) nameExist = true
-				})
-				return nameExist
-			})
-			if (boardNameExist) {
-				setError('You are trying to add an existing column name. Use a different name.')
-				return
-			}
-			if (!boardNameExist) addNewColumn(boardColumns)
-		}
+
+		if (!isSomeColEmpty && !isIdencticalColNames) addNewColumn(boardColumns)
+
 		setBoardColumns([{ name: '', tasks: [] }])
 		addColRef.current.close()
 	}
@@ -102,7 +81,7 @@ export default function ({ open, onClose, currentBoard }) {
 									name='boardColumns'
 									type='text'
 									placeholder='e.g. Todo'
-									cross
+									cross={boardColumns.length > 1 ? true : false}
 								/>
 							)
 						})}
