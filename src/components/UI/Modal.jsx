@@ -1,9 +1,8 @@
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const ModalOverlay = forwardRef(({ props }, ref) => {
 	const handlerAddWindowListener = e => {
-		console.log(props.open)
 		if (e.target.id === 'dialog') {
 			ref.current.close()
 			window.removeEventListener('click', handlerAddWindowListener)
@@ -11,8 +10,8 @@ const ModalOverlay = forwardRef(({ props }, ref) => {
 			return
 		}
 	}
-
-	props.open && window.addEventListener('click', handlerAddWindowListener)
+	// props.open && !removeListener && window.addEventListener('click', handlerAddWindowListener)
+	// props.open !== true && window.removeEventListener('click', handlerAddWindowListener)
 
 	return (
 		<dialog

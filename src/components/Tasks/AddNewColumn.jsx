@@ -3,7 +3,7 @@ import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
-import checkColsName from '../../helpers/checkColsName.js'
+import checkColsName from '../../helpers/checkDuplicateName.js'
 
 export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState([{ name: '', tasks: [] }])

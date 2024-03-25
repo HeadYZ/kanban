@@ -3,7 +3,7 @@ import KanbanContex from '../../store/KanbanContex.jsx'
 import Modal from '../UI/Modal.jsx'
 import Input from '../UI/Input.jsx'
 import Button from '../UI/Button.jsx'
-import checkColsName from '../../helpers/checkColsName.js'
+import checkDuplicateName from '../../helpers/checkDuplicateName.js'
 import checkBoardName from '../../helpers/checkBoardName.js'
 
 export default function EditBoard({
@@ -71,7 +71,7 @@ export default function EditBoard({
 			return
 		}
 
-		const duplicateColName = checkColsName(existingBoard.columns)
+		const duplicateColName = checkDuplicateName(existingBoard.columns)
 		if (duplicateColName) {
 			setError('You are trying to add the same column names. Use different names.')
 			return

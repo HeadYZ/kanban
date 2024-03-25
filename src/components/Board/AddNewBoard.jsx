@@ -2,7 +2,7 @@ import Input from '../UI/Input.jsx'
 import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import { useEffect, useRef, useState } from 'react'
-import checkColsName from '../../helpers/checkColsName.js'
+import checkDuplicateName from '../../helpers/checkDuplicateName.js'
 import checkBoardName from '../../helpers/checkBoardName.js'
 
 export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoard }) {
@@ -58,7 +58,7 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 			return
 		}
 
-		const duplicateColName = checkColsName(newBoard.columns)
+		const duplicateColName = checkDuplicateName(newBoard.columns)
 		if (duplicateColName) {
 			setError('You are trying to add the same column names. Use different names.')
 			return

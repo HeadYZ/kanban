@@ -5,6 +5,8 @@ import TextArea from '../UI/Textarea.jsx'
 import Button from '../UI/Button.jsx'
 import Select from '../UI/Select.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
+import checkDuplicateName from '../../helpers/checkDuplicateName.js'
+import checkDuplicateTitle from '../../helpers/checkDuplicateTitle.js'
 
 const initialState = {
 	description: '',
@@ -78,22 +80,34 @@ export function AddNewTask({ open, onClose }) {
 		const emptySubtask = newTask.subtasks.some(subtask => subtask.title.trim() === '')
 		const emptyDescription = newTask.description.trim() === ''
 		const emptyTitle = newTask.title.trim() === ''
-
+		const isIdenticalTitle = checkDuplicateTitle(currentBoard.columns, newTask.title)
+		const isIdenticalSubtaskName = checkDuplicateName(newTask.subtasks, 'title')
 		if (emptyTitle) {
 			setError('Fill task title.')
 			return
-		} else if (emptyDescription) {
-			setError('Fill task description.')
-			return
-		} else if (emptySubtask) {
-			setError('Fill all subtasks title.')
+		}
+		if (isIdenticalTitle) {
+			setError('You already have such a title in the selected board. Try using a different name.')
 			return
 		}
 
-		addTask(newTask)
-		setNewTask(initialState)
-		setError(null)
-		addTaskRef.current.close()
+		if (emptyDescription) {
+			setError('Fill task description.')
+			return
+		}
+		if (emptySubtask) {
+			setError('Fill all subtasks title.')
+			return
+		}
+		if (isIdenticalSubtaskName) {
+			setError('You are trying to add the same subtask names. Use different names.')
+			return
+		}
+		console.log(currentBoard.columns)
+		// addTask(newTask)
+		// setNewTask(initialState)
+		// setError(null)
+		// addTaskRef.current.close()
 	}
 
 	return (
