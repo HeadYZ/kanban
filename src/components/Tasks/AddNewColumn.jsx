@@ -3,7 +3,7 @@ import Modal from '../UI/Modal.jsx'
 import Button from '../UI/Button.jsx'
 import Input from '../UI/Input.jsx'
 import KanbanContex from '../../store/KanbanContex.jsx'
-import checkColsName from '../../helpers/checkDuplicateName.js'
+import checkDuplicateName from '../../helpers/checkDuplicateName.js'
 
 export default function ({ open, onClose }) {
 	const [boardColumns, setBoardColumns] = useState([{ name: '', tasks: [] }])
@@ -47,7 +47,7 @@ export default function ({ open, onClose }) {
 			setError('Fill in all fields.')
 			return
 		}
-		const isIdencticalColNames = checkColsName(boardColumns)
+		const isIdencticalColNames = checkDuplicateName(boardColumns)
 		if (!isSomeColEmpty && isIdencticalColNames) {
 			setError('Please enter different column names.')
 			return

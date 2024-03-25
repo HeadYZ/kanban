@@ -8,7 +8,6 @@ import checkBoardName from '../../helpers/checkBoardName.js'
 export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoard }) {
 	const [newBoard, setNewBoard] = useState({ name: '', columns: [{ name: '', tasks: [] }] })
 	const [error, setError] = useState(null)
-
 	const modalRef = useRef()
 	useEffect(() => {
 		open && modalRef.current.showModal()
@@ -52,7 +51,9 @@ export default function AddNewBoard({ open, onClose, boards, onAddBoard: addBoar
 			return
 		}
 
-		const duplicateBoardName = checkBoardName(newBoard.name, boards)
+		let duplicateBoardName = false
+		if (boards.length > 0) duplicateBoardName = checkBoardName(newBoard.name, boards)
+
 		if (duplicateBoardName) {
 			setError('You are trying to add an existing board name. Use a different name.')
 			return

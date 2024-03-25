@@ -6,9 +6,9 @@ import TaskList from './TaskList.jsx'
 import NewBoard from './NewBoard.jsx'
 
 const Tasks = ({ boards }) => {
-	const { boards: kanbanBoards, findCurrentBoard, fetchBoards, addBoard } = useContext(KanbanContex)
+	const { boards: kanbanBoards, fetchBoards, addBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
-	const currentBoard = findCurrentBoard()
+
 	useEffect(() => {
 		fetchBoards(boards)
 	}, [])
@@ -22,7 +22,6 @@ const Tasks = ({ boards }) => {
 				showSidebar={visualCtx.showSidebar}
 				toggleSidebar={visualCtx.handlerToggleSidebar}
 				onAddBoard={handlerCreateNewBoard}
-				currentBoard={currentBoard}
 			/>
 		)
 	}

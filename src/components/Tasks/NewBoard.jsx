@@ -2,7 +2,7 @@ import { useState } from 'react'
 import iconShowSidebar from '../../assets/icon-show-sidebar.svg'
 import Button from '../UI/Button.jsx'
 import AddNewBoard from '../Board/AddNewBoard.jsx'
-export default function NewBoard({ showSidebar, toggleSidebar, currentBoard, onAddBoard }) {
+export default function NewBoard({ showSidebar, toggleSidebar, onAddBoard }) {
 	const [addNewBoard, setAddNewBoard] = useState(false)
 	const handlerShowAddNewBoard = () => {
 		setAddNewBoard(true)
@@ -43,12 +43,7 @@ export default function NewBoard({ showSidebar, toggleSidebar, currentBoard, onA
 				</div>
 			</main>
 			{addNewBoard && (
-				<AddNewBoard
-					open={addNewBoard}
-					onClose={handlerHideAddNewBoard}
-					currentBoard={currentBoard}
-					onAddBoard={onAddBoard}
-				/>
+				<AddNewBoard open={addNewBoard} onClose={handlerHideAddNewBoard} boards={[]} onAddBoard={onAddBoard} />
 			)}
 		</>
 	)
