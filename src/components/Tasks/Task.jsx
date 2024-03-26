@@ -36,16 +36,6 @@ export default function Task({ open, task, onClose, currentBoard, status: taskSt
 			board: currentBoard.name,
 			taskTitle: task.title,
 		})
-
-		// try {
-		// 	const send  = fetch('https://kanban-f64b7-default-rtdb.firebaseio.com/boards.json', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 		body: JSON.stringify(uploadData),
-		// 	})
-		// } catch (err) {}
 	}
 
 	const handlerChangeStatus = e => {

@@ -103,11 +103,11 @@ export function AddNewTask({ open, onClose }) {
 			setError('You are trying to add the same subtask names. Use different names.')
 			return
 		}
-		console.log(currentBoard.columns)
-		// addTask(newTask)
-		// setNewTask(initialState)
-		// setError(null)
-		// addTaskRef.current.close()
+
+		addTask(newTask)
+		setNewTask(initialState)
+		setError(null)
+		addTaskRef.current.close()
 	}
 
 	return (

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import sunIcon from '../../assets/icon-light-theme.svg'
 import moonIcon from '../../assets/icon-dark-theme.svg'
 import IconBoard from '../../assets/IconBoard.jsx'
@@ -13,7 +13,8 @@ const Nav = () => {
 	const { boards, addBoard, selectBoard, activeBoard } = useContext(KanbanContex)
 	const visualCtx = useContext(VisualContext)
 	const [showModal, setShowModal] = useState(false)
-
+	const body = document.querySelector('body')
+	visualCtx.showNav ? body.classList.add('overflow-hidden') : body.classList.remove('overflow-hidden')
 	const handlerShowModal = () => {
 		setShowModal(prevShow => !prevShow)
 	}
@@ -23,17 +24,33 @@ const Nav = () => {
 	const handlerSelectBoard = selectedBoard => {
 		selectBoard(selectedBoard)
 	}
+	const handlerCloseMobileNav = e => {
+		if (e.target.classList.contains('nav-backdrop')) {
+			visualCtx.handlerToggleShowMobileNav()
+			window.removeEventListener('click', handlerCloseMobileNav)
+			return
+		}
+		if (e.target.closest('li')) {
+			window.removeEventListener('click', handlerCloseMobileNav)
+		}
+	}
+	useEffect(() => {
+		visualCtx.showNav &&
+			setTimeout(() => {
+				visualCtx.showNav && window.addEventListener('click', handlerCloseMobileNav)
+			}, 10)
+	}, [visualCtx.showNav])
 
 	return (
 		<>
 			<nav
 				className={`${
-					visualCtx.showNav ? 'z-20 ' : 'opacity-0 -z-10'
-				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0 tablet:relative  tablet:w-26.1 tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 lg:min-w-30 tablet:transition-transform transition-opacity  ${
+					visualCtx.showNav ? 'z-20 ' : 'opacity-0 z-20 pointer-events-none'
+				} absolute top-1.6 left-1/2  max-[640px]:translate-x-minus50 w-26.4 rounded-0.8 bg-white dark:bg-dark-grey   tablet:left-0 tablet:top-0 tablet:relative  tablet:w-26.1 tablet:min-w-26.1 tablet:flex tablet:flex-col tablet:justify-between  tablet:h-full tablet:rounded-none tablet:z-20 tablet:border-r tablet:border-lines-light dark:tablet:border-lines-dark  lg:w-30 lg:min-w-30 tablet:transition-transform transition-opacity duration-500  ${
 					visualCtx.showSidebar
 						? 'tablet:-translate-x-26.1 lg:-translate-x-30 '
 						: 'tablet:translate-x-0 tablet:delay-300'
-				} tablet:opacity-100 `}
+				} tablet:opacity-100 tablet:pointer-events-auto `}
 			>
 				<main className='pt-1.6 tablet:pt-3.2'>
 					<h2 className='text-1.2 pl-2.4 font-bold tracking-tight text-medium-grey uppercase lg:pl-3.2'>
@@ -48,7 +65,9 @@ const Nav = () => {
 						/>
 						<li
 							className='  w-24 h-4.8 group  text-purple lg:w-27.6  lg:gap-x-1.6 lg:rounded-r-right-corners lg:hover:text-purple lg:hover:bg-purple-btn lg:dark:hover:bg-white lg:transition-color lg:duration-300'
-							onClick={handlerShowModal}
+							onClick={() => {
+								handlerShowModal(), visualCtx.handlerToggleShowMobileNav()
+							}}
 						>
 							<Button className='flex items-center gap-x-1.2 text-hm w-full h-full pl-2.4 lg:pl-3.2'>
 								<IconBoard fill='rgb(99,95,199)' /> + Create New Board
@@ -82,8 +101,8 @@ const Nav = () => {
 			</nav>
 			<div
 				className={`${
-					visualCtx.showNav ? 'opacity-50 z-10' : 'opacity-0 -z-10'
-				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity duration-300 tablet:hidden tablet:-z-10 nav-backdrop`}
+					visualCtx.showNav ? 'opacity-50 z-10' : 'opacity-0 z-10 pointer-events-none'
+				} absolute  top-0 left-0 bottom-0 right-0 h-full w-full bg-black transition-opacity duration-500 tablet:hidden tablet:-z-10 nav-backdrop `}
 			></div>
 			{showModal && (
 				<AddNewBoard
