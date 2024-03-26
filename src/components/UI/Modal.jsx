@@ -1,17 +1,25 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 const ModalOverlay = forwardRef(({ props }, ref) => {
 	const handlerAddWindowListener = e => {
+		console.log('g')
 		if (e.target.id === 'dialog') {
 			ref.current.close()
 			window.removeEventListener('click', handlerAddWindowListener)
-		} else {
+			return
+		}
+		if (e.target.closest('.dialog') === null && e.target.closest('#modal') === null) {
+			window.removeEventListener('click', handlerAddWindowListener)
 			return
 		}
 	}
-	// props.open && !removeListener && window.addEventListener('click', handlerAddWindowListener)
-	// props.open !== true && window.removeEventListener('click', handlerAddWindowListener)
+	useEffect(() => {
+		props.open &&
+			setTimeout(() => {
+				window.addEventListener('click', handlerAddWindowListener)
+			}, 10)
+	}, [props.open])
 
 	return (
 		<dialog
@@ -20,7 +28,9 @@ const ModalOverlay = forwardRef(({ props }, ref) => {
 			className='top-2/4 -translate-y-2/4 w-11/12  mx-auto bg-white dark:bg-dark-grey rounded-0.6 tablet:w-48 backdrop:bg-black backdrop:opacity-50'
 			onClose={props.onClose}
 		>
-			<div className='p-2.4 tablet:p-3.2'>{props.children}</div>
+			<div className='p-2.4 tablet:p-3.2' id='modal'>
+				{props.children}
+			</div>
 		</dialog>
 	)
 })
